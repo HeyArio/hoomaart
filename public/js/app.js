@@ -30,27 +30,85 @@ function setLang(l, save) {
 $('#langBtn').addEventListener('click', () => setLang(Hooma.lang === 'fa' ? 'en' : 'fa', true));
 
 /* ---- rendering */
-let heroIx = 0;
-// The hero sofa is drawn 220 cm wide, so the slider shows a work at a believable size beside it.
-function heroSize() {
-  const hw = Hooma.works[heroIx % Hooma.works.length]; if (!hw) return; const cm = +$('#heroSize').value, r = hw.ratio || 1.5;
-  $('.hero').style.setProperty('--cm', Math.min(cm, 150 * r));
-  $('#heroSizeOut').textContent = `${Hooma.num(cm)} × ${Hooma.num(Math.round(cm / r))} ${Hooma.t('cm')}`;
+let heroIx = 0, elevIx = 2, heroTimer = 0, ambOn = 0, heroShown = '', heroHold = false;
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const mod = (n, m) => ((n % m) + m) % m;
+
+// The hero room takes its light from the work: a heavily blurred copy of the image sits behind it.
+function heroAuto(ms) {
+  clearTimeout(heroTimer);
+  heroTimer = setTimeout(() => { if (!document.hidden && !heroHold) { heroIx++; paintHero(); } else heroAuto(1500); }, ms);
 }
-$('#heroSize').addEventListener('input', heroSize);
+function paintHero(first) {
+  const n = Hooma.works.length, hw = Hooma.works[mod(heroIx, n)], hang = $('#heroHang'), img = $('#heroImg'), label = $('#heroLabel');
+  $('#heroCap').textContent = Hooma.L(hw.title);
+  $('#heroMeta').textContent = [Hooma.L(hw.medium), Hooma.by(hw)].filter(Boolean).join(Hooma.lang === 'fa' ? '، ' : ', ');
+  $('#heroCount').textContent = Hooma.num(mod(heroIx, n) + 1) + (Hooma.lang === 'fa' ? ' از ' : ' / ') + Hooma.num(n);
+  img.alt = Hooma.L(hw.title);
+  if (heroShown === hw.id) return;
+  heroShown = hw.id;
+  const show = () => {
+    img.src = hw.img; hang.style.setProperty('--r', hw.ratio || 1.5);
+    const go = () => {
+      img.onload = img.onerror = null;
+      if (heroShown !== hw.id) return;
+      hang.classList.remove('swap');
+      const next = $(ambOn ? '#ambA' : '#ambB'), prev = $(ambOn ? '#ambB' : '#ambA');
+      next.style.backgroundImage = 'url("' + hw.img + '")'; next.classList.add('on'); prev.classList.remove('on'); ambOn = ambOn ? 0 : 1;
+    };
+    if (img.complete && img.naturalWidth) go(); else { img.onload = go; img.onerror = go; }
+  };
+  if (first || still) show(); else { hang.classList.add('swap'); setTimeout(show, 420); }
+  label.classList.remove('run');
+  if (!still && n > 1) { void label.offsetWidth; label.classList.add('run'); heroAuto(7000); }
+}
+const heroWork = $('.hero-work');
+['pointerenter', 'focusin'].forEach((e) => heroWork.addEventListener(e, () => { heroHold = true; }));
+['pointerleave', 'focusout'].forEach((e) => heroWork.addEventListener(e, () => { heroHold = false; }));
+$('#heroNext').addEventListener('click', () => { heroIx++; paintHero(); });
+$('#heroPrev').addEventListener('click', () => { heroIx--; paintHero(); });
+$('#heroOpen').addEventListener('click', () => Hooma.openWork(Hooma.works[mod(heroIx, Hooma.works.length)].id));
+
+// Elevation drawing: 1 cm is a fixed fraction of the wall, so the work keeps its true proportion to the door.
+function paintElev() {
+  const w = Hooma.works[mod(elevIx, Hooma.works.length)]; if (!w) return;
+  const cm = +$('#elevSize').value, r = w.ratio || 1.5, el = $('#elev'), img = $('#demoImg');
+  if (img.getAttribute('src') !== w.img) img.src = w.img;
+  img.alt = Hooma.L(w.title);
+  el.style.setProperty('--cm', Math.min(cm, 215 * r)); el.style.setProperty('--r', r);
+  $('#elevW').textContent = Hooma.num(cm) + ' × ' + Hooma.num(Math.round(cm / r)) + ' ' + Hooma.t('cm');
+}
+$('#elevSize').addEventListener('input', paintElev);
+$('#elevNext').addEventListener('click', () => { elevIx++; paintElev(); });
+
 function render() {
   if (!Hooma.works.length) return;
-  const hw = Hooma.works[heroIx % Hooma.works.length];
-  const hi = $('#heroImg'); if (hi.getAttribute('src') !== hw.img) hi.src = hw.img; hi.alt = Hooma.L(hw.title);
-  $('#heroCap').textContent = Hooma.L(hw.title); heroSize();
-  $('#demoImg').src = (Hooma.works[2] || hw).img; $('#scanDemoImg').src = (Hooma.works[1] || hw).img;
-  $('#salon').innerHTML = Hooma.works.map((w) => `<figure class="hang"><button type="button" class="hang-btn" data-work="${w.id}"><img loading="lazy" width="1000" height="${Math.round(1000 / (w.ratio || 1.5))}" src="${w.img}" alt="${esc(Hooma.L(w.title))}"></button><figcaption><b>${esc(Hooma.L(w.title))}</b><span>${esc(Hooma.by(w))}</span></figcaption></figure>`).join('');
+  paintHero(!heroShown); paintElev();
+  $('#scanDemoImg').src = (Hooma.works[1] || Hooma.works[0]).img;
+  $('#salon').innerHTML = Hooma.works.map((w) => '<figure class="hang"><button type="button" class="hang-btn" data-work="' + w.id + '"><img loading="lazy" width="1000" height="' + Math.round(1000 / (w.ratio || 1.5)) + '" src="' + w.img + '" alt="' + esc(Hooma.L(w.title)) + '"></button><figcaption><b>' + esc(Hooma.L(w.title)) + '</b><span' + (w.available ? '' : ' class="dotted"') + '>' + esc(w.available ? Hooma.L(w.medium) : Hooma.t('sold')) + '</span></figcaption></figure>').join('');
   if (openId) fillWork(Hooma.find(openId));
+  reveal();
+}
+
+/* ---- header, menu, scroll entrances */
+const topBar = $('#top'), menuBtn = $('#menuBtn');
+const onScroll = () => topBar.classList.toggle('solid', scrollY > 24);
+addEventListener('scroll', onScroll, { passive: true }); onScroll();
+const setMenu = (o) => { topBar.classList.toggle('open', o); menuBtn.setAttribute('aria-expanded', String(o)); };
+menuBtn.addEventListener('click', () => setMenu(!topBar.classList.contains('open')));
+$('#nav').addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+let io = null;
+function reveal() {
+  if (still || !('IntersectionObserver' in window)) return;
+  io = io || new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  $$('.sec-head, .terms > div, .elev-grid > *, .scan-grid > *, .salon figure, .steps li, .promise > *, .join-grid > *').forEach((el) => {
+    if (el.classList.contains('rv')) return;
+    if (el.getBoundingClientRect().top < innerHeight) return; // never hide what is already on screen
+    el.classList.add('rv'); io.observe(el);
+  });
 }
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 Hooma.esc = esc;
-$('#heroNext').addEventListener('click', () => { heroIx++; const i = $('#heroImg'); i.style.animation = 'none'; void i.offsetWidth; i.style.animation = ''; render(); });
-$('#heroOpen').addEventListener('click', () => Hooma.openWork(Hooma.works[heroIx % Hooma.works.length].id));
 
 /* ---- overlays */
 let openId = null, lastFocus = null;
@@ -104,10 +162,12 @@ const form = $('#joinForm');
 Hooma.sendOwnWork = (file) => {
   hideAll(true); form.role.value = 'artist'; roleChanged();
   let ok = false; try { const d = new DataTransfer(); d.items.add(file); form.image.files = d.files; ok = form.image.files.length === 1; } catch {}
-  const note = $('#formNote'); note.textContent = ok ? Hooma.t('attached') : ''; note.hidden = !ok;
+  const note = $('#formNote'); note.textContent = ok ? Hooma.t('attached') : ''; note.hidden = !ok; pickedChanged();
   $('#join').scrollIntoView(); form.name.focus({ preventScroll: true });
 };
 function roleChanged() { $('#fileRow').hidden = form.role.value !== 'artist'; }
+function pickedChanged() { const f = form.image.files[0]; $('#pickedName').textContent = f ? f.name : ''; }
+form.image.addEventListener('change', pickedChanged);
 form.addEventListener('change', (e) => { if (e.target.name === 'role') roleChanged(); });
 function shrink(file, max = 1600) {
   return new Promise((ok, bad) => {
@@ -130,7 +190,7 @@ form.addEventListener('submit', async (e) => {
     const data = { role: f.role.value, name: f.name.value, phone: f.phone.value, city: f.city.value, link: f.link.value, message: f.message.value, work: f.work.value, website: f.website.value, lang: Hooma.lang };
     if (f.role.value === 'artist' && f.image.files[0]) { try { data.image = await shrink(f.image.files[0]); } catch {} }
     const r = await fetch('/api/submit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-    if (r.ok) { f.reset(); roleChanged(); $('#formNote').hidden = true; say('sent', 'ok'); }
+    if (r.ok) { f.reset(); roleChanged(); pickedChanged(); $('#formNote').hidden = true; say('sent', 'ok'); }
     else say(r.status === 429 ? 'rate' : r.status === 413 ? 'big' : r.status === 400 ? 'missing' : 'failed', 'bad');
   } catch { say('failed', 'bad'); }
   btn.disabled = false;
