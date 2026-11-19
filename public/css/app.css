@@ -203,3 +203,4 @@ dt{color:var(--mist)}
 .faq details p{padding-bottom:14px;font-size:.96rem;color:#2A3050}
 .chip.send{border-color:var(--saffron);color:var(--saffron)}
 .form-note{font-size:.9rem;color:var(--ok);font-weight:600}
+section{scroll-margin-top:60px}

@@ -134,7 +134,7 @@ function route() {
   const p = location.pathname; let m;
   if ((m = /^\/w\/([a-z0-9-]+)/.exec(p))) return Hooma.openWork(m[1], true);
   hideAll(false);
-  if (p === '/wall') Hooma.openWall(); else if (p === '/scan') Hooma.openScan(); else if (p === '/join') $('#join').scrollIntoView(); else if (p === '/artists') $('#artists').scrollIntoView();
+  if (p === '/wall') Hooma.openWall(); else if (p === '/scan') Hooma.openScan(); else if (p === '/join' || p === '/artists') $('#' + p.slice(1)).scrollIntoView({ behavior: 'instant' });
 }
 Hooma.ready = fetch('/api/works').then((r) => r.json()).then((w) => { Hooma.works = w; }).catch(() => { Hooma.works = []; });
 document.addEventListener('DOMContentLoaded', async () => {
