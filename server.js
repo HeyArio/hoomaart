@@ -15,6 +15,7 @@ fs.mkdirSync(UP, { recursive: true });
 
 const WORKS = path.join(DATA, 'works.json');
 const SUBS = path.join(DATA, 'submissions.jsonl');
+const ARTISTS = path.join(DATA, 'artists.json');
 if (!fs.existsSync(WORKS)) fs.copyFileSync(path.join(__dirname, 'data-seed', 'works.json'), WORKS);
 const SECRET_FILE = path.join(DATA, 'secret');
 if (!fs.existsSync(SECRET_FILE)) fs.writeFileSync(SECRET_FILE, crypto.randomBytes(32).toString('hex'), { mode: 0o600 });
@@ -26,6 +27,8 @@ const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=u
 
 const readWorks = () => JSON.parse(fs.readFileSync(WORKS, 'utf8'));
 const writeWorks = (w) => { fs.writeFileSync(WORKS + '.tmp', JSON.stringify(w, null, 2)); fs.renameSync(WORKS + '.tmp', WORKS); };
+const readArtists = () => (fs.existsSync(ARTISTS) ? JSON.parse(fs.readFileSync(ARTISTS, 'utf8')) : []);
+const writeArtists = (a) => { fs.writeFileSync(ARTISTS + '.tmp', JSON.stringify(a, null, 2)); fs.renameSync(ARTISTS + '.tmp', ARTISTS); };
 const readSubs = () => fs.existsSync(SUBS) ? fs.readFileSync(SUBS, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [];
 const writeSubs = (a) => fs.writeFileSync(SUBS, a.map((x) => JSON.stringify(x)).join('\n') + (a.length ? '\n' : ''));
 
@@ -80,12 +83,23 @@ function saveImage(dataUrl, maxBytes) {
 }
 const slug = (s) => str(s, 60).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const ROLES = ['artist', 'space', 'sponsor', 'collector', 'viewing', 'other'];
+const CATS = ['painting', 'photography', 'print', 'sculpture', 'calligraphy', 'other'];
+const catOf = (w) => (CATS.includes(w.category) ? w.category : /photo/i.test((w.medium && w.medium.en) || '') ? 'photography' : 'other');
+const full = (w) => ({ ...w, category: catOf(w), artistId: w.artistId || '' });
+// Prices are private: the public catalogue never carries them.
+const pub = (w) => { const { price, ...rest } = full(w); return rest; };
+const two = (o, max) => ({ fa: str(o && o.fa, max), en: str(o && o.en, max) });
+function cleanArtist(b, prev) {
+  const a = { id: prev ? prev.id : '', name: two(b.name, 120), city: two(b.city, 80), bio: two(b.bio, 3000), link: str(b.link, 300), img: prev ? prev.img : '' };
+  if (b.image) { const p = saveImage(b.image, 6e6); if (p) a.img = p; }
+  return a;
+}
 
 function cleanWork(b, prev) {
-  const two = (o, max) => ({ fa: str(o && o.fa, max), en: str(o && o.en, max) });
   const w = { id: prev ? prev.id : '', title: two(b.title, 120), artist: two(b.artist, 120), medium: two(b.medium, 160), story: two(b.story, 2000),
     year: str(b.year, 12), w: Math.max(0, Math.min(1000, +b.w || 0)), h: Math.max(0, Math.min(1000, +b.h || 0)), price: two(b.price, 80),
-    available: b.available !== false, img: prev ? prev.img : '', ratio: prev ? prev.ratio : 1.5 };
+    available: b.available !== false, img: prev ? prev.img : '', ratio: prev ? prev.ratio : 1.5,
+    category: CATS.includes(b.category) ? b.category : 'other', artistId: str(b.artistId, 60), edition: two(b.edition, 120), frame: two(b.frame, 160) };
   if (b.image) { const p = saveImage(b.image, 6e6); if (p) w.img = p; }
   if (+b.ratio > 0.2 && +b.ratio < 5) w.ratio = +b.ratio;
   return w;
@@ -96,7 +110,8 @@ const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, 'http://x'); const p = decodeURIComponent(url.pathname);
 
     if (p.startsWith('/api/')) {
-      if (req.method === 'GET' && p === '/api/works') return send(res, 200, readWorks(), { 'Cache-Control': 'no-cache' });
+      if (req.method === 'GET' && p === '/api/works') return send(res, 200, readWorks().map(pub), { 'Cache-Control': 'no-cache' });
+      if (req.method === 'GET' && p === '/api/artists') return send(res, 200, readArtists(), { 'Cache-Control': 'no-cache' });
 
       if (req.method === 'POST' && p === '/api/submit') {
         if (limited('s' + ip(req), 8, 3600e3)) return send(res, 429, { error: 'rate' });
@@ -121,7 +136,21 @@ const server = http.createServer(async (req, res) => {
         if (!authed(req)) return send(res, 401, { error: 'auth' });
         if (req.method === 'POST' && p === '/api/admin/logout') return send(res, 200, { ok: true }, { 'Set-Cookie': 'hooma_admin=; Path=/; Max-Age=0' });
         if (req.method === 'GET' && p === '/api/admin/submissions') return send(res, 200, readSubs().reverse(), { 'Cache-Control': 'no-store' });
+        if (req.method === 'GET' && p === '/api/admin/works') return send(res, 200, readWorks().map(full), { 'Cache-Control': 'no-store' });
         let m;
+        if (req.method === 'POST' && p === '/api/admin/artists') {
+          const b = await body(req, 9e6); const all = readArtists(); const a = cleanArtist(b);
+          if (!a.name.fa && !a.name.en) return send(res, 400, { error: 'name' });
+          let id = slug(a.name.en) || 'artist'; let n = 2; const base = id; while (all.some((x) => x.id === id)) id = base + '-' + n++;
+          a.id = id; all.push(a); writeArtists(all); return send(res, 200, a);
+        }
+        if ((m = /^\/api\/admin\/artists\/([a-z0-9-]+)$/.exec(p))) {
+          const all = readArtists(); const i = all.findIndex((x) => x.id === m[1]); if (i < 0) return send(res, 404, { error: 'nf' });
+          if (req.method === 'DELETE') all.splice(i, 1);
+          else if (req.method === 'PUT') all[i] = cleanArtist(await body(req, 9e6), all[i]);
+          else return send(res, 405, { error: 'method' });
+          writeArtists(all); return send(res, 200, { ok: true });
+        }
         if ((m = /^\/api\/admin\/submissions\/([a-f0-9]+)$/.exec(p))) {
           const all = readSubs(); const i = all.findIndex((x) => x.id === m[1]); if (i < 0) return send(res, 404, { error: 'nf' });
           if (req.method === 'DELETE') all.splice(i, 1);
@@ -150,7 +179,7 @@ const server = http.createServer(async (req, res) => {
     if (p.startsWith('/uploads/')) {
       const f = path.join(UP, path.basename(p)); return serveFile(res, f, 'public, max-age=31536000, immutable');
     }
-    if (p === '/' || p.startsWith('/w/') || ['/wall', '/scan', '/join', '/artists'].includes(p)) return serveFile(res, path.join(PUB, 'index.html'), 'no-cache');
+    if (p === '/' || p.startsWith('/w/') || p.startsWith('/a/') || ['/wall', '/scan', '/join', '/artists'].includes(p)) return serveFile(res, path.join(PUB, 'index.html'), 'no-cache');
     if (p === '/admin') return serveFile(res, path.join(PUB, 'admin.html'), 'no-store');
     const f = path.normalize(path.join(PUB, p));
     if (!f.startsWith(PUB + path.sep)) return send(res, 403, 'Forbidden');

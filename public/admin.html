@@ -6,32 +6,43 @@
 <link rel="icon" href="/img/mark.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/css/app.css">
 <style>
-body{background:var(--paper)}
+html,body{background:var(--paper);color:var(--ink)}
 .adm{max-width:1100px;margin:0 auto;padding:24px var(--gut) 80px}
 .adm h1{font-size:2.4rem;margin-bottom:.4em}
+.adm form{grid-column:auto;gap:16px}
+.adm .f>span{color:var(--mist);font-size:.875rem}
+.adm .f input:not([type=file]),.adm .f textarea,.adm .f select{width:100%;min-height:46px;padding:9px 12px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);font:inherit;font-size:1rem}
+.adm .f input:focus,.adm .f textarea:focus,.adm .f select:focus{border-color:var(--ink);outline:none}
+.adm .f input[type=file]{position:static;opacity:1;width:auto;height:auto;color:var(--ink);font-size:.875rem;padding:8px 0}
+.adm .btn.primary{background:var(--ink);border-color:var(--ink);color:#fff}
+.adm .btn.primary:hover{background:#2c2c2e;border-color:#2c2c2e;color:#fff}
+.adm .form-msg{color:var(--ink)}.adm .form-msg.bad{color:var(--bad)}
 .tabs{display:flex;gap:8px;margin:18px 0 24px;flex-wrap:wrap}
-.tabs button{min-height:44px;padding:6px 20px;border-radius:999px;border:1.5px solid var(--ink);background:none;cursor:pointer}
+.tabs button{min-height:44px;padding:6px 20px;border-radius:999px;border:1px solid var(--ink);background:none;cursor:pointer}
 .tabs button[aria-selected=true]{background:var(--ink);color:#fff}
-.card{background:#fff;border:1px solid var(--line);padding:16px 18px;margin-bottom:12px;display:grid;gap:6px}
+.card{background:#fff;border:1px solid var(--line);border-radius:6px;padding:16px 18px;margin-bottom:12px;display:grid;gap:6px}
 .card header{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between}
 .card b{font-size:1.1rem}.card small{color:var(--mist)}
 .tag{font-size:.8rem;padding:2px 10px;border-radius:999px;background:var(--wall-2)}
-.tag.new{background:var(--saffron)}
+.tag.new{background:var(--ink);color:#fff}
 .card p{white-space:pre-wrap;max-width:none}
 .card img.thumb{max-height:150px;width:auto;border:1px solid var(--line)}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.row button,.row select,.row a{min-height:40px;padding:4px 14px;border:1.5px solid var(--line);background:#fff;border-radius:2px;cursor:pointer;text-decoration:none;color:var(--ink);font-size:.9rem}
+.row button,.row select,.row a{min-height:40px;padding:4px 14px;border:1px solid var(--line);background:#fff;border-radius:4px;cursor:pointer;text-decoration:none;color:var(--ink);font-size:.9rem}
 .row .danger{color:var(--bad);border-color:var(--bad)}
 .wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
 .wgrid .card img{width:100%;aspect-ratio:3/2;object-fit:cover}
-form.edit{grid-template-columns:1fr 1fr}
+.wgrid .card img.face{aspect-ratio:1;filter:grayscale(1)}
+form.edit{grid-template-columns:1fr 1fr;background:#fff;border:1px solid var(--line);border-radius:6px;padding:20px;margin-bottom:20px}
 form.edit .wide{grid-column:1/-1}
+form.edit h2{font-size:1.6rem}
+.fnote{font-size:.8125rem;color:var(--mist);max-width:none;display:block}
 @media(max-width:640px){form.edit{grid-template-columns:1fr}}
 .empty{color:var(--mist);padding:30px 0}
 @media print{body *{visibility:hidden}#labels,#labels *{visibility:visible}#labels{position:absolute;inset:0;display:grid!important;grid-template-columns:1fr 1fr;gap:10mm;padding:10mm}}
 #labels{display:none}
-.label{border:1px solid #999;padding:6mm;display:grid;grid-template-columns:32mm 1fr;gap:5mm;align-items:center;break-inside:avoid;font-family:var(--body)}
-.label svg{width:32mm;height:32mm}.label b{font-family:var(--display);font-size:16pt;display:block;line-height:1.3}.label span{font-size:9pt;color:#444}
+.qr{border:1px solid #999;padding:6mm;display:grid;grid-template-columns:32mm 1fr;gap:5mm;align-items:center;break-inside:avoid;font-family:var(--body);color:#111}
+.qr svg{width:32mm;height:32mm}.qr b{font-family:var(--display);font-size:16pt;display:block;line-height:1.3}.qr span{font-size:9pt;color:#444}
 </style>
 </head>
 <body>
@@ -45,29 +56,56 @@ form.edit .wide{grid-column:1/-1}
     <div class="tabs" role="tablist">
       <button role="tab" data-tab="subs" aria-selected="true">درخواست‌ها <span id="newCount"></span></button>
       <button role="tab" data-tab="works" aria-selected="false">آثار</button>
+      <button role="tab" data-tab="artists" aria-selected="false">هنرمندان</button>
       <button id="logout" style="margin-inline-start:auto">خروج</button>
     </div>
     <section id="subs"></section>
+
     <section id="works" hidden>
       <div class="row" style="margin-bottom:16px"><button id="addWork" class="btn primary">افزودن اثر</button><button id="printLabels">چاپ نشانه‌های اسکن (QR)</button></div>
       <form class="edit" id="workForm" hidden>
         <label class="f"><span>عنوان (فارسی)</span><input name="title_fa" required></label>
         <label class="f"><span>Title (English)</span><input name="title_en" dir="ltr" required></label>
-        <label class="f"><span>هنرمند (فارسی)</span><input name="artist_fa"></label>
-        <label class="f"><span>Artist (English)</span><input name="artist_en" dir="ltr"></label>
+        <label class="f"><span>هنرمند</span><select name="artistId"></select></label>
+        <label class="f"><span>دسته</span><select name="category">
+          <option value="painting">نقاشی</option><option value="photography">عکاسی</option><option value="print">چاپ دستی</option>
+          <option value="sculpture">مجسمه</option><option value="calligraphy">خوشنویسی</option><option value="other">دیگر</option></select></label>
         <label class="f"><span>تکنیک (فارسی)</span><input name="medium_fa"></label>
         <label class="f"><span>Medium (English)</span><input name="medium_en" dir="ltr"></label>
         <label class="f"><span>سال</span><input name="year" dir="ltr"></label>
-        <label class="f"><span>قیمت (خالی = با درخواست)</span><input name="price_fa"></label>
+        <label class="f"><span>وضعیت</span><select name="available"><option value="1">موجود</option><option value="0">فروخته‌شده</option></select></label>
         <label class="f"><span>عرض (سانتی‌متر)</span><input name="w" type="number" min="0" dir="ltr"></label>
         <label class="f"><span>ارتفاع (سانتی‌متر)</span><input name="h" type="number" min="0" dir="ltr"></label>
+        <label class="f"><span>نسخه (فارسی)، مثلاً «۳ از ۱۰»</span><input name="edition_fa"></label>
+        <label class="f"><span>Edition (English)</span><input name="edition_en" dir="ltr"></label>
+        <label class="f"><span>قاب (فارسی)</span><input name="frame_fa"></label>
+        <label class="f"><span>Framing (English)</span><input name="frame_en" dir="ltr"></label>
+        <label class="f wide"><span>قیمت (خصوصی)</span><input name="price_fa">
+          <span class="fnote">قیمت فقط در همین صفحهٔ مدیریت دیده می‌شود. در سایت همیشه «با درخواست» نوشته می‌شود.</span></label>
         <label class="f wide"><span>داستان اثر (فارسی)</span><textarea name="story_fa" rows="3"></textarea></label>
         <label class="f wide"><span>Story (English)</span><textarea name="story_en" rows="3" dir="ltr"></textarea></label>
-        <label class="f"><span>عکس اثر</span><input name="image" type="file" accept="image/*"></label>
-        <label class="f"><span>وضعیت</span><select name="available" style="min-height:48px"><option value="1">موجود</option><option value="0">فروخته‌شده</option></select></label>
+        <label class="f wide"><span>عکس اثر</span><input name="image" type="file" accept="image/*">
+          <span class="fnote">بزرگ‌ترین و باکیفیت‌ترین فایل را انتخاب کنید. سایت آن را تا ۲۰۰۰ پیکسل کوچک می‌کند.</span></label>
         <div class="row wide"><button class="btn primary" type="submit">ذخیرهٔ اثر</button><button type="button" id="cancelWork">انصراف</button><span class="form-msg" id="workMsg"></span></div>
       </form>
       <div class="wgrid" id="workList"></div>
+    </section>
+
+    <section id="artists" hidden>
+      <div class="row" style="margin-bottom:16px"><button id="addArtist" class="btn primary">افزودن هنرمند</button></div>
+      <form class="edit" id="artistForm" hidden>
+        <label class="f"><span>نام (فارسی)</span><input name="name_fa" required></label>
+        <label class="f"><span>Name (English)</span><input name="name_en" dir="ltr" required></label>
+        <label class="f"><span>شهر (فارسی)</span><input name="city_fa"></label>
+        <label class="f"><span>City (English)</span><input name="city_en" dir="ltr"></label>
+        <label class="f wide"><span>زندگی‌نامه (فارسی)</span><textarea name="bio_fa" rows="4"></textarea></label>
+        <label class="f wide"><span>Biography (English)</span><textarea name="bio_en" rows="4" dir="ltr"></textarea></label>
+        <label class="f"><span>اینستاگرام یا وب‌سایت</span><input name="link" dir="ltr"></label>
+        <label class="f"><span>عکس هنرمند (اختیاری)</span><input name="image" type="file" accept="image/*"></label>
+        <p class="fnote wide">فقط هنرمندانی را اضافه کنید که با انتشار نام و تصویرشان موافقت کرده‌اند. صفحهٔ هنرمند بلافاصله در سایت دیده می‌شود.</p>
+        <div class="row wide"><button class="btn primary" type="submit">ذخیرهٔ هنرمند</button><button type="button" id="cancelArtist">انصراف</button><span class="form-msg" id="artistMsg"></span></div>
+      </form>
+      <div class="wgrid" id="artistList"></div>
     </section>
   </div>
 </div>
@@ -78,12 +116,15 @@ form.edit .wide{grid-column:1/-1}
 const $=(s,r=document)=>r.querySelector(s);const esc=(s)=>String(s??'').replace(/[&<>"]/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const api=async(m,u,b)=>{const r=await fetch(u,{method:m,headers:b?{'Content-Type':'application/json'}:{},body:b?JSON.stringify(b):undefined});if(r.status===401&&u!=='/api/admin/login'){showLogin();throw new Error('auth')}return r};
 const ROLE={artist:'هنرمند',space:'صاحب فضا',sponsor:'حامی',collector:'خریدار',viewing:'بازدید',other:'دیگر'};const ST={new:'تازه',contacted:'تماس گرفته شد',done:'بسته شد'};
-let works=[],editing=null;
+const CAT={painting:'نقاشی',photography:'عکاسی',print:'چاپ دستی',sculpture:'مجسمه',calligraphy:'خوشنویسی',other:'دیگر'};
+let works=[],artists=[],editing=null,editingArtist=null;
+const artistName=(id)=>{const a=artists.find((x)=>x.id===id);return a?(a.name.fa||a.name.en):''};
 function showLogin(){$('#login').hidden=false;$('#app').hidden=true}
 $('#login').addEventListener('submit',async(e)=>{e.preventDefault();const r=await api('POST','/api/admin/login',{password:e.target.password.value});
   if(r.ok){e.target.reset();boot()}else $('#loginMsg').textContent=r.status===429?'چند بار اشتباه وارد شد. یک ربع بعد دوباره امتحان کنید.':'رمز درست نیست.'});
 $('#logout').addEventListener('click',async()=>{await api('POST','/api/admin/logout');showLogin()});
-document.querySelectorAll('[data-tab]').forEach((b)=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach((x)=>x.setAttribute('aria-selected',x===b));$('#subs').hidden=b.dataset.tab!=='subs';$('#works').hidden=b.dataset.tab!=='works'}));
+document.querySelectorAll('[data-tab]').forEach((b)=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach((x)=>x.setAttribute('aria-selected',x===b));for(const t of['subs','works','artists'])$('#'+t).hidden=b.dataset.tab!==t}));
+
 async function loadSubs(){const r=await api('GET','/api/admin/submissions');const a=await r.json();
   $('#newCount').textContent=a.filter((x)=>x.status==='new').length?`(${a.filter((x)=>x.status==='new').length})`:'';
   $('#subs').innerHTML=a.length?a.map((s)=>`<article class="card" data-id="${s.id}"><header><b>${esc(s.name)}</b><span class="row"><span class="tag ${s.status}">${ST[s.status]||s.status}</span><span class="tag">${ROLE[s.role]||s.role}</span><small dir="ltr">${new Date(s.at).toLocaleString('fa-IR')}</small></span></header>
@@ -92,25 +133,48 @@ async function loadSubs(){const r=await api('GET','/api/admin/submissions');cons
    <div class="row"><select data-status>${Object.keys(ST).map((k)=>`<option value="${k}" ${k===s.status?'selected':''}>${ST[k]}</option>`).join('')}</select><button class="danger" data-del>حذف</button></div></article>`).join(''):'<p class="empty">هنوز درخواستی نرسیده است. هر فرمی که در سایت پر شود اینجا دیده می‌شود.</p>'}
 $('#subs').addEventListener('change',async(e)=>{if(!e.target.matches('[data-status]'))return;await api('PUT','/api/admin/submissions/'+e.target.closest('[data-id]').dataset.id,{status:e.target.value});loadSubs()});
 $('#subs').addEventListener('click',async(e)=>{if(!e.target.matches('[data-del]'))return;if(!confirm('این درخواست حذف شود؟'))return;await api('DELETE','/api/admin/submissions/'+e.target.closest('[data-id]').dataset.id);loadSubs()});
-async function loadWorks(){works=await (await fetch('/api/works')).json();
-  $('#workList').innerHTML=works.map((w)=>`<article class="card" data-id="${w.id}"><img src="${esc(w.img)}" alt=""><b>${esc(w.title.fa||w.title.en)}</b><small>${esc(w.artist.fa||'بدون نام هنرمند')}${w.w?` · ${w.w}×${w.h} cm`:''}</small><div class="row"><button data-edit>ویرایش</button><a href="/w/${w.id}" target="_blank">صفحه</a><button class="danger" data-delw>حذف</button></div></article>`).join('')||'<p class="empty">اثری ثبت نشده است.</p>'}
+
+function readImage(file,max=2000){return new Promise((ok,bad)=>{const i=new Image(),u=URL.createObjectURL(file);i.onload=()=>{const k=Math.min(1,max/Math.max(i.naturalWidth,i.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(i.naturalWidth*k);c.height=Math.round(i.naturalHeight*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);ok({data:c.toDataURL('image/jpeg',.9),ratio:c.width/c.height})};i.onerror=bad;i.src=u})}
+
+/* works */
+async function loadWorks(){works=await (await api('GET','/api/admin/works')).json();
+  $('#workList').innerHTML=works.map((w)=>`<article class="card" data-id="${w.id}"><img src="${esc(w.img)}" alt=""><b>${esc(w.title.fa||w.title.en)}</b><small>${esc(artistName(w.artistId)||w.artist.fa||'بدون هنرمند')} · ${CAT[w.category]||''}${w.w?` · ${w.w}×${w.h} cm`:''}</small><small>قیمت: ${esc(w.price?.fa||'ثبت نشده')}${w.available?'':' · فروخته‌شده'}</small><div class="row"><button data-edit>ویرایش</button><a href="/w/${w.id}" target="_blank">صفحه</a><button class="danger" data-delw>حذف</button></div></article>`).join('')||'<p class="empty">اثری ثبت نشده است.</p>'}
 const wf=$('#workForm');
 function openForm(w){editing=w?w.id:null;wf.hidden=false;wf.reset();$('#workMsg').textContent='';
-  if(w){for(const k of['title','artist','medium','story'])for(const l of['fa','en'])if(wf[k+'_'+l])wf[k+'_'+l].value=w[k]?.[l]||'';wf.price_fa.value=w.price?.fa||'';wf.year.value=w.year||'';wf.w.value=w.w||'';wf.h.value=w.h||'';wf.available.value=w.available?'1':'0'}
+  wf.artistId.innerHTML='<option value="">بدون هنرمند (مجموعهٔ هوما آرت)</option>'+artists.map((a)=>`<option value="${a.id}">${esc(a.name.fa||a.name.en)}</option>`).join('');
+  if(w){for(const k of['title','medium','story','edition','frame'])for(const l of['fa','en'])if(wf[k+'_'+l])wf[k+'_'+l].value=w[k]?.[l]||'';wf.price_fa.value=w.price?.fa||'';wf.year.value=w.year||'';wf.w.value=w.w||'';wf.h.value=w.h||'';wf.available.value=w.available?'1':'0';wf.category.value=w.category||'other';wf.artistId.value=w.artistId||''}
   wf.scrollIntoView({behavior:'smooth'})}
 $('#addWork').addEventListener('click',()=>openForm(null));$('#cancelWork').addEventListener('click',()=>{wf.hidden=true});
 $('#workList').addEventListener('click',async(e)=>{const c=e.target.closest('[data-id]');if(!c)return;const w=works.find((x)=>x.id===c.dataset.id);
   if(e.target.matches('[data-edit]'))openForm(w);
   if(e.target.matches('[data-delw]')&&confirm(`«${w.title.fa||w.title.en}» حذف شود؟`)){await api('DELETE','/api/admin/works/'+w.id);loadWorks()}});
-function readImage(file,max=2000){return new Promise((ok,bad)=>{const i=new Image(),u=URL.createObjectURL(file);i.onload=()=>{const k=Math.min(1,max/Math.max(i.naturalWidth,i.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(i.naturalWidth*k);c.height=Math.round(i.naturalHeight*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);ok({data:c.toDataURL('image/jpeg',.88),ratio:c.width/c.height})};i.onerror=bad;i.src=u})}
 wf.addEventListener('submit',async(e)=>{e.preventDefault();const two=(k)=>({fa:wf[k+'_fa'].value,en:wf[k+'_en']?wf[k+'_en'].value:''});
-  const b={title:two('title'),artist:two('artist'),medium:two('medium'),story:two('story'),price:{fa:wf.price_fa.value,en:wf.price_fa.value},year:wf.year.value,w:+wf.w.value||0,h:+wf.h.value||0,available:wf.available.value==='1'};
+  const prev=works.find((x)=>x.id===editing);
+  const b={title:two('title'),artist:prev?prev.artist:{fa:'',en:''},medium:two('medium'),story:two('story'),edition:two('edition'),frame:two('frame'),price:{fa:wf.price_fa.value,en:wf.price_fa.value},year:wf.year.value,w:+wf.w.value||0,h:+wf.h.value||0,available:wf.available.value==='1',category:wf.category.value,artistId:wf.artistId.value};
   if(wf.image.files[0]){const im=await readImage(wf.image.files[0]);b.image=im.data;b.ratio=im.ratio}
   if(!editing&&!b.image){$('#workMsg').textContent='عکس اثر را انتخاب کنید.';return}
   $('#workMsg').textContent='در حال ذخیره…';const r=await api(editing?'PUT':'POST','/api/admin/works'+(editing?'/'+editing:''),b);
   if(r.ok){wf.hidden=true;loadWorks()}else $('#workMsg').textContent='ذخیره نشد. عکس کوچک‌تری انتخاب کنید و دوباره امتحان کنید.'});
-$('#printLabels').addEventListener('click',()=>{$('#labels').innerHTML=works.map((w)=>{const q=qrcode(0,'M');q.addData(location.origin+'/w/'+w.id);q.make();return `<div class="label">${q.createSvgTag({scalable:true,margin:0})}<div><b>${esc(w.title.fa||w.title.en)}</b><span>${esc(w.artist.fa||'هوما آرت')}</span><br><span dir="ltr">hoomaart.ir/w/${w.id}</span></div></div>`}).join('');window.print()});
-async function boot(){try{const r=await fetch('/api/admin/submissions');if(r.status===401)return showLogin();$('#login').hidden=true;$('#app').hidden=false;loadSubs();loadWorks()}catch{showLogin()}}
+$('#printLabels').addEventListener('click',()=>{$('#labels').innerHTML=works.map((w)=>{const q=qrcode(0,'M');q.addData(location.origin+'/w/'+w.id);q.make();return `<div class="qr">${q.createSvgTag({scalable:true,margin:0})}<div><b>${esc(w.title.fa||w.title.en)}</b><span>${esc(artistName(w.artistId)||w.artist.fa||'هوما آرت')}</span><br><span dir="ltr">hoomaart.ir/w/${w.id}</span></div></div>`}).join('');window.print()});
+
+/* artists */
+async function loadArtists(){artists=await (await api('GET','/api/artists')).json();
+  $('#artistList').innerHTML=artists.map((a)=>`<article class="card" data-id="${a.id}">${a.img?`<img class="face" src="${esc(a.img)}" alt="">`:''}<b>${esc(a.name.fa||a.name.en)}</b><small>${esc(a.city?.fa||'')} · ${works.filter((w)=>w.artistId===a.id).length} اثر</small><div class="row"><button data-edit>ویرایش</button><a href="/a/${a.id}" target="_blank">صفحه</a><button class="danger" data-dela>حذف</button></div></article>`).join('')||'<p class="empty">هنوز هنرمندی ثبت نشده است. بعد از افزودن هنرمند، می‌توانید در فرم هر اثر او را انتخاب کنید.</p>'}
+const af=$('#artistForm');
+function openArtist(a){editingArtist=a?a.id:null;af.hidden=false;af.reset();$('#artistMsg').textContent='';
+  if(a){for(const k of['name','city','bio'])for(const l of['fa','en'])af[k+'_'+l].value=a[k]?.[l]||'';af.link.value=a.link||''}
+  af.scrollIntoView({behavior:'smooth'})}
+$('#addArtist').addEventListener('click',()=>openArtist(null));$('#cancelArtist').addEventListener('click',()=>{af.hidden=true});
+$('#artistList').addEventListener('click',async(e)=>{const c=e.target.closest('[data-id]');if(!c)return;const a=artists.find((x)=>x.id===c.dataset.id);
+  if(e.target.matches('[data-edit]'))openArtist(a);
+  if(e.target.matches('[data-dela]')&&confirm(`«${a.name.fa||a.name.en}» حذف شود؟ آثار او باقی می‌مانند و بدون هنرمند نمایش داده می‌شوند.`)){await api('DELETE','/api/admin/artists/'+a.id);await loadArtists();loadWorks()}});
+af.addEventListener('submit',async(e)=>{e.preventDefault();const two=(k)=>({fa:af[k+'_fa'].value,en:af[k+'_en'].value});
+  const b={name:two('name'),city:two('city'),bio:two('bio'),link:af.link.value};
+  if(af.image.files[0]){const im=await readImage(af.image.files[0],1400);b.image=im.data}
+  $('#artistMsg').textContent='در حال ذخیره…';const r=await api(editingArtist?'PUT':'POST','/api/admin/artists'+(editingArtist?'/'+editingArtist:''),b);
+  if(r.ok){af.hidden=true;await loadArtists();loadWorks()}else $('#artistMsg').textContent='ذخیره نشد. نام را وارد کنید یا عکس کوچک‌تری انتخاب کنید.'});
+
+async function boot(){try{const r=await fetch('/api/admin/submissions');if(r.status===401)return showLogin();$('#login').hidden=true;$('#app').hidden=false;loadSubs();await loadWorks();await loadArtists();loadWorks()}catch{showLogin()}}
 boot();
 </script>
 </body>

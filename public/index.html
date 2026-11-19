@@ -109,9 +109,17 @@
   <div class="wrap">
     <div class="sec-head">
       <h2><span class="fa">مجموعهٔ نخست</span><span class="en">The first collection</span></h2>
-      <p class="sub"><span class="fa">هفت عکس از عکاس هوما آرت. هر اثر را باز کنید یا روی دیوار خودتان ببینید.</span><span class="en">Seven photographs by Hooma Art's photographer. Open any work, or see it on your own wall.</span></p>
+      <p class="sub"><span class="fa">هر اثر را باز کنید یا روی دیوار خودتان ببینید. قیمت هر اثر با درخواست شما اعلام می‌شود.</span><span class="en">Open any work, or see it on your own wall. Prices are shared on request.</span></p>
+    </div>
+    <div class="browse" id="browse">
+      <label class="find"><span class="sr"><span class="fa">جست‌وجو</span><span class="en">Search</span></span><input id="fQ" type="search" autocomplete="off"></label>
+      <div class="cats" id="fCats" role="group"></div>
+      <select id="fArtist" hidden></select>
+      <label class="tick"><input id="fAvail" type="checkbox"><span><span class="fa">فقط آثار موجود</span><span class="en">Available only</span></span></label>
+      <span class="count num" id="fCount" aria-live="polite"></span>
     </div>
     <div class="salon" id="salon"></div>
+    <p class="none" id="fNone" hidden><span class="fa">اثری با این مشخصات پیدا نشد.</span><span class="en">No work matches these filters.</span> <button type="button" class="link" id="fReset"><span class="fa">پاک کردن فیلترها</span><span class="en">Clear filters</span></button></p>
   </div>
 </section>
 
@@ -199,7 +207,7 @@
     <figure class="hang"><img id="wImg" alt=""></figure>
     <div class="work-info">
       <h2 id="wTitle"></h2>
-      <p class="by" id="wBy"></p>
+      <p class="by"><button type="button" class="link" id="wBy"></button></p>
       <dl id="wMeta"></dl>
       <p id="wStory"></p>
       <div class="actions col">
@@ -208,6 +216,20 @@
         <a class="btn wa" id="wWa" target="_blank" rel="noopener"><span class="fa">پرسش در واتس‌اپ</span><span class="en">Ask on WhatsApp</span></a>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- artist page -->
+<div class="sheet" id="artistSheet" hidden role="dialog" aria-modal="true" aria-labelledby="aName">
+  <button class="x" type="button" data-close aria-label="Close">×</button>
+  <div class="artist">
+    <div class="artist-head">
+      <img id="aImg" alt="" hidden>
+      <div><h2 id="aName"></h2><p class="by" id="aCity"></p><p id="aBio"></p>
+        <div class="actions"><button class="btn primary" type="button" id="aAsk"><span class="fa">دربارهٔ آثار این هنرمند می‌پرسم</span><span class="en">Ask about this artist's works</span></button></div>
+      </div>
+    </div>
+    <div class="salon small" id="aWorks"></div>
   </div>
 </div>
 
