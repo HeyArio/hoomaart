@@ -150,7 +150,7 @@ const server = http.createServer(async (req, res) => {
     if (p.startsWith('/uploads/')) {
       const f = path.join(UP, path.basename(p)); return serveFile(res, f, 'public, max-age=31536000, immutable');
     }
-    if (p === '/' || p.startsWith('/w/') || ['/wall', '/scan', '/join'].includes(p)) return serveFile(res, path.join(PUB, 'index.html'), 'no-cache');
+    if (p === '/' || p.startsWith('/w/') || ['/wall', '/scan', '/join', '/artists'].includes(p)) return serveFile(res, path.join(PUB, 'index.html'), 'no-cache');
     if (p === '/admin') return serveFile(res, path.join(PUB, 'admin.html'), 'no-store');
     const f = path.normalize(path.join(PUB, p));
     if (!f.startsWith(PUB + path.sep)) return send(res, 403, 'Forbidden');

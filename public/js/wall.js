@@ -24,15 +24,17 @@
     size.value = S.cm; buildStrip(); layout();
   }
   function setOwn(file) {
-    if (S.own) URL.revokeObjectURL(S.own); S.own = URL.createObjectURL(file); S.id = 'own'; S.src = S.own; S.title = t('own');
+    if (S.own) URL.revokeObjectURL(S.own); S.own = URL.createObjectURL(file); S.ownFile = file; S.id = 'own'; S.src = S.own; S.title = t('own');
     artImg.onload = () => { S.ratio = artImg.naturalWidth / artImg.naturalHeight; layout(); }; artImg.src = S.own; buildStrip();
   }
   function buildStrip() {
     strip.innerHTML = `<button type="button" class="own" data-pick="own" aria-pressed="${S.id === 'own'}">${S.own ? `<img src="${S.own}" alt="">` : '+ ' + Hooma.esc(t('own'))}</button>` +
       Hooma.works.map((w) => `<button type="button" data-pick="${w.id}" aria-pressed="${S.id === w.id}" aria-label="${Hooma.esc(Hooma.L(w.title))}"><img src="${w.img}" alt=""></button>`).join('');
     if (S.own) strip.firstChild.classList.remove('own');
+    $('#wallSend').hidden = S.id !== 'own';
   }
   strip.addEventListener('click', (e) => { const b = e.target.closest('[data-pick]'); if (!b) return; if (b.dataset.pick === 'own') { if (S.own && S.id !== 'own') { S.id = 'own'; S.src = S.own; artImg.src = S.own; buildStrip(); } else ownIn.click(); } else setWork(b.dataset.pick); });
+  $('#wallSend').addEventListener('click', () => { if (S.ownFile) Hooma.sendOwnWork(S.ownFile); });
   ownIn.addEventListener('change', () => { if (ownIn.files[0]) setOwn(ownIn.files[0]); ownIn.value = ''; });
   size.addEventListener('input', () => { S.cm = +size.value; layout(); });
 

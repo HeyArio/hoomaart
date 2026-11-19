@@ -7,10 +7,10 @@ const Hooma = window.Hooma = {
   works: [], lang: 'fa', ready: null,
   T: {
     fa: { collection: 'مجموعهٔ هوما آرت', medium: 'تکنیک', year: 'سال', size: 'ابعاد', price: 'قیمت', status: 'وضعیت', avail: 'موجود', sold: 'فروخته‌شده', onreq: 'با درخواست', cm: 'سانتی‌متر',
-      sending: 'در حال ارسال…', sent: 'درخواست شما ثبت شد. به‌زودی با شما تماس می‌گیریم.', missing: 'نام و شمارهٔ تماس را وارد کنید.', failed: 'ارسال نشد. اتصال اینترنت را بررسی کنید و دوباره بفرستید.', rate: 'چند درخواست پشت سر هم فرستاده‌اید. کمی بعد دوباره امتحان کنید.', big: 'حجم عکس زیاد است. عکس کوچک‌تری انتخاب کنید.',
+      attached: 'عکس اثرتان پیوست شد. نام و شمارهٔ تماس را بنویسید و بفرستید.', sending: 'در حال ارسال…', sent: 'درخواست شما ثبت شد. به‌زودی با شما تماس می‌گیریم.', missing: 'نام و شمارهٔ تماس را وارد کنید.', failed: 'ارسال نشد. اتصال اینترنت را بررسی کنید و دوباره بفرستید.', rate: 'چند درخواست پشت سر هم فرستاده‌اید. کمی بعد دوباره امتحان کنید.', big: 'حجم عکس زیاد است. عکس کوچک‌تری انتخاب کنید.',
       askWork: (t) => `درخواست بازدید خصوصی برای اثر «${t}»`, waWork: (t, u) => `سلام، دربارهٔ اثر «${t}» در هوما آرت سؤال دارم.\n${u}`, waHello: 'سلام، از سایت هوما آرت پیام می‌دهم.' },
     en: { collection: 'Hooma Art collection', medium: 'Medium', year: 'Year', size: 'Size', price: 'Price', status: 'Status', avail: 'Available', sold: 'Sold', onreq: 'On request', cm: 'cm',
-      sending: 'Sending…', sent: 'Your request is saved. We will call you soon.', missing: 'Enter your name and phone number.', failed: "It didn't send. Check your connection and send it again.", rate: 'You sent several requests in a row. Try again a little later.', big: 'That photo is too large. Choose a smaller one.',
+      attached: 'Your photo is attached. Add your name and phone number and send it.', sending: 'Sending…', sent: 'Your request is saved. We will call you soon.', missing: 'Enter your name and phone number.', failed: "It didn't send. Check your connection and send it again.", rate: 'You sent several requests in a row. Try again a little later.', big: 'That photo is too large. Choose a smaller one.',
       askWork: (t) => `Private viewing request for "${t}"`, waWork: (t, u) => `Hello, I have a question about "${t}" at Hooma Art.\n${u}`, waHello: 'Hello, I am writing from the Hooma Art website.' },
   },
   t(k, ...a) { const v = this.T[this.lang][k]; return typeof v === 'function' ? v(...a) : v; },
@@ -37,7 +37,7 @@ function render() {
   const hi = $('#heroImg'); if (hi.getAttribute('src') !== hw.img) hi.src = hw.img; hi.alt = Hooma.L(hw.title);
   $('#heroCap').textContent = Hooma.L(hw.title) + (Hooma.lang === 'fa' ? '، ' : ', ') + Hooma.by(hw);
   $('#demoImg').src = (Hooma.works[2] || hw).img; $('#scanDemoImg').src = (Hooma.works[1] || hw).img;
-  $('#salon').innerHTML = Hooma.works.map((w) => `<figure class="hang"><button type="button" class="hang-btn" data-work="${w.id}"><img loading="lazy" src="${w.img}" alt="${esc(Hooma.L(w.title))}"></button><figcaption><b>${esc(Hooma.L(w.title))}</b><span>${esc(Hooma.by(w))}</span></figcaption></figure>`).join('');
+  $('#salon').innerHTML = Hooma.works.map((w) => `<figure class="hang"><button type="button" class="hang-btn" data-work="${w.id}"><img loading="lazy" width="1000" height="${Math.round(1000 / (w.ratio || 1.5))}" src="${w.img}" alt="${esc(Hooma.L(w.title))}"></button><figcaption><b>${esc(Hooma.L(w.title))}</b><span>${esc(Hooma.by(w))}</span></figcaption></figure>`).join('');
   if (openId) fillWork(Hooma.find(openId));
 }
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -93,6 +93,13 @@ $('#wAsk').addEventListener('click', () => {
 
 /* ---- form */
 const form = $('#joinForm');
+// Carry a photo from the wall tool into the artist request. Nothing is uploaded until the visitor presses send.
+Hooma.sendOwnWork = (file) => {
+  hideAll(true); form.role.value = 'artist'; roleChanged();
+  let ok = false; try { const d = new DataTransfer(); d.items.add(file); form.image.files = d.files; ok = form.image.files.length === 1; } catch {}
+  const note = $('#formNote'); note.textContent = ok ? Hooma.t('attached') : ''; note.hidden = !ok;
+  $('#join').scrollIntoView(); form.name.focus({ preventScroll: true });
+};
 function roleChanged() { $('#fileRow').hidden = form.role.value !== 'artist'; }
 form.addEventListener('change', (e) => { if (e.target.name === 'role') roleChanged(); });
 function shrink(file, max = 1600) {
@@ -116,7 +123,7 @@ form.addEventListener('submit', async (e) => {
     const data = { role: f.role.value, name: f.name.value, phone: f.phone.value, city: f.city.value, link: f.link.value, message: f.message.value, work: f.work.value, website: f.website.value, lang: Hooma.lang };
     if (f.role.value === 'artist' && f.image.files[0]) { try { data.image = await shrink(f.image.files[0]); } catch {} }
     const r = await fetch('/api/submit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-    if (r.ok) { f.reset(); roleChanged(); say('sent', 'ok'); }
+    if (r.ok) { f.reset(); roleChanged(); $('#formNote').hidden = true; say('sent', 'ok'); }
     else say(r.status === 429 ? 'rate' : r.status === 413 ? 'big' : r.status === 400 ? 'missing' : 'failed', 'bad');
   } catch { say('failed', 'bad'); }
   btn.disabled = false;
@@ -127,7 +134,7 @@ function route() {
   const p = location.pathname; let m;
   if ((m = /^\/w\/([a-z0-9-]+)/.exec(p))) return Hooma.openWork(m[1], true);
   hideAll(false);
-  if (p === '/wall') Hooma.openWall(); else if (p === '/scan') Hooma.openScan(); else if (p === '/join') $('#join').scrollIntoView();
+  if (p === '/wall') Hooma.openWall(); else if (p === '/scan') Hooma.openScan(); else if (p === '/join') $('#join').scrollIntoView(); else if (p === '/artists') $('#artists').scrollIntoView();
 }
 Hooma.ready = fetch('/api/works').then((r) => r.json()).then((w) => { Hooma.works = w; }).catch(() => { Hooma.works = []; });
 document.addEventListener('DOMContentLoaded', async () => {
