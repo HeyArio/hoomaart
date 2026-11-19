@@ -8,7 +8,7 @@
 <meta property="og:title" content="هوما آرت | Hooma Art">
 <meta property="og:description" content="اثر هنری را با دوربین گوشی روی دیوار خودتان ببینید.">
 <meta property="og:image" content="/img/works/tango-in-red-ruby.jpg">
-<meta name="theme-color" content="#0F1430">
+<meta name="theme-color" content="#17110D">
 <link rel="icon" href="/img/mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/markazi-text-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/vazirmatn-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -42,21 +42,48 @@
       <a class="btn" href="#artists"><span class="fa">هنرمند هستم</span><span class="en">I'm an artist</span></a>
     </div>
   </div>
-  <figure class="hang hero-hang" id="heroHang">
-    <button type="button" class="hang-btn" id="heroOpen"><img id="heroImg" alt="" width="1094" height="729"></button>
-    <figcaption><span id="heroCap"></span><button type="button" class="link" id="heroNext"><span class="fa">اثر بعدی</span><span class="en">Next work</span></button></figcaption>
-  </figure>
+  <div class="scene">
+    <figure class="hero-hang" id="heroHang"><button type="button" class="hang-btn" id="heroOpen"><img id="heroImg" alt="" width="1094" height="729"></button></figure>
+    <svg class="sofa" viewBox="0 0 440 150" aria-hidden="true">
+      <defs>
+        <linearGradient id="sfA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a4535"/><stop offset="1" stop-color="#33261d"/></linearGradient>
+        <linearGradient id="sfB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#644d3b"/><stop offset="1" stop-color="#3e2e23"/></linearGradient>
+        <radialGradient id="sfS" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+      </defs>
+      <ellipse cx="220" cy="149" rx="250" ry="9" fill="url(#sfS)"/>
+      <rect x="30" y="8" width="380" height="96" rx="14" fill="url(#sfA)"/>
+      <rect x="6" y="50" width="34" height="84" rx="12" fill="#2d2119"/><rect x="400" y="50" width="34" height="84" rx="12" fill="#2d2119"/>
+      <rect x="42" y="78" width="118" height="40" rx="9" fill="url(#sfB)"/><rect x="161" y="78" width="118" height="40" rx="9" fill="url(#sfB)"/><rect x="280" y="78" width="118" height="40" rx="9" fill="url(#sfB)"/>
+      <rect x="26" y="116" width="388" height="18" rx="5" fill="#281d16"/>
+      <path d="M52 134l-5 16h5l6-16zM388 134l5 16h-5l-6-16z" fill="#15100c"/>
+    </svg>
+  </div>
+  <div class="hero-ctl"><div class="ctl">
+    <b id="heroCap"></b><button type="button" class="link" id="heroNext"><span class="fa">اثر بعدی</span><span class="en">Next work</span></button>
+    <label><span><span class="fa">عرض اثر</span><span class="en">Work width</span></span><input id="heroSize" type="range" min="60" max="180" step="5" value="120"><output id="heroSizeOut"></output></label>
+  </div></div>
 </section>
 
-<section class="band" id="wall">
+<section class="sides dark">
+  <div class="wrap">
+    <h2><span class="fa">سه چیز کمیاب، کنار هم</span><span class="en">Three scarce things, together</span></h2>
+    <div class="cards">
+      <div><i><span class="fa">۰۱</span><span class="en">01</span></i><h3><span class="fa">خریداران منتخب</span><span class="en">Selected buyers</span></h3><p><span class="fa">مجموعه‌داران و خانواده‌هایی که برای خانه‌شان اثر می‌خرند. هر مهمان با نام دعوت می‌شود.</span><span class="en">Collectors and families who buy art for their homes. Every guest is invited by name.</span></p></div>
+      <div><i><span class="fa">۰۲</span><span class="en">02</span></i><h3><span class="fa">آثار گزیده</span><span class="en">Selected works</span></h3><p><span class="fa">نقاشی، عکس هنری، چاپ دستی و مجسمه. آثار را همراه با خود هنرمند انتخاب می‌کنیم.</span><span class="en">Painting, fine-art photography, printmaking and sculpture. We choose the works together with the artist.</span></p></div>
+      <div><i><span class="fa">۰۳</span><span class="en">03</span></i><h3><span class="fa">فضاهای خاص</span><span class="en">Remarkable spaces</span></h3><p><span class="fa">خانه‌هایی با طراحی معماران شناخته‌شده، با نور گالری، برای یک شب.</span><span class="en">Homes by known architects, lit like a gallery, for one evening.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="plain tint" id="wall">
   <div class="wrap two">
     <div>
       <h2><span class="fa">اثر خودتان را روی دیوار ببینید</span><span class="en">See your own work on a wall</span></h2>
       <p><span class="fa">عکس اثرتان را انتخاب کنید، دوربین را رو به دیوار بگیرید و اندازه را تنظیم کنید. خریدار هم دقیقاً همین را می‌بیند: اثر شما، در خانهٔ خودش، پیش از خرید.</span><span class="en">Choose a photo of your work, point the camera at a wall and set the size. A buyer sees exactly this: your work, in their own home, before they buy.</span></p>
       <p class="quiet"><span class="fa">عکس شما روی گوشی خودتان می‌ماند، مگر اینکه خودتان آن را برای ما بفرستید.</span><span class="en">Your photo stays on your phone unless you choose to send it to us.</span></p>
       <div class="actions">
-        <button class="btn primary on-dark" type="button" data-open="wall" data-own="1"><span class="fa">با اثر خودم امتحان می‌کنم</span><span class="en">Try it with my own work</span></button>
-        <button class="btn on-dark" type="button" data-open="wall"><span class="fa">با آثار مجموعه</span><span class="en">Use a work from the collection</span></button>
+        <button class="btn primary" type="button" data-open="wall" data-own="1"><span class="fa">با اثر خودم امتحان می‌کنم</span><span class="en">Try it with my own work</span></button>
+        <button class="btn" type="button" data-open="wall"><span class="fa">با آثار مجموعه</span><span class="en">Use a work from the collection</span></button>
       </div>
     </div>
     <div class="phone-demo" aria-hidden="true">
@@ -77,7 +104,7 @@
   </div>
 </section>
 
-<section class="plain" id="collection">
+<section class="plain dark" id="collection">
   <div class="wrap">
     <h2><span class="fa">مجموعهٔ نخست</span><span class="en">The first collection</span></h2>
     <p class="sub"><span class="fa">عکس‌هایی از عکاس هوما آرت. هر اثر را باز کنید، اسکن کنید یا روی دیوار خودتان ببینید.</span><span class="en">Photographs by Hooma Art's photographer. Open any work, scan it, or see it on your own wall.</span></p>
@@ -85,7 +112,7 @@
   </div>
 </section>
 
-<section class="plain tint" id="artists">
+<section class="plain" id="artists">
   <div class="wrap">
     <h2><span class="fa">برای هنرمندان</span><span class="en">For artists</span></h2>
     <p class="sub"><span class="fa">اثر خوب کم نیست. خریدار درست کم است. ما سه چیز را کنار هم می‌گذاریم.</span><span class="en">Good work isn't rare. The right buyer is. We bring three things together.</span></p>

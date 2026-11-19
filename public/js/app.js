@@ -31,11 +31,18 @@ $('#langBtn').addEventListener('click', () => setLang(Hooma.lang === 'fa' ? 'en'
 
 /* ---- rendering */
 let heroIx = 0;
+// The hero sofa is drawn 220 cm wide, so the slider shows a work at a believable size beside it.
+function heroSize() {
+  const hw = Hooma.works[heroIx % Hooma.works.length]; if (!hw) return; const cm = +$('#heroSize').value, r = hw.ratio || 1.5;
+  $('.hero').style.setProperty('--cm', Math.min(cm, 150 * r));
+  $('#heroSizeOut').textContent = `${Hooma.num(cm)} × ${Hooma.num(Math.round(cm / r))} ${Hooma.t('cm')}`;
+}
+$('#heroSize').addEventListener('input', heroSize);
 function render() {
   if (!Hooma.works.length) return;
   const hw = Hooma.works[heroIx % Hooma.works.length];
   const hi = $('#heroImg'); if (hi.getAttribute('src') !== hw.img) hi.src = hw.img; hi.alt = Hooma.L(hw.title);
-  $('#heroCap').textContent = Hooma.L(hw.title) + (Hooma.lang === 'fa' ? '، ' : ', ') + Hooma.by(hw);
+  $('#heroCap').textContent = Hooma.L(hw.title); heroSize();
   $('#demoImg').src = (Hooma.works[2] || hw).img; $('#scanDemoImg').src = (Hooma.works[1] || hw).img;
   $('#salon').innerHTML = Hooma.works.map((w) => `<figure class="hang"><button type="button" class="hang-btn" data-work="${w.id}"><img loading="lazy" width="1000" height="${Math.round(1000 / (w.ratio || 1.5))}" src="${w.img}" alt="${esc(Hooma.L(w.title))}"></button><figcaption><b>${esc(Hooma.L(w.title))}</b><span>${esc(Hooma.by(w))}</span></figcaption></figure>`).join('');
   if (openId) fillWork(Hooma.find(openId));
