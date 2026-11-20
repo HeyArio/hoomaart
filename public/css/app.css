@@ -361,3 +361,18 @@ html[dir=rtl] .find:after{transform:rotate(-45deg)}
 @media (max-width:760px){.artist-head>img,.artist-head>div,.artist-head>img:not([hidden])+div{grid-column:1/-1}.artist-head>img{max-width:220px}}
 .by .link{text-decoration:none;cursor:default}
 .by .link[data-artist]{text-decoration:underline;cursor:pointer}
+
+/* the buyer's path */
+.journey{border-top:1px solid var(--hair)}
+.journey-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);row-gap:48px;align-items:start}
+.journey-head{grid-column:1/span 5;position:sticky;top:104px}
+.path{grid-column:7/-1;list-style:none;padding:0;counter-reset:p}
+.path li{counter-increment:p;display:grid;grid-template-columns:clamp(44px,5vw,72px) minmax(0,1fr);column-gap:clamp(12px,2vw,28px);padding:clamp(24px,3.2vw,40px) 0;border-top:1px solid var(--hair)}
+.path li:last-child{border-bottom:1px solid var(--hair)}
+.path li:before{content:counter(p,persian);grid-row:1/span 3;font-family:var(--display);font-size:clamp(2.4rem,4vw,3.5rem);line-height:.9;color:var(--fg-2);transition:color .6s var(--out)}
+html[lang=en] .path li:before{content:counter(p)}
+.path li:hover:before,.path li:focus-within:before{color:var(--fg)}
+.path h3{grid-column:2;font-size:clamp(1.6rem,2.3vw,2.1rem)}
+.path p{grid-column:2;color:var(--fg-2);margin-top:6px;max-width:46ch}
+.path .go{color:var(--fg);margin-top:14px;font-size:.9375rem}
+@media (max-width:900px){.journey-head,.path{grid-column:1/-1}.journey-head{position:static}}

@@ -138,7 +138,7 @@ let io = null;
 function reveal() {
   if (still || !('IntersectionObserver' in window)) return;
   io = io || new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
-  $$('.sec-head, .terms > div, .elev-grid > *, .scan-grid > *, .salon figure, .steps li, .promise > *, .join-grid > *').forEach((el) => {
+  $$('.sec-head, .terms > div, .journey-head, .path li, .elev-grid > *, .scan-grid > *, .salon figure, .steps li, .promise > *, .join-grid > *').forEach((el) => {
     if (el.classList.contains('rv')) return;
     if (el.getBoundingClientRect().top < innerHeight) return; // never hide what is already on screen
     el.classList.add('rv'); io.observe(el);
