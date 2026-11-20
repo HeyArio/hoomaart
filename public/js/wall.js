@@ -100,7 +100,7 @@
   document.addEventListener('hooma:lang', () => { if (!tool.hidden) { buildStrip(); layout(); } });
 
   Hooma.openWall = (id, own) => {
-    Hooma.hideAll(false); Hooma.show(tool); S.x = 0.5; S.y = 0.42; S.calibrated = false; S.cm = 100;
+    Hooma.hideAll(false); Hooma.show(tool); S.x = 0.5; S.y = 0.42; S.calibrated = false; S.cm = 100; Hooma.track(own ? 'own' : 'wall', own ? '' : (id || ''));
     if (own && !S.own) { setWork(id || S.id); ownIn.click(); } else if (own && S.own) { S.id = 'own'; artImg.src = S.own; buildStrip(); layout(); } else setWork(id || (S.id !== 'own' && S.id) || null);
     startCam();
   };

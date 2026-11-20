@@ -16,6 +16,8 @@ fs.mkdirSync(UP, { recursive: true });
 const WORKS = path.join(DATA, 'works.json');
 const SUBS = path.join(DATA, 'submissions.jsonl');
 const ARTISTS = path.join(DATA, 'artists.json');
+const EVENTS = path.join(DATA, 'events.jsonl');
+const EVENT_TYPES = ['view', 'scan', 'wall', 'own'];
 if (!fs.existsSync(WORKS)) fs.copyFileSync(path.join(__dirname, 'data-seed', 'works.json'), WORKS);
 const SECRET_FILE = path.join(DATA, 'secret');
 if (!fs.existsSync(SECRET_FILE)) fs.writeFileSync(SECRET_FILE, crypto.randomBytes(32).toString('hex'), { mode: 0o600 });
@@ -113,6 +115,16 @@ const server = http.createServer(async (req, res) => {
       if (req.method === 'GET' && p === '/api/works') return send(res, 200, readWorks().map(pub), { 'Cache-Control': 'no-cache' });
       if (req.method === 'GET' && p === '/api/artists') return send(res, 200, readArtists(), { 'Cache-Control': 'no-cache' });
 
+      // Interest signals. Nothing personal is stored: only the kind of event, the work and the day.
+      if (req.method === 'POST' && p === '/api/event') {
+        if (limited('e' + ip(req), 240, 3600e3)) return send(res, 204, '');
+        const b = await body(req, 500);
+        if (!EVENT_TYPES.includes(b.t)) return send(res, 204, '');
+        const work = /^[a-z0-9-]{1,80}$/.test(b.w || '') ? b.w : '';
+        fs.appendFileSync(EVENTS, JSON.stringify({ d: new Date().toISOString().slice(0, 10), t: b.t, w: work }) + '\n');
+        return send(res, 204, '');
+      }
+
       if (req.method === 'POST' && p === '/api/submit') {
         if (limited('s' + ip(req), 8, 3600e3)) return send(res, 429, { error: 'rate' });
         const b = await body(req, 6e6);
@@ -136,6 +148,21 @@ const server = http.createServer(async (req, res) => {
         if (!authed(req)) return send(res, 401, { error: 'auth' });
         if (req.method === 'POST' && p === '/api/admin/logout') return send(res, 200, { ok: true }, { 'Set-Cookie': 'hooma_admin=; Path=/; Max-Age=0' });
         if (req.method === 'GET' && p === '/api/admin/submissions') return send(res, 200, readSubs().reverse(), { 'Cache-Control': 'no-store' });
+        if (req.method === 'GET' && p === '/api/admin/stats') {
+          const days = []; for (let i = 29; i >= 0; i--) days.push(new Date(Date.now() - i * 864e5).toISOString().slice(0, 10));
+          const since = days[0], blank = () => ({ view: 0, scan: 0, wall: 0, own: 0, requests: 0 });
+          const total = blank(), all = blank(), byWork = {}, byDay = Object.fromEntries(days.map((d) => [d, blank()])), byRole = {};
+          const lines = fs.existsSync(EVENTS) ? fs.readFileSync(EVENTS, 'utf8').split('\n') : [];
+          let first = '';
+          for (const l of lines) { if (!l) continue; let e; try { e = JSON.parse(l); } catch { continue; }
+            if (!EVENT_TYPES.includes(e.t)) continue; if (!first || e.d < first) first = e.d; all[e.t]++;
+            if (e.d < since) continue; total[e.t]++; if (byDay[e.d]) byDay[e.d][e.t]++;
+            if (e.w) { byWork[e.w] = byWork[e.w] || blank(); byWork[e.w][e.t]++; } }
+          for (const r of readSubs()) { const d = String(r.at || '').slice(0, 10); all.requests++;
+            if (d < since) continue; total.requests++; if (byDay[d]) byDay[d].requests++; byRole[r.role] = (byRole[r.role] || 0) + 1;
+            if (r.work) { byWork[r.work] = byWork[r.work] || blank(); byWork[r.work].requests++; } }
+          return send(res, 200, { since, first, total, all, byWork, byRole, days: days.map((d) => ({ d, ...byDay[d] })) }, { 'Cache-Control': 'no-store' });
+        }
         if (req.method === 'GET' && p === '/api/admin/works') return send(res, 200, readWorks().map(full), { 'Cache-Control': 'no-store' });
         let m;
         if (req.method === 'POST' && p === '/api/admin/artists') {

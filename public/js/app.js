@@ -23,6 +23,8 @@ const Hooma = window.Hooma = {
   artistOf(w) { return (w && w.artistId && this.artists.find((a) => a.id === w.artistId)) || null; },
   by(w) { const a = this.artistOf(w); return (a && this.L(a.name)) || this.L(w.artist) || this.t('collection'); },
   find(id) { return this.works.find((w) => w.id === id); },
+  // Anonymous interest signal for the team's dashboard: the kind of event and the work, nothing about the visitor.
+  track(t, w) { try { const b = JSON.stringify({ t, w: w || '' }); if (!(navigator.sendBeacon && navigator.sendBeacon('/api/event', new Blob([b], { type: 'application/json' })))) fetch('/api/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: b, keepalive: true }).catch(() => {}); } catch {} },
 };
 
 /* ---- language */
@@ -186,7 +188,7 @@ function fillWork(w) {
 }
 Hooma.openWork = (id, noPush) => {
   const w = Hooma.find(id); if (!w) return;
-  hideAll(false); openId = id; fillWork(w); show($('#workSheet')); $('#workSheet').scrollTop = 0;
+  hideAll(false); openId = id; fillWork(w); show($('#workSheet')); $('#workSheet').scrollTop = 0; Hooma.track('view', id);
   if (!noPush) history.pushState({}, '', '/w/' + id);
 };
 function fillArtist(a) {

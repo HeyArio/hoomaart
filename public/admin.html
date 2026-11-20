@@ -39,6 +39,23 @@ form.edit h2{font-size:1.6rem}
 .fnote{font-size:.8125rem;color:var(--mist);max-width:none;display:block}
 @media(max-width:640px){form.edit{grid-template-columns:1fr}}
 .empty{color:var(--mist);padding:30px 0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-bottom:22px}
+.tiles>div{background:#fff;padding:18px 18px 16px}
+.tiles b{display:block;font-family:var(--display);font-weight:500;font-size:2.6rem;line-height:1.1}
+.tiles span{font-size:.8125rem;color:var(--mist)}
+.panel2{background:#fff;border:1px solid var(--line);border-radius:6px;padding:20px;margin-bottom:22px}
+.panel2 h2{font-size:1.5rem;margin-bottom:4px}.panel2>p{font-size:.8125rem;color:var(--mist);margin-bottom:14px;max-width:none}
+.days{display:grid;grid-template-columns:repeat(30,1fr);gap:3px;align-items:end;height:110px;border-bottom:1px solid var(--line)}
+.days i{background:var(--ink);min-height:1px;border-radius:2px 2px 0 0}
+.days i.zero{background:var(--line)}
+.axis{display:flex;justify-content:space-between;font-size:.75rem;color:var(--mist);margin-top:6px}
+table.st{width:100%;border-collapse:collapse;font-size:.9375rem}
+table.st th{font-weight:500;font-size:.8125rem;color:var(--mist);text-align:start;padding:8px 10px;border-bottom:1px solid var(--line)}
+table.st td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.st td.n,table.st th.n{text-align:center;font-variant-numeric:tabular-nums}
+table.st .wk{display:flex;align-items:center;gap:12px}table.st .wk img{width:54px;height:38px;object-fit:cover}
+.bar{height:6px;background:var(--wall-2);border-radius:3px;min-width:90px}.bar i{display:block;height:100%;background:var(--ink);border-radius:3px}
+.roles2{display:flex;flex-wrap:wrap;gap:8px}
 @media print{body *{visibility:hidden}#labels,#labels *{visibility:visible}#labels{position:absolute;inset:0;display:grid!important;grid-template-columns:1fr 1fr;gap:10mm;padding:10mm}}
 #labels{display:none}
 .qr{border:1px solid #999;padding:6mm;display:grid;grid-template-columns:32mm 1fr;gap:5mm;align-items:center;break-inside:avoid;font-family:var(--body);color:#111}
@@ -54,12 +71,14 @@ form.edit h2{font-size:1.6rem}
   </form>
   <div id="app" hidden>
     <div class="tabs" role="tablist">
-      <button role="tab" data-tab="subs" aria-selected="true">درخواست‌ها <span id="newCount"></span></button>
+      <button role="tab" data-tab="studio" aria-selected="true">استودیو</button>
+      <button role="tab" data-tab="subs" aria-selected="false">درخواست‌ها <span id="newCount"></span></button>
       <button role="tab" data-tab="works" aria-selected="false">آثار</button>
       <button role="tab" data-tab="artists" aria-selected="false">هنرمندان</button>
       <button id="logout" style="margin-inline-start:auto">خروج</button>
     </div>
-    <section id="subs"></section>
+    <section id="studio"></section>
+    <section id="subs" hidden></section>
 
     <section id="works" hidden>
       <div class="row" style="margin-bottom:16px"><button id="addWork" class="btn primary">افزودن اثر</button><button id="printLabels">چاپ نشانه‌های اسکن (QR)</button></div>
@@ -123,7 +142,7 @@ function showLogin(){$('#login').hidden=false;$('#app').hidden=true}
 $('#login').addEventListener('submit',async(e)=>{e.preventDefault();const r=await api('POST','/api/admin/login',{password:e.target.password.value});
   if(r.ok){e.target.reset();boot()}else $('#loginMsg').textContent=r.status===429?'چند بار اشتباه وارد شد. یک ربع بعد دوباره امتحان کنید.':'رمز درست نیست.'});
 $('#logout').addEventListener('click',async()=>{await api('POST','/api/admin/logout');showLogin()});
-document.querySelectorAll('[data-tab]').forEach((b)=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach((x)=>x.setAttribute('aria-selected',x===b));for(const t of['subs','works','artists'])$('#'+t).hidden=b.dataset.tab!==t}));
+document.querySelectorAll('[data-tab]').forEach((b)=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach((x)=>x.setAttribute('aria-selected',x===b));for(const t of['studio','subs','works','artists'])$('#'+t).hidden=b.dataset.tab!==t}));
 
 async function loadSubs(){const r=await api('GET','/api/admin/submissions');const a=await r.json();
   $('#newCount').textContent=a.filter((x)=>x.status==='new').length?`(${a.filter((x)=>x.status==='new').length})`:'';
@@ -135,6 +154,25 @@ $('#subs').addEventListener('change',async(e)=>{if(!e.target.matches('[data-stat
 $('#subs').addEventListener('click',async(e)=>{if(!e.target.matches('[data-del]'))return;if(!confirm('این درخواست حذف شود؟'))return;await api('DELETE','/api/admin/submissions/'+e.target.closest('[data-id]').dataset.id);loadSubs()});
 
 function readImage(file,max=2000){return new Promise((ok,bad)=>{const i=new Image(),u=URL.createObjectURL(file);i.onload=()=>{const k=Math.min(1,max/Math.max(i.naturalWidth,i.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(i.naturalWidth*k);c.height=Math.round(i.naturalHeight*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);ok({data:c.toDataURL('image/jpeg',.9),ratio:c.width/c.height})};i.onerror=bad;i.src=u})}
+
+/* studio: real interest data */
+const fa=(n)=>String(n).replace(/\d/g,(d)=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+async function loadStudio(){const s=await (await api('GET','/api/admin/stats')).json();const t=s.total;
+  const ev=t.view+t.scan+t.wall+t.own;
+  const rows=works.map((w)=>({w,x:s.byWork[w.id]||{view:0,scan:0,wall:0,requests:0}})).map((r)=>({...r,score:r.x.view+2*r.x.scan+2*r.x.wall+5*r.x.requests})).sort((a,b)=>b.score-a.score);
+  const top=Math.max(1,...rows.map((r)=>r.score));const peak=Math.max(1,...s.days.map((d)=>d.view+d.scan+d.wall+d.own));
+  $('#studio').innerHTML=`<div class="tiles">
+    <div><b>${fa(t.view)}</b><span>باز شدن صفحهٔ آثار</span></div><div><b>${fa(t.scan)}</b><span>اسکن اثر با دوربین</span></div>
+    <div><b>${fa(t.wall)}</b><span>نمایش روی دیوار</span></div><div><b>${fa(t.own)}</b><span>امتحان با اثر خود (هنرمندان)</span></div>
+    <div><b>${fa(t.requests)}</b><span>درخواست رسیده</span></div></div>
+   <div class="panel2"><h2>۳۰ روز گذشته</h2><p>${s.first?`شمارش از ${new Date(s.first).toLocaleDateString('fa-IR')} شروع شده است. این اعداد واقعی‌اند و از رفتار بازدیدکنندگان همین سایت می‌آیند.`:'هنوز رویدادی ثبت نشده است. شمارش از لحظهٔ همین به‌روزرسانی شروع می‌شود و عددی ساختگی نشان داده نمی‌شود.'}</p>
+    <div class="days">${s.days.map((d)=>{const v=d.view+d.scan+d.wall+d.own;return `<i class="${v?'':'zero'}" style="height:${v?Math.max(4,Math.round(v/peak*100)):1}%" title="${d.d}: ${v}"></i>`}).join('')}</div>
+    <div class="axis"><span>${new Date(s.days[0].d).toLocaleDateString('fa-IR')}</span><span>امروز</span></div></div>
+   <div class="panel2"><h2>علاقه به هر اثر</h2><p>امتیاز علاقه: هر بازدید ۱، هر اسکن یا نمایش روی دیوار ۲، هر درخواست ۵.</p>
+    <table class="st"><thead><tr><th>اثر</th><th class="n">بازدید</th><th class="n">اسکن</th><th class="n">روی دیوار</th><th class="n">درخواست</th><th>علاقه</th></tr></thead><tbody>
+    ${rows.map((r)=>`<tr><td><span class="wk"><img src="${esc(r.w.img)}" alt=""><span>${esc(r.w.title.fa||r.w.title.en)}</span></span></td><td class="n">${fa(r.x.view)}</td><td class="n">${fa(r.x.scan)}</td><td class="n">${fa(r.x.wall)}</td><td class="n">${fa(r.x.requests)}</td><td><div class="bar"><i style="width:${Math.round(r.score/top*100)}%"></i></div></td></tr>`).join('')}
+    </tbody></table></div>
+   <div class="panel2"><h2>درخواست‌ها بر اساس نوع</h2><p>در ۳۰ روز گذشته.</p><div class="roles2">${Object.keys(ROLE).map((k)=>`<span class="tag">${ROLE[k]}: ${fa(s.byRole[k]||0)}</span>`).join('')}</div></div>`}
 
 /* works */
 async function loadWorks(){works=await (await api('GET','/api/admin/works')).json();
@@ -174,7 +212,7 @@ af.addEventListener('submit',async(e)=>{e.preventDefault();const two=(k)=>({fa:a
   $('#artistMsg').textContent='در حال ذخیره…';const r=await api(editingArtist?'PUT':'POST','/api/admin/artists'+(editingArtist?'/'+editingArtist:''),b);
   if(r.ok){af.hidden=true;await loadArtists();loadWorks()}else $('#artistMsg').textContent='ذخیره نشد. نام را وارد کنید یا عکس کوچک‌تری انتخاب کنید.'});
 
-async function boot(){try{const r=await fetch('/api/admin/submissions');if(r.status===401)return showLogin();$('#login').hidden=true;$('#app').hidden=false;loadSubs();await loadWorks();await loadArtists();loadWorks()}catch{showLogin()}}
+async function boot(){try{const r=await fetch('/api/admin/submissions');if(r.status===401)return showLogin();$('#login').hidden=true;$('#app').hidden=false;loadSubs();await loadWorks();await loadArtists();loadWorks();loadStudio()}catch{showLogin()}}
 boot();
 </script>
 </body>

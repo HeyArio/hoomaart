@@ -76,7 +76,7 @@
   function show(id) {
     const w = Hooma.find(id); if (!w) return; current = id; streak = { id: null, n: 0 }; hint.textContent = t('found');
     $('#scanFoundImg').src = w.img; $('#scanFoundTitle').textContent = Hooma.L(w.title); $('#scanFoundBy').textContent = Hooma.by(w);
-    $('#scanFound').hidden = false; $('#scanNoCam').hidden = true; if (navigator.vibrate) navigator.vibrate(40); $('#scanView').focus();
+    $('#scanFound').hidden = false; $('#scanNoCam').hidden = true; Hooma.track('scan', w.id); if (navigator.vibrate) navigator.vibrate(40); $('#scanView').focus();
   }
   $('#scanView').addEventListener('click', () => { const id = current; Hooma.openWork(id); });
   $('#scanAgain').addEventListener('click', () => { current = null; $('#scanFound').hidden = true; if (!stream) noCam(); else hint.textContent = t('aim'); });
