@@ -8,117 +8,178 @@
 <meta property="og:title" content="هوما آرت | Hooma Art">
 <meta property="og:description" content="خریدار منتخب، اثر گزیده و فضای خاص، در یک شب.">
 <meta property="og:image" content="/img/spaces/hall-hung.jpg">
-<meta name="theme-color" content="#0A0A0B">
+<meta name="theme-color" content="#000000">
 <link rel="icon" href="/img/mark.svg" type="image/svg+xml">
-<link rel="preload" href="/fonts/markazi-text-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/img/spaces/hall-hung.jpg" as="image">
 <link rel="stylesheet" href="/css/app.css">
 <style>
-html{scroll-snap-type:y proximity}
-.pz{position:relative;min-height:100svh;display:grid;align-content:center;padding:clamp(72px,10vh,140px) 0 clamp(24px,5vh,110px);scroll-snap-align:start;scroll-margin-top:0;border-top:1px solid var(--hair)}
-.pz:first-of-type{border-top:0}
-.pz.light{background:var(--wall);color:var(--ink);border-top:0}
-.kick{font-size:.875rem;color:var(--fg-2);margin-bottom:clamp(8px,2vh,32px);display:flex;gap:14px;align-items:baseline}
-.kick b{font-family:var(--display);font-weight:500;font-size:1.25rem;color:var(--fg)}
-.light .kick{color:var(--mist)}.light .kick b{color:var(--ink)}
-.cols{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);row-gap:40px;align-items:start}
-.c5{grid-column:1/span 5}.c6{grid-column:7/-1}.c12{grid-column:1/-1}
-@media (max-width:900px){.c5,.c6{grid-column:1/-1}}
-.pz h2{font-size:clamp(1.9rem,min(5vw,7vh),4.5rem)}
-.pz .big{font-size:clamp(1rem,min(1.7vw,2.5vh),1.5rem);line-height:1.8;color:var(--fg-2);margin-top:clamp(.7rem,2vh,1.4rem);max-width:44ch}
-html[lang=en] .pz .big{line-height:1.5}
-.light .big{color:var(--mist)}
+/* Front page. Black and near-white screens, heavy type, rounded tiles, one picture per screen. */
+:root{--k:#000;--k2:#161617;--k3:#2a2a2d;--w:#f5f5f7;--w2:#fff;--t:#f5f5f7;--t2:#a1a1a6;--d:#1d1d1f;--d2:#6e6e73;--r:clamp(18px,2vw,28px);--go:#30d158}
+html{scroll-snap-type:y proximity;background:var(--k)}
+body{background:var(--k);color:var(--t)}
+.pz{position:relative;min-height:100svh;display:grid;align-content:center;padding:clamp(68px,9.5vh,120px) 0 clamp(20px,4.5vh,80px);scroll-snap-align:start;scroll-margin-top:0;background:var(--k)}
+.pz.lt{background:var(--w);color:var(--d)}
+.hd{max-width:22ch}
+.pz h2{font-size:clamp(1.7rem,min(4.2vw,6.4vh),3.6rem);font-weight:800;line-height:1.28}
+html[lang=en] .pz h2{line-height:1.05}
+.ld{font-size:clamp(1rem,min(1.45vw,2.4vh),1.3rem);line-height:1.85;color:var(--t2);margin-top:clamp(.5rem,1.6vh,1rem);max-width:46ch}
+html[lang=en] .ld{line-height:1.5}
+.lt .ld{color:var(--d2)}
+.eyebrow{font-size:.875rem;font-weight:600;color:var(--t2);margin-bottom:clamp(6px,1.4vh,14px)}
+.lt .eyebrow{color:var(--d2)}
+.grid{display:grid;gap:clamp(10px,1.2vw,18px);margin-top:clamp(16px,3.4vh,44px)}
+.tile{position:relative;border-radius:var(--r);background:var(--k2);overflow:hidden;padding:clamp(16px,2vw,30px);display:flex;flex-direction:column;min-width:0}
+.lt .tile{background:var(--w2)}
+.tile h3{font-size:clamp(1.15rem,min(1.7vw,2.9vh),1.6rem);font-weight:700}
+.tile p{font-size:clamp(.875rem,min(1.05vw,1.9vh),1rem);color:var(--t2);margin-top:6px;max-width:none}
+.lt .tile p{color:var(--d2)}
+.tile .pic{margin:calc(clamp(16px,2vw,30px)*-1);margin-bottom:clamp(12px,2vh,22px);height:clamp(110px,24vh,240px);overflow:hidden;background:#111}
+.tile .pic img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--out)}
+.tile:hover .pic img{transform:scale(1.04)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin-top:auto;padding-top:clamp(10px,1.8vh,18px);font-size:clamp(.8125rem,min(1vw,1.8vh),.9375rem);border:0}
+.kv dt{color:var(--d2);font-weight:600}
+.pz .btn{min-height:46px}
+.pz .actions{margin-top:clamp(.9rem,2.6vh,2rem)}
+.lt .btn{border-color:var(--d);color:var(--d)}
+.lt .btn:hover,.lt .btn.primary{background:var(--d);border-color:var(--d);color:#fff}
+.cols{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);row-gap:28px;align-items:center}
+.lat{direction:ltr;unicode-bidi:isolate;letter-spacing:-.02em}
 
-/* opening */
+/* 1. opening */
 .open{padding:0;align-content:end;overflow:hidden;isolation:isolate}
-.open>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:32% 60%;z-index:-2;animation:drift 22s var(--out) both}
-@keyframes drift{from{transform:scale(1.12)}to{transform:scale(1)}}
-.open:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(10,10,11,.5),rgba(10,10,11,.08) 32%,rgba(10,10,11,.5) 62%,var(--bg) 100%)}
-.open .wrap{width:100%;padding-bottom:clamp(32px,6vh,72px)}
-.open .actions{margin-top:1.8rem}
-.pz .actions{margin-top:clamp(1rem,3vh,2.2rem)}
-.open .btn{border-color:rgba(244,243,241,.7)}
-.down{margin-top:1.6rem}
-.open h1{max-width:13ch;font-size:clamp(3rem,8vw,7rem)}
-html[lang=en] .open h1{font-size:clamp(3rem,7.4vw,6rem)}
-.open .big{color:rgba(244,243,241,.86)}
-.down{display:inline-flex;align-items:center;gap:12px;margin-top:2.4rem;font-size:.875rem;color:var(--fg);text-decoration:none}
-.down i{width:44px;height:44px;border:1px solid rgba(244,243,241,.5);border-radius:50%;display:grid;place-items:center;transition:border-color .3s,transform .5s var(--out)}
-.down:hover i{border-color:#fff;transform:translateY(4px)}
-.down svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.open>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:32% 60%;z-index:-2;animation:drift 24s var(--out) both}
+@keyframes drift{from{transform:scale(1.14)}to{transform:scale(1)}}
+.open:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.05) 30%,rgba(0,0,0,.45) 60%,#000 100%)}
+.open .wrap{width:100%;padding-bottom:clamp(28px,6vh,72px)}
+.open h1{max-width:12ch;font-size:clamp(2.6rem,min(7.4vw,12vh),6.5rem);font-weight:800;line-height:1.2}
+html[lang=en] .open h1{line-height:.98;letter-spacing:-.045em;max-width:13ch}
+.open .ld{color:rgba(245,245,247,.86);max-width:52ch;text-wrap:balance}
+.open .btn{border-color:rgba(245,245,247,.7)}
+.down{display:inline-flex;align-items:center;gap:10px;margin-top:clamp(1rem,2.6vh,1.6rem);font-size:.875rem;color:var(--t2);text-decoration:none;transition:color .3s}
+.down:hover{color:#fff}
+.down svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;animation:nudge 2.4s var(--out) infinite}
+@keyframes nudge{0%,60%,100%{transform:none}30%{transform:translateY(4px)}}
 
-/* the room: compare and open works */
-.room{padding-inline:0;padding-top:clamp(80px,10vh,104px);padding-bottom:clamp(20px,3vh,40px)}
-.room h2{font-size:clamp(1.8rem,3.1vw,2.9rem)}
-.room .big{font-size:1.0625rem;line-height:1.9}
-.room .kick{margin-bottom:10px}
-.room-scroll{overflow-x:auto;scrollbar-width:none;margin-top:clamp(16px,2.6vh,28px);direction:ltr}
+/* 2. the room */
+.room{padding-inline:0;padding-top:clamp(68px,9vh,96px);padding-bottom:clamp(14px,2.4vh,32px)}
+.room-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:10px 40px}
+.room-head .ld{margin-top:0;max-width:38ch;font-size:clamp(.9375rem,min(1.2vw,2.1vh),1.0625rem)}
+.room-scroll{overflow-x:auto;scrollbar-width:none;margin-top:clamp(12px,2.2vh,24px);direction:ltr}
 .room-scroll::-webkit-scrollbar{display:none}
-.cmp{position:relative;width:max(100%,860px);aspect-ratio:2000/1334;margin-inline:auto;direction:ltr;overflow:hidden;--pos:98%;user-select:none;-webkit-user-select:none}
-@media (min-width:861px){.cmp{width:min(100%,calc(60svh*1.4993));max-height:60svh}}
+.cmp{position:relative;width:max(100%,860px);aspect-ratio:2000/1334;margin-inline:auto;direction:ltr;overflow:hidden;--pos:98%;user-select:none;-webkit-user-select:none;border-radius:var(--r)}
+@media (min-width:861px){.cmp{width:min(calc(100% - var(--gut)*2),calc(61svh*1.4993));max-height:61svh}}
 .cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
 .cmp .hung{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
-.cmp .tag2{position:absolute;top:14px;font-size:.75rem;padding:5px 12px;border-radius:999px;background:rgba(10,10,11,.66);color:var(--fg);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:opacity .4s}
-.cmp .tag2.a{left:14px}.cmp .tag2.b{right:14px}
-.cmp .dim2{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .5s var(--out);background:radial-gradient(circle at var(--sx,50%) var(--sy,50%),transparent 0,transparent 8%,rgba(10,10,11,.6) 24%)}
+.tag2{position:absolute;top:14px;font-size:.75rem;font-weight:600;padding:6px 13px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:opacity .4s}
+.tag2.a{left:14px}.tag2.b{right:14px}
+.dim2{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .5s var(--out);background:radial-gradient(circle at var(--sx,50%) var(--sy,50%),transparent 0,transparent 8%,rgba(0,0,0,.62) 24%)}
 .cmp.spot .dim2{opacity:1}
 .handle{position:absolute;top:0;bottom:0;left:var(--pos);width:44px;margin-left:-22px;cursor:ew-resize;touch-action:none;display:grid;place-items:center;background:none;border:0;padding:0;z-index:3}
-.handle:before{content:"";position:absolute;top:0;bottom:0;left:50%;width:1px;background:#fff}
-.handle i{position:relative;width:44px;height:44px;border-radius:50%;background:#fff;color:#111;display:grid;place-items:center;box-shadow:0 6px 24px rgba(0,0,0,.5)}
-.handle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.hot{position:absolute;z-index:2;display:block;border-radius:2px;outline-offset:6px;transition:opacity .3s}
+.handle:before{content:"";position:absolute;top:0;bottom:0;left:50%;width:1.5px;background:#fff}
+.handle i{position:relative;width:44px;height:44px;border-radius:50%;background:#fff;color:#000;display:grid;place-items:center;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.handle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hot{position:absolute;z-index:2;display:block;border-radius:2px;outline-offset:6px}
 .hot:before{content:"";position:absolute;inset:-10px}
-.hot:after{content:"";position:absolute;inset:-5px;border:1px solid rgba(255,255,255,.9);border-radius:1px;animation:ring 3s var(--out) infinite}
+.hot:after{content:"";position:absolute;inset:-5px;border:1px solid rgba(255,255,255,.9);border-radius:2px;animation:ring 3s var(--out) infinite}
 @keyframes ring{0%{opacity:0;inset:-2px}25%{opacity:.95}100%{opacity:0;inset:-14px}}
 .hot:hover:after,.hot:focus-visible:after{animation:none;opacity:1;inset:-5px}
 .hot[hidden]{display:none}
-.plate{position:absolute;z-index:4;left:var(--sx);top:var(--py);transform:translate(-50%,0);pointer-events:none;opacity:0;transition:opacity .35s var(--out);direction:rtl;text-align:center;white-space:nowrap;font-size:.8125rem;color:var(--fg-2)}
+.plate{position:absolute;z-index:4;left:var(--sx);top:var(--py);transform:translate(-50%,0);pointer-events:none;opacity:0;transition:opacity .35s var(--out);direction:rtl;text-align:center;white-space:nowrap;font-size:.8125rem;color:#d2d2d7}
 html[lang=en] .plate{direction:ltr}
-.plate b{display:block;font-family:var(--display);font-weight:500;font-size:1.5rem;line-height:1.3;color:#fff}
+.plate b{display:block;font-weight:700;font-size:1.15rem;line-height:1.5;color:#fff}
 .cmp.spot .plate{opacity:1}
-.room-note{font-size:.8125rem;color:var(--fg-2);margin-top:16px;max-width:none}
+.room-note{font-size:.75rem;color:#86868b;margin-top:10px;max-width:none;text-align:center}
 .swipe{display:none}
-@media (max-width:860px){.swipe{display:block}}
+@media (max-width:860px){.swipe{display:inline}.cmp{border-radius:0}}
 
-/* three sides */
-.sides3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);margin-top:clamp(18px,4vh,72px);border-top:1px solid var(--ink)}
-.sides3>div{padding-top:20px}
-.sides3 h3{font-size:clamp(1.5rem,min(2.6vw,4vh),2.4rem);margin-bottom:6px}
-.sides3 p{font-size:.9688rem;color:var(--mist)}
-.sides3 dl{margin-top:clamp(8px,1.8vh,18px);border-top:1px solid var(--line);grid-template-columns:auto 1fr;font-size:.9375rem}
-.sides3 dt{color:var(--mist)}
-@media (max-width:860px){.sides3{grid-template-columns:1fr;border-top:0}.sides3>div{border-top:1px solid var(--ink);padding-bottom:28px}}
+/* 3. three sides */
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:860px){.g3{grid-template-columns:1fr}}
 
-/* path, studio, model */
-.steps6{list-style:none;padding:0;counter-reset:p;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);margin-top:clamp(14px,3.4vh,64px)}
-.steps6 li{counter-increment:p;border-top:1px solid var(--hair);padding:clamp(10px,1.8vh,18px) 0 clamp(12px,2.6vh,44px)}
-.steps6 li:before{content:counter(p,persian);font-family:var(--display);font-size:1.25rem;color:var(--fg-2);display:block;margin-bottom:clamp(4px,1.4vh,28px)}
-html[lang=en] .steps6 li:before{content:counter(p)}
-.steps6 h3{font-size:1.5rem}
-.steps6 p{font-size:.9375rem;color:var(--fg-2);margin-top:4px}
-.steps6 .link{display:inline-block;margin-top:12px;font-size:.9375rem;color:var(--fg)}
-@media (max-width:860px){.steps6{grid-template-columns:1fr 1fr}}
-@media (max-width:520px){.steps6{grid-template-columns:1fr}}
-.rows{border-top:1px solid var(--hair);margin-top:4px}
-.rows>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:baseline;padding:clamp(8px,1.6vh,16px) 0;border-bottom:1px solid var(--hair);font-size:.9688rem}
-.rows span:last-child{color:var(--fg-2);font-size:.875rem}
-.light .rows,.light .rows>div{border-color:var(--line)}.light .rows span:last-child{color:var(--mist)}
-.calc{font-size:1.0625rem;color:var(--mist);margin-top:clamp(16px,2.4vh,28px)}
-.sum{font-family:var(--display);font-size:clamp(2.2rem,min(6vw,8.5vh),5.5rem);line-height:1.15;margin-top:2px}
-.note3{font-size:.8125rem;color:var(--mist);margin-top:clamp(8px,1.6vh,18px);max-width:60ch}
-.pz:not(.light) .note3{color:var(--fg-2)}
+/* 4. the buyer's path: a phone that shows each step */
+.path-copy{grid-column:1/span 6}
+.path-phone{grid-column:8/-1;display:grid;place-items:center}
+@media (max-width:900px){.path-copy,.path-phone{grid-column:1/-1}.path-phone{order:-1}}
+.steps7{list-style:none;padding:0;margin-top:clamp(10px,2.4vh,28px);display:grid}
+.steps7 button{width:100%;display:grid;grid-template-columns:auto 1fr;column-gap:16px;align-items:baseline;text-align:start;background:none;border:0;border-top:1px solid var(--k3);padding:clamp(7px,1.5vh,14px) 0;cursor:pointer;color:var(--t2);transition:color .4s var(--out)}
+.steps7 li:last-child button{border-bottom:1px solid var(--k3)}
+.steps7 i{font-style:normal;font-weight:700;font-size:.875rem;font-variant-numeric:tabular-nums}
+.steps7 b{font-weight:700;font-size:clamp(1rem,min(1.5vw,2.6vh),1.35rem)}
+.steps7 span.more{grid-column:2;display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--out);font-size:clamp(.8125rem,min(1vw,1.8vh),.9375rem);color:var(--t2)}
+.steps7 span.more>span{overflow:hidden}
+.steps7 button[aria-selected=true]{color:#fff}
+.steps7 button[aria-selected=true] span.more{grid-template-rows:1fr}
+.steps7 button:hover{color:#fff}
+.steps7 .go{display:inline-block;margin-top:4px;color:#fff;text-decoration:underline;text-underline-offset:4px}
+.ph{position:relative;height:min(64svh,580px);aspect-ratio:9/18.6;border-radius:clamp(30px,5.6vh,48px);background:#000;border:clamp(6px,1vh,9px) solid #2c2c2e;box-shadow:0 0 0 1.5px #48484a,0 40px 80px -30px rgba(0,0,0,.9);overflow:hidden}
+.ph:before{content:"";position:absolute;top:9px;left:50%;width:28%;height:20px;margin-left:-14%;border-radius:12px;background:#000;z-index:3}
+.scr{position:absolute;inset:0;opacity:0;transition:opacity .7s var(--out),transform .9s var(--out);transform:scale(1.03);display:grid;align-content:center;justify-items:center;text-align:center;padding:14%;gap:10px;color:#fff;font-size:.8125rem}
+.scr.on{opacity:1;transform:none}
+.scr b{font-weight:800;font-size:1.25rem;line-height:1.5}
+.scr small{color:#a1a1a6;font-size:.75rem}
+.scr.photo{padding:0}
+.scr.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scr.card{background:radial-gradient(120% 80% at 50% 0,#2a2a2d,#0b0b0c)}
+.scr .seal{width:44px;height:44px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-bottom:6px}
+.scr.scan{background:#0b0b0c}
+.scr .target{position:relative;width:100%;padding:9%}
+.scr .target img{width:100%;height:auto}
+.scr .target:before,.scr .target:after{content:"";position:absolute;width:22px;height:22px;border:2px solid #fff}
+.scr .target:before{top:0;left:0;border-right:0;border-bottom:0}.scr .target:after{bottom:0;right:0;border-left:0;border-top:0}
+.scr.wall{background:linear-gradient(175deg,#dedbd3,#bfbcb3 70%,#8f8c84);color:#1d1d1f;align-content:start;padding-top:38%}
+.scr.wall img{width:100%;height:auto;background:#fff;padding:4px;box-shadow:0 14px 24px -10px rgba(0,0,0,.55)}
+.scr.wall small{color:#48484a;margin-top:6px}
+.scr.form{background:#0b0b0c;justify-items:stretch;text-align:start}
+.scr.form u{display:block;height:34px;border-bottom:1px solid #3a3a3c;text-decoration:none;font-size:.6875rem;color:#86868b;padding-top:10px}
+.scr.form em{font-style:normal;display:grid;place-items:center;height:36px;border-radius:999px;background:#fff;color:#000;font-weight:700;font-size:.75rem;margin-top:10px}
 
-/* index dots */
-.dots{position:fixed;inset-inline-end:4px;top:50%;transform:translateY(-50%);z-index:var(--z-sticky);display:grid;gap:0}
+/* 5. studio: from a glance to a conversation */
+.studio-copy{grid-column:1/span 5}
+.funnel{grid-column:7/-1;display:grid;gap:clamp(6px,1.1vh,10px);justify-items:center}
+@media (max-width:900px){.studio-copy,.funnel{grid-column:1/-1}}
+.funnel div{width:var(--wd);min-height:clamp(42px,8.2vh,74px);border-radius:clamp(12px,1.4vw,18px);background:var(--w2);display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 clamp(14px,1.8vw,26px);font-weight:700;font-size:clamp(.875rem,min(1.2vw,2.1vh),1.0625rem)}
+.funnel div span:last-child{font-weight:500;color:var(--d2);font-size:.8125rem;white-space:nowrap}
+.funnel div:last-child{background:var(--d);color:#fff}
+.funnel div:last-child span:last-child{color:#d2d2d7}
+@media (max-width:560px){.funnel div{width:100%!important}}
+
+/* 6. business model */
+.g4{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(clamp(96px,19vh,180px),auto)}
+.g4 .hero-t{grid-column:span 2;grid-row:span 2;justify-content:flex-end;background:linear-gradient(160deg,#232326,#101011)}
+.g4 .wide{grid-column:span 2}
+.num{font-weight:800;font-size:clamp(2.6rem,min(8.5vw,15vh),8rem);line-height:1.1;font-variant-numeric:proportional-nums}
+.num.s{font-size:clamp(1.9rem,min(4vw,7.4vh),3.6rem)}
+.unit{font-weight:700;font-size:clamp(1.05rem,min(1.9vw,3.2vh),1.8rem)}
+.ticks2{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:clamp(3px,.8vh,8px) 20px;margin-top:8px;font-size:clamp(.8125rem,min(1vw,1.8vh),.9375rem);color:var(--t2)}
+.ticks2 li{padding-inline-start:16px;position:relative}
+.ticks2 li:before{content:"";position:absolute;inset-inline-start:0;top:.8em;width:6px;height:6px;border-radius:50%;background:var(--t2)}
+.fine{font-size:.75rem;color:#86868b;margin-top:clamp(8px,1.6vh,16px);max-width:none}
+@media (max-width:900px){.g4{grid-template-columns:1fr 1fr}.ticks2{grid-template-columns:1fr}}
+@media (max-width:520px){.g4{grid-template-columns:1fr}.g4 .hero-t,.g4 .wide{grid-column:auto}}
+
+/* 7. today */
+.g3b{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:860px){.g3b{grid-template-columns:1fr}}
+.pill{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;font-size:.75rem;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--w);color:var(--d2);margin-bottom:clamp(8px,1.8vh,18px)}
+.pill.on{color:var(--d)}
+.pill.on:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--go)}
+.end{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 30px;margin-top:clamp(14px,3vh,36px)}
+.end a.mail{color:var(--d2);font-size:.875rem}
+
+/* index dots, top bar, entrances */
+.dots{position:fixed;inset-inline-end:4px;top:50%;transform:translateY(-50%);z-index:var(--z-sticky);display:grid}
 .dots a{width:24px;height:22px;display:grid;place-items:center}
 .dots a:before{content:"";width:4px;height:4px;border-radius:50%;background:#fff;mix-blend-mode:difference;opacity:.3;transition:opacity .3s,transform .4s var(--out)}
-.dots a[aria-current=true]:before{opacity:1;transform:scale(1.7)}
+.dots a[aria-current=true]:before{opacity:1;transform:scale(1.8)}
 @media (max-width:1100px){.dots{display:none}}
-header.top .back{font-size:.875rem;color:var(--fg);opacity:.78;text-decoration:none;margin-inline-start:auto}
+header.top .back{font-size:.875rem;color:var(--t);opacity:.8;text-decoration:none;margin-inline-start:auto}
 header.top .back:hover{opacity:1}
 header.top .lang{margin-inline-start:0}
-@media (prefers-reduced-motion:reduce){.open>img,.hot:after{animation:none}html{scroll-snap-type:none}}
-.lat{font-family:var(--body);font-weight:500;font-size:.72em;direction:ltr;unicode-bidi:isolate;letter-spacing:-.01em}
+header.top.solid{background:rgba(0,0,0,.88)}
+.up{opacity:0;transform:translateY(28px) scale(.985)}
+.up.in{opacity:1;transform:none;transition:opacity .9s var(--out),transform 1.1s var(--out);transition-delay:calc(var(--n,0)*80ms)}
+@media (prefers-reduced-motion:reduce){.open>img,.hot:after,.down svg{animation:none}html{scroll-snap-type:none}.up{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -130,7 +191,6 @@ header.top .lang{margin-inline-start:0}
   <a class="back" href="/gallery"><span class="fa">مجموعه</span><span class="en">Collection</span></a>
   <button class="lang" id="langBtn" type="button" aria-label="Switch language"><span class="fa">English</span><span class="en">فارسی</span></button>
 </header>
-
 <nav class="dots" id="dots" aria-label="Sections"></nav>
 
 <main>
@@ -138,19 +198,16 @@ header.top .lang{margin-inline-start:0}
   <img src="/img/spaces/hall-hung.jpg" alt="">
   <div class="wrap rise">
     <h1><span class="fa">جایی که فضا، مجموعه می‌شود.</span><span class="en">Where a space becomes a collection.</span></h1>
-    <p class="big"><span class="fa">هوما آرت سه چیز کمیاب را در یک شب کنار هم می‌گذارد: خریدار منتخب، اثر گزیده و فضایی که معماری شناخته‌شده طراحی کرده است.</span><span class="en">Hooma Art brings three scarce things together in one evening: selected buyers, selected works, and a space designed by a known architect.</span></p>
+    <p class="ld"><span class="fa">خریدار منتخب، اثر گزیده و فضایی با امضای یک معمار. در یک شب.</span><span class="en">Selected buyers, selected works, and a space signed by an architect. In one evening.</span></p>
     <div class="actions"><a class="btn primary" href="/gallery"><span class="fa">مجموعه را ببینید</span><span class="en">See the collection</span></a><a class="btn" href="/artists"><span class="fa">هنرمند هستم</span><span class="en">I'm an artist</span></a></div>
-    <a class="down" href="#s2"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></i><span class="fa">معرفی پلتفرم، در هفت بخش</span><span class="en">The platform, in seven parts</span></a>
+    <a class="down" href="#s2"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg><span class="fa">هوما آرت چطور کار می‌کند</span><span class="en">How Hooma Art works</span></a>
   </div>
 </section>
 
 <section class="pz room" id="s2" data-name="فضا|The space">
-  <div class="wrap">
-    <p class="kick"><b><span class="fa">۱</span><span class="en">1</span></b><span class="fa">فضا</span><span class="en">The space</span></p>
-    <div class="cols">
-      <h2 class="c5"><span class="fa">همان سالن، با مجموعه‌ای روی دیوارهایش.</span><span class="en">The same hall, with a collection on its walls.</span></h2>
-      <p class="big c6" style="margin-top:0"><span class="fa">خط سفید را بکشید تا سالن را پیش و پس از هوما آرت ببینید. روی هر اثر بزنید: صفحهٔ واقعی همان اثر باز می‌شود.</span><span class="en">Drag the white line to see the hall before and after Hooma Art. Tap any work: its real page opens.</span></p>
-    </div>
+  <div class="wrap room-head">
+    <h2 class="hd"><span class="fa">همان سالن. حالا یک مجموعه.</span><span class="en">The same hall. Now a collection.</span></h2>
+    <p class="ld"><span class="fa">خط را بکشید. روی هر اثر بزنید تا صفحه‌اش باز شود.</span><span class="en">Drag the line. Tap any work to open its page.</span></p>
   </div>
   <div class="room-scroll" id="roomScroll">
     <div class="cmp" id="cmp">
@@ -170,108 +227,105 @@ header.top .lang{margin-inline-start:0}
     </div>
   </div>
   <div class="wrap">
-    <p class="room-note"><span class="swipe"><span class="fa">برای دیدن همهٔ سالن، تصویر را به چپ و راست بکشید. </span><span class="en">Swipe the picture sideways to see the whole hall. </span></span><span class="fa">تصویر مفهومی: آثار به‌صورت دیجیتال روی عکس یک سالن واقعی قرار گرفته‌اند. جای آثار، اندازه و نور تقریبی است. عکس فضا: Divan Development.</span><span class="en">Concept visualisation: the works are digitally placed on a photograph of a real hall. Positions, sizes and lighting are indicative. Photograph of the space: Divan Development.</span></p>
+    <p class="room-note"><span class="swipe"><span class="fa">تصویر را به چپ و راست بکشید. </span><span class="en">Swipe the picture sideways. </span></span><span class="fa">تصویر مفهومی: آثار به‌صورت دیجیتال روی عکس یک سالن واقعی قرار گرفته‌اند. عکس فضا: Divan Development.</span><span class="en">Concept visualisation: works digitally placed on a photograph of a real hall. Photograph of the space: Divan Development.</span></p>
   </div>
 </section>
 
-<section class="pz light" id="s3" data-name="سه طرف|Three sides">
+<section class="pz lt" id="s3" data-name="سه طرف|Three sides">
   <div class="wrap">
-    <p class="kick"><b><span class="fa">۲</span><span class="en">2</span></b><span class="fa">سه طرف</span><span class="en">Three sides</span></p>
-    <h2><span class="fa">هر طرف چیزی می‌دهد که دو طرف دیگر ندارند.</span><span class="en">Each side brings what the other two lack.</span></h2>
-    <div class="sides3">
-      <div><h3><span class="fa">خریدار</span><span class="en">Buyers</span></h3>
-        <p><span class="fa">مجموعه‌دار، صاحب کسب‌وکار و خانواده‌ای که خانه‌اش را می‌چیند، از شبکهٔ شخصی بنیان‌گذاران.</span><span class="en">Collectors, business owners and families furnishing a home, from the founders' personal network.</span></p>
-        <dl><dt><span class="fa">می‌دهد</span><span class="en">Gives</span></dt><dd><span class="fa">توجه و خرید</span><span class="en">Attention and purchases</span></dd>
-            <dt><span class="fa">می‌گیرد</span><span class="en">Gets</span></dt><dd><span class="fa">راهی خصوصی و مطمئن برای دیدن اثر در خانه‌ای واقعی، و دیدن آن روی دیوار خودش</span><span class="en">A private, trusted way to see art in a real home, and on their own wall</span></dd></dl></div>
-      <div><h3><span class="fa">هنرمند</span><span class="en">Artists</span></h3>
-        <p><span class="fa">نقاش، عکاس هنری، چاپگر و مجسمه‌ساز.</span><span class="en">Painters, fine-art photographers, printmakers and sculptors.</span></p>
-        <dl><dt><span class="fa">می‌دهد</span><span class="en">Gives</span></dt><dd><span class="fa">اثر، به امانت</span><span class="en">Works on consignment</span></dd>
-            <dt><span class="fa">می‌گیرد</span><span class="en">Gets</span></dt><dd><span class="fa">خریدار جدی، فضایی معماری‌شده و صفحه‌ای برای هر اثر، بدون هزینهٔ حضور</span><span class="en">Serious buyers, an architectural setting and a page per work, with no fee to take part</span></dd></dl></div>
-      <div><h3><span class="fa">صاحب فضا</span><span class="en">Space owners</span></h3>
-        <p><span class="fa">صاحب ویلا، معمار و سازنده.</span><span class="en">Villa owners, architects and developers.</span></p>
-        <dl><dt><span class="fa">می‌دهد</span><span class="en">Gives</span></dt><dd><span class="fa">یک شب از فضایش</span><span class="en">One evening of their space</span></dd>
-            <dt><span class="fa">می‌گیرد</span><span class="en">Gets</span></dt><dd><span class="fa">دیده شدن پیش مخاطبی گزیده، عکس و فیلم حرفه‌ای، بدون هزینه و با پروتکل مکتوب نگهداری</span><span class="en">Exposure to a select audience, professional photos and film, at no cost and with a written care protocol</span></dd></dl></div>
+    <h2 class="hd"><span class="fa">سه طرف. هر کدام چیزی که دو طرف دیگر ندارند.</span><span class="en">Three sides. Each brings what the others lack.</span></h2>
+    <div class="grid g3">
+      <article class="tile up"><div class="pic"><img src="/img/works/tango-in-red-ruby.jpg" alt="" loading="lazy"></div>
+        <h3><span class="fa">خریدار</span><span class="en">Buyers</span></h3>
+        <p><span class="fa">مجموعه‌دار، صاحب کسب‌وکار، خانواده‌ای که خانه‌اش را می‌چیند.</span><span class="en">Collectors, business owners, families furnishing a home.</span></p>
+        <dl class="kv"><dt><span class="fa">می‌دهد</span><span class="en">Gives</span></dt><dd><span class="fa">توجه و خرید</span><span class="en">Attention and purchases</span></dd><dt><span class="fa">می‌گیرد</span><span class="en">Gets</span></dt><dd><span class="fa">دیدن اثر در خانه‌ای واقعی، و روی دیوار خودش</span><span class="en">Art seen in a real home, and on their own wall</span></dd></dl></article>
+      <article class="tile up" style="--n:1"><div class="pic"><img src="/img/works/echo-of-the-soul.jpg" alt="" loading="lazy"></div>
+        <h3><span class="fa">هنرمند</span><span class="en">Artists</span></h3>
+        <p><span class="fa">نقاش، عکاس هنری، چاپگر و مجسمه‌ساز.</span><span class="en">Painters, fine-art photographers, printmakers, sculptors.</span></p>
+        <dl class="kv"><dt><span class="fa">می‌دهد</span><span class="en">Gives</span></dt><dd><span class="fa">اثر، به امانت</span><span class="en">Works on consignment</span></dd><dt><span class="fa">می‌گیرد</span><span class="en">Gets</span></dt><dd><span class="fa">خریدار جدی و صفحه‌ای برای هر اثر، بدون هزینه</span><span class="en">Serious buyers and a page per work, at no fee</span></dd></dl></article>
+      <article class="tile up" style="--n:2"><div class="pic"><img src="/img/spaces/hall-empty.jpg" alt="" loading="lazy" style="object-position:70% 70%"></div>
+        <h3><span class="fa">صاحب فضا</span><span class="en">Space owners</span></h3>
+        <p><span class="fa">صاحب ویلا، معمار و سازنده.</span><span class="en">Villa owners, architects, developers.</span></p>
+        <dl class="kv"><dt><span class="fa">می‌دهد</span><span class="en">Gives</span></dt><dd><span class="fa">یک شب از فضایش</span><span class="en">One evening of their space</span></dd><dt><span class="fa">می‌گیرد</span><span class="en">Gets</span></dt><dd><span class="fa">مخاطبی گزیده، عکس و فیلم حرفه‌ای، بدون هزینه</span><span class="en">A select audience, professional photo and film, at no cost</span></dd></dl></article>
     </div>
   </div>
 </section>
 
 <section class="pz" id="s4" data-name="مسیر خریدار|The buyer's path">
+  <div class="wrap cols">
+    <div class="path-copy">
+      <h2 class="hd"><span class="fa">از دعوت‌نامه تا دیوار خانه.</span><span class="en">From the invitation to the wall at home.</span></h2>
+      <ol class="steps7" id="steps" role="tablist">
+        <li><button type="button" role="tab" aria-selected="true"><i><span class="fa">۱</span><span class="en">1</span></i><b><span class="fa">دعوت به نام</span><span class="en">Invited by name</span></b><span class="more"><span><span class="fa">بلیتی فروخته نمی‌شود. فهرست مهمانان به هیچ‌کس داده نمی‌شود.</span><span class="en">No tickets are sold. The guest list is shared with no one.</span></span></span></button></li>
+        <li><button type="button" role="tab" aria-selected="false"><i><span class="fa">۲</span><span class="en">2</span></i><b><span class="fa">یک شب در خانه‌ای معماری‌شده</span><span class="en">One evening in an architect's house</span></b><span class="more"><span><span class="fa">حدود پنجاه مهمان. آثار با نور گالری.</span><span class="en">About fifty guests. Works under gallery lighting.</span></span></span></button></li>
+        <li><button type="button" role="tab" aria-selected="false"><i><span class="fa">۳</span><span class="en">3</span></i><b><span class="fa">گوشی رو به اثر</span><span class="en">Phone toward the work</span></b><span class="more"><span><span class="fa">صفحهٔ اثر باز می‌شود: داستان، تکنیک، ابعاد. </span><span class="en">Its page opens: story, medium, size. </span><a class="go" href="/scan" target="_blank" rel="noopener"><span class="fa">اسکنر واقعی را باز کنید</span><span class="en">Open the real scanner</span></a></span></span></button></li>
+        <li><button type="button" role="tab" aria-selected="false"><i><span class="fa">۴</span><span class="en">4</span></i><b><span class="fa">روی دیوار خودش</span><span class="en">On their own wall</span></b><span class="more"><span><span class="fa">در خانه، با دوربین، در اندازهٔ واقعی. </span><span class="en">At home, through the camera, at true size. </span><a class="go" href="/wall" target="_blank" rel="noopener"><span class="fa">ابزار واقعی را باز کنید</span><span class="en">Open the real tool</span></a></span></span></button></li>
+        <li><button type="button" role="tab" aria-selected="false"><i><span class="fa">۵</span><span class="en">5</span></i><b><span class="fa">بازدید خصوصی</span><span class="en">A private viewing</span></b><span class="more"><span><span class="fa">درخواست مستقیم به تیم می‌رسد. قیمت در گفت‌وگو اعلام می‌شود.</span><span class="en">The request goes straight to the team. The price is shared in conversation.</span></span></span></button></li>
+        <li><button type="button" role="tab" aria-selected="false"><i><span class="fa">۶</span><span class="en">6</span></i><b><span class="fa">خرید، رو در رو</span><span class="en">The purchase, in person</span></b><span class="more"><span><span class="fa">بدون سبد خرید و بدون پرداخت آنلاین.</span><span class="en">No cart and no online payment.</span></span></span></button></li>
+      </ol>
+    </div>
+    <div class="path-phone">
+      <div class="ph" id="phone" aria-hidden="true">
+        <div class="scr card on"><svg class="seal" viewBox="0 0 40 40"><path d="M6 31C8 16 18 6 34 5c-1 15-10 25-25 27l12-13"/></svg><b><span class="fa">دعوت‌نامه</span><span class="en">Invitation</span></b><small><span class="fa">به نام شما</span><span class="en">In your name</span></small></div>
+        <div class="scr photo"><img src="/img/spaces/hall-hung.jpg" alt="" style="object-position:22% 60%"></div>
+        <div class="scr scan"><div class="target"><img src="/img/works/galaxy.jpg" alt=""></div><b class="wt" data-id="galaxy"></b><small><span class="fa">صفحهٔ اثر</span><span class="en">The work's page</span></small></div>
+        <div class="scr wall"><img src="/img/works/parishan-lake.jpg" alt=""><small><span class="fa">روی دیوار شما، اندازهٔ واقعی</span><span class="en">On your wall, at true size</span></small></div>
+        <div class="scr form"><b><span class="fa">بازدید خصوصی</span><span class="en">Private viewing</span></b><u><span class="fa">نام</span><span class="en">Name</span></u><u><span class="fa">شمارهٔ تماس</span><span class="en">Phone</span></u><em><span class="fa">درخواست را بفرست</span><span class="en">Send the request</span></em></div>
+        <div class="scr card"><b><span class="fa">رو در رو</span><span class="en">In person</span></b><small><span class="fa">بدون سبد خرید</span><span class="en">No cart</span></small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pz lt" id="s5" data-name="استودیو|The Studio">
+  <div class="wrap cols">
+    <div class="studio-copy">
+      <p class="eyebrow"><span class="fa">استودیو</span><span class="en">The Studio</span></p>
+      <h2><span class="fa">از یک نگاه، تا یک گفت‌وگو.</span><span class="en">From a glance to a conversation.</span></h2>
+      <p class="ld"><span class="fa">هر بازدید، اسکن و درخواست شمرده می‌شود. اعداد واقعی‌اند و دربارهٔ بازدیدکننده چیزی ذخیره نمی‌شود.</span><span class="en">Every view, scan and request is counted. The numbers are real, and nothing about the visitor is stored.</span></p>
+      <div class="actions"><a class="btn primary" href="/admin" target="_blank" rel="noopener"><span class="fa">باز کردن استودیو</span><span class="en">Open the Studio</span></a></div>
+    </div>
+    <div class="funnel">
+      <div class="up" style="--wd:100%"><span><span class="fa">باز شدن صفحهٔ اثر</span><span class="en">Work page opened</span></span><span><span class="fa">علاقهٔ اولیه</span><span class="en">First interest</span></span></div>
+      <div class="up" style="--wd:86%;--n:1"><span><span class="fa">اسکن اثر در رویداد</span><span class="en">Work scanned at the event</span></span><span><span class="fa">جلوی اثر ایستاد</span><span class="en">Stopped at the work</span></span></div>
+      <div class="up" style="--wd:72%;--n:2"><span><span class="fa">نمایش روی دیوار خانه</span><span class="en">Viewed on a wall at home</span></span><span><span class="fa">قصد جدی</span><span class="en">Serious intent</span></span></div>
+      <div class="up" style="--wd:58%;--n:3"><span><span class="fa">درخواست بازدید خصوصی</span><span class="en">Private viewing requested</span></span><span><span class="fa">آمادهٔ گفت‌وگو</span><span class="en">Ready to talk</span></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="pz" id="s6" data-name="مدل درآمد|Business model">
   <div class="wrap">
-    <p class="kick"><b><span class="fa">۳</span><span class="en">3</span></b><span class="fa">مسیر خریدار</span><span class="en">The buyer's path</span></p>
-    <h2><span class="fa">از دعوت‌نامه تا دیوار خانه.</span><span class="en">From the invitation to the wall at home.</span></h2>
-    <ol class="steps6">
-      <li><h3><span class="fa">دعوت به نام</span><span class="en">Invited by name</span></h3><p><span class="fa">بلیتی فروخته نمی‌شود. فهرست مهمانان به هیچ‌کس داده نمی‌شود.</span><span class="en">No tickets are sold. The guest list is shared with no one.</span></p></li>
-      <li><h3><span class="fa">یک شب در خانه‌ای معماری‌شده</span><span class="en">One evening in an architect's house</span></h3><p><span class="fa">حدود پنجاه مهمان، آثار با نور گالری.</span><span class="en">About fifty guests, works under gallery lighting.</span></p></li>
-      <li><h3><span class="fa">گوشی رو به اثر</span><span class="en">Phone toward the work</span></h3><p><span class="fa">صفحهٔ اثر باز می‌شود: داستان، تکنیک، ابعاد.</span><span class="en">Its page opens: story, medium, size.</span></p><a class="link" href="/scan" target="_blank" rel="noopener"><span class="fa">اسکنر واقعی را باز کنید</span><span class="en">Open the real scanner</span></a></li>
-      <li><h3><span class="fa">روی دیوار خودش</span><span class="en">On their own wall</span></h3><p><span class="fa">در خانه، با دوربین، در اندازهٔ واقعی.</span><span class="en">At home, through the camera, at true size.</span></p><a class="link" href="/wall" target="_blank" rel="noopener"><span class="fa">ابزار واقعی را باز کنید</span><span class="en">Open the real tool</span></a></li>
-      <li><h3><span class="fa">بازدید خصوصی</span><span class="en">A private viewing</span></h3><p><span class="fa">درخواست مستقیم به تیم می‌رسد. قیمت در گفت‌وگو اعلام می‌شود.</span><span class="en">The request goes straight to the team. The price is shared in conversation.</span></p></li>
-      <li><h3><span class="fa">خرید، رو در رو</span><span class="en">The purchase, in person</span></h3><p><span class="fa">بدون سبد خرید و بدون پرداخت آنلاین.</span><span class="en">No cart and no online payment.</span></p></li>
-    </ol>
+    <h2 class="hd"><span class="fa">رویداد را حامی می‌سازد. درآمد را فروش.</span><span class="en">The sponsor funds the event. Sales bring the income.</span></h2>
+    <div class="grid g4">
+      <div class="tile hero-t up"><p class="eyebrow"><span class="fa">حمایت از رویداد نخست</span><span class="en">Sponsorship of the first event</span></p><div class="num"><span class="fa">۷۵۰</span><span class="en">750</span></div><div class="unit"><span class="fa">میلیون تومان</span><span class="en">million toman</span></div></div>
+      <div class="tile up" style="--n:1"><div class="num s"><span class="fa">۵۰</span><span class="en">50</span></div><h3><span class="fa">مهمان</span><span class="en">guests</span></h3><p><span class="fa">هر کدام با نام دعوت می‌شوند.</span><span class="en">Each one invited by name.</span></p></div>
+      <div class="tile up" style="--n:2"><div class="num s"><span class="fa">۱۵</span><span class="en">15</span></div><h3><span class="fa">میلیون تومان</span><span class="en">million toman</span></h3><p><span class="fa">حدود هزینهٔ میزبانی هر مهمان.</span><span class="en">About the hosting cost per guest.</span></p></div>
+      <div class="tile wide up" style="--n:3"><h3><span class="fa">حامی اصلی چه می‌گیرد</span><span class="en">What the lead sponsor receives</span></h3>
+        <ul class="ticks2">
+          <li><span class="fa">عنوان «حامی اصلی» و انحصار در دستهٔ خود</span><span class="en">The "lead sponsor" title and category exclusivity</span></li>
+          <li><span class="fa">فضای نمایش محصول در رویداد</span><span class="en">A product display area at the event</span></li>
+          <li><span class="fa">معرفی کوتاه و آشنایی شخصی با مهمانان</span><span class="en">A short introduction and personal introductions</span></li>
+          <li><span class="fa">پنج صندلی از پنجاه برای مشتریان خود</span><span class="en">Five of the fifty seats for their clients</span></li>
+          <li><span class="fa">عکس و فیلم حرفه‌ای از شب</span><span class="en">Professional photo and video</span></li>
+        </ul></div>
+    </div>
+    <p class="fine"><span class="fa">هوما آرت از هر فروش درصدی می‌گیرد که با هنرمند توافق و در قرارداد امانت نوشته می‌شود؛ اگر اثری فروخته نشود، هنرمند چیزی نمی‌پردازد. حامی سرمایه‌گذار نیست و سهمی در سود نمی‌گیرد. فهرست مهمانان به حامی داده نمی‌شود.</span><span class="en">Hooma Art takes a percentage of each sale, agreed with the artist and written into the consignment agreement; if a work does not sell, the artist pays nothing. The sponsor is not an investor and receives no profit share. The guest list is not shared with the sponsor.</span></p>
   </div>
 </section>
 
-<section class="pz" id="s5" data-name="استودیو|The Studio">
-  <div class="wrap cols">
-    <div class="c5">
-      <p class="kick"><b><span class="fa">۴</span><span class="en">4</span></b><span class="fa">استودیو</span><span class="en">The Studio</span></p>
-      <h2><span class="fa">پیش از گفت‌وگو می‌دانیم کدام اثر دیده شده است.</span><span class="en">Before the conversation, we know which work was looked at.</span></h2>
-      <p class="big"><span class="fa">هر اسکن، هر نمایش روی دیوار و هر درخواست در استودیوی هوما آرت شمرده می‌شود. اعداد واقعی‌اند و از همین سایت می‌آیند.</span><span class="en">Every scan, every wall view and every request is counted in the Hooma Art Studio. The numbers are real and come from this site.</span></p>
-      <div class="actions"><a class="btn" href="/admin" target="_blank" rel="noopener"><span class="fa">باز کردن استودیو</span><span class="en">Open the Studio</span></a></div>
+<section class="pz lt" id="s7" data-name="امروز|Today">
+  <div class="wrap">
+    <h2 class="hd"><span class="fa">ساخته شده. روی <span class="lat">hoomaart.ir</span> کار می‌کند.</span><span class="en">Built. Running at hoomaart.ir.</span></h2>
+    <div class="grid g3b">
+      <div class="tile up"><span class="pill on"><span class="fa">کار می‌کند</span><span class="en">Working</span></span><h3><span class="fa">صفحهٔ هر اثر، اسکن و دیوار</span><span class="en">Work pages, scan and wall view</span></h3><p><span class="fa">با دوربین گوشی، بدون نصب برنامه.</span><span class="en">With the phone camera, no app to install.</span></p></div>
+      <div class="tile up" style="--n:1"><span class="pill on"><span class="fa">کار می‌کند</span><span class="en">Working</span></span><h3><span class="fa">درخواست‌ها، مدیریت و استودیو</span><span class="en">Requests, admin and the Studio</span></h3><p><span class="fa">هر درخواست مستقیم به تیم می‌رسد.</span><span class="en">Every request reaches the team directly.</span></p></div>
+      <div class="tile up" style="--n:2"><span class="pill on"><span class="fa">روی سایت</span><span class="en">On the site</span></span><h3><span class="fa">مجموعهٔ نخست</span><span class="en">The first collection</span></h3><p><span class="fa">هفت عکس از عکاس هوما آرت.</span><span class="en">Seven photographs by Hooma Art's photographer.</span></p></div>
+      <div class="tile up" style="--n:3"><span class="pill"><span class="fa">قدم بعدی</span><span class="en">Next</span></span><h3><span class="fa">جذب نخستین هنرمندان</span><span class="en">Signing the first artists</span></h3></div>
+      <div class="tile up" style="--n:4"><span class="pill"><span class="fa">در حال آماده‌سازی</span><span class="en">In preparation</span></span><h3><span class="fa">رویداد نخست، با حامی</span><span class="en">The first event, with a sponsor</span></h3></div>
+      <div class="tile up" style="--n:5"><span class="pill"><span class="fa">پس از رویداد نخست</span><span class="en">After the first event</span></span><h3><span class="fa">درآمد تکرارشونده از پلتفرم</span><span class="en">Recurring revenue from the platform</span></h3></div>
     </div>
-    <div class="c6">
-      <div class="rows">
-        <div><span><span class="fa">باز شدن صفحهٔ هر اثر</span><span class="en">Work pages opened</span></span><span><span class="fa">علاقهٔ اولیه</span><span class="en">First interest</span></span></div>
-        <div><span><span class="fa">اسکن اثر در رویداد</span><span class="en">Works scanned at the event</span></span><span><span class="fa">مهمان جلوی کدام اثر ایستاد</span><span class="en">Which work a guest stopped at</span></span></div>
-        <div><span><span class="fa">نمایش روی دیوار خانه</span><span class="en">Works viewed on a wall at home</span></span><span><span class="fa">قصد جدی</span><span class="en">Serious intent</span></span></div>
-        <div><span><span class="fa">درخواست بازدید خصوصی</span><span class="en">Private viewing requests</span></span><span><span class="fa">آمادهٔ گفت‌وگو</span><span class="en">Ready to talk</span></span></div>
-        <div><span><span class="fa">هنرمندانی که اثر خود را امتحان کرده‌اند</span><span class="en">Artists who tried their own work</span></span><span><span class="fa">عرضهٔ آینده</span><span class="en">Future supply</span></span></div>
-      </div>
-      <p class="note3"><span class="fa">دربارهٔ بازدیدکننده چیزی ذخیره نمی‌شود: فقط نوع رویداد، اثر و روز.</span><span class="en">Nothing about the visitor is stored: only the kind of event, the work and the day.</span></p>
-    </div>
-  </div>
-</section>
-
-<section class="pz light" id="s6" data-name="مدل درآمد|Business model">
-  <div class="wrap cols">
-    <div class="c5">
-      <p class="kick"><b><span class="fa">۵</span><span class="en">5</span></b><span class="fa">مدل درآمد</span><span class="en">Business model</span></p>
-      <h2><span class="fa">رویداد را حامی می‌سازد. فروش، درآمد را.</span><span class="en">The sponsor funds the event. Sales bring the income.</span></h2>
-      <p class="big"><span class="fa">حامی اصلی هزینهٔ کامل میزبانی یک شب را می‌پردازد. هوما آرت از هر فروش درصدی می‌گیرد که با هنرمند توافق و در قرارداد امانت نوشته می‌شود. اگر اثری فروخته نشود، هنرمند چیزی نمی‌پردازد.</span><span class="en">A lead sponsor pays the full hosting cost of one evening. Hooma Art takes a percentage of each sale, agreed with the artist and written into the consignment agreement. If a work does not sell, the artist pays nothing.</span></p>
-    </div>
-    <div class="c6">
-      <p class="kick" style="margin-bottom:0"><span class="fa">حمایت از رویداد نخست</span><span class="en">Sponsorship of the first event</span></p>
-      <p class="calc"><span class="fa">۵۰ مهمان، هر مهمان حدود ۱۵ میلیون تومان</span><span class="en">50 guests, at about 15 million toman each</span></p>
-      <p class="sum"><span class="fa">۷۵۰ میلیون تومان</span><span class="en">750 million toman</span></p>
-      <div class="rows" style="margin-top:clamp(10px,2vh,28px)">
-        <div><span><span class="fa">عنوان «حامی اصلی» و انحصار در دستهٔ خود</span><span class="en">The "lead sponsor" title and category exclusivity</span></span><span></span></div>
-        <div><span><span class="fa">فضای نمایش محصول در خود رویداد</span><span class="en">A product display area inside the event</span></span><span></span></div>
-        <div><span><span class="fa">زمانی کوتاه برای معرفی و آشنایی شخصی با مهمانان</span><span class="en">A short introduction slot and personal introductions to guests</span></span><span></span></div>
-        <div><span><span class="fa">پنج صندلی از پنجاه صندلی برای مشتریان خود</span><span class="en">Five of the fifty seats for their own clients</span></span><span></span></div>
-        <div><span><span class="fa">عکس و فیلم حرفه‌ای از شب</span><span class="en">Professional photo and video content</span></span><span></span></div>
-      </div>
-      <p class="note3"><span class="fa">حامی سرمایه‌گذار نیست و سهم یا شراکتی در سود نمی‌گیرد. فهرست و اطلاعات تماس مهمانان به حامی داده نمی‌شود.</span><span class="en">The sponsor is not an investor and receives no equity or profit share. The guest list and contact details are not shared with the sponsor.</span></p>
-    </div>
-  </div>
-</section>
-
-<section class="pz" id="s7" data-name="امروز|Today">
-  <div class="wrap cols">
-    <div class="c5">
-      <p class="kick"><b><span class="fa">۶</span><span class="en">6</span></b><span class="fa">امروز</span><span class="en">Today</span></p>
-      <h2><span class="fa">پلتفرم ساخته شده و روی <span class="lat">hoomaart.ir</span> کار می‌کند.</span><span class="en">The platform is built and running at hoomaart.ir.</span></h2>
-      <div class="actions"><a class="btn primary" href="/gallery"><span class="fa">مجموعه را ببینید</span><span class="en">See the collection</span></a><a class="btn" href="https://wa.me/989123800864" target="_blank" rel="noopener"><span class="fa">گفت‌وگو در واتس‌اپ</span><span class="en">Talk on WhatsApp</span></a></div>
-    </div>
-    <div class="c6">
-      <div class="rows">
-        <div><span><span class="fa">صفحهٔ هر اثر، اسکن با دوربین و نمایش روی دیوار</span><span class="en">A page per work, camera scan and wall view</span></span><span><span class="fa">کار می‌کند</span><span class="en">Working</span></span></div>
-        <div><span><span class="fa">درخواست بازدید و همکاری، با پنل مدیریت و استودیو</span><span class="en">Viewing and partnership requests, with an admin panel and the Studio</span></span><span><span class="fa">کار می‌کند</span><span class="en">Working</span></span></div>
-        <div><span><span class="fa">مجموعهٔ نخست: هفت عکس از عکاس هوما آرت</span><span class="en">First collection: seven photographs by Hooma Art's photographer</span></span><span><span class="fa">روی سایت</span><span class="en">On the site</span></span></div>
-        <div><span><span class="fa">جذب نخستین هنرمندان</span><span class="en">Signing the first artists</span></span><span><span class="fa">قدم بعدی</span><span class="en">Next</span></span></div>
-        <div><span><span class="fa">رویداد نخست، با حامی</span><span class="en">The first event, with a sponsor</span></span><span><span class="fa">در حال آماده‌سازی</span><span class="en">In preparation</span></span></div>
-        <div><span><span class="fa">درآمد تکرارشونده از پلتفرم</span><span class="en">Recurring revenue from the platform</span></span><span><span class="fa">پس از رویداد نخست</span><span class="en">After the first event</span></span></div>
-      </div>
-      <p class="note3" dir="ltr" style="text-align:start">info@nazarbanai.com</p>
-    </div>
+    <div class="end"><div class="actions" style="margin-top:0"><a class="btn primary" href="/gallery"><span class="fa">مجموعه را ببینید</span><span class="en">See the collection</span></a><a class="btn" href="https://wa.me/989123800864" target="_blank" rel="noopener"><span class="fa">گفت‌وگو در واتس‌اپ</span><span class="en">Talk on WhatsApp</span></a></div><a class="mail" href="mailto:info@nazarbanai.com" dir="ltr">info@nazarbanai.com</a></div>
   </div>
 </section>
 </main>
@@ -284,35 +338,41 @@ header.top .lang{margin-inline-start:0}
   let lang = 'fa', works = [];
   const L = (o) => (o && (o[lang] || o.fa || o.en)) || '';
 
-  /* language, shared with the main site */
+  /* language, shared with the gallery */
   function setLang(l, save) {
     lang = l === 'en' ? 'en' : 'fa'; const h = document.documentElement; h.lang = lang; h.dir = lang === 'fa' ? 'rtl' : 'ltr';
     if (save) try { localStorage.setItem('hooma-lang', lang); } catch {}
     document.title = lang === 'fa' ? 'هوما آرت | Hooma Art' : 'Hooma Art | هوما آرت';
     $$('#dots a').forEach((a) => { a.setAttribute('aria-label', a.dataset[lang]); a.title = a.dataset[lang]; });
+    $$('.wt').forEach((b) => { const w = works.find((x) => x.id === b.dataset.id); b.textContent = w ? L(w.title) : ''; });
   }
   $('#langBtn').addEventListener('click', () => setLang(lang === 'fa' ? 'en' : 'fa', true));
 
-  /* header + section index */
+  /* top bar + section index + keyboard presenting */
   const top = $('#top'), secs = $$('.pz'), dots = $('#dots');
   dots.innerHTML = secs.map((s) => { const [fa, en] = s.dataset.name.split('|'); return '<a href="#' + s.id + '" data-fa="' + fa + '" data-en="' + en + '"></a>'; }).join('');
-  let cur = 0;
+  let cur = -1;
   const onScroll = () => {
     top.classList.toggle('solid', scrollY > 24);
     const mid = scrollY + innerHeight / 2; let k = 0;
     secs.forEach((s, i) => { if (s.offsetTop <= mid) k = i; });
-    if (k !== cur || !dots.querySelector('[aria-current=true]')) { cur = k; $$('#dots a').forEach((a, i) => a.setAttribute('aria-current', String(i === k))); }
+    if (k !== cur) { cur = k; $$('#dots a').forEach((a, i) => a.setAttribute('aria-current', String(i === k))); }
   };
   addEventListener('scroll', onScroll, { passive: true });
-  /* presenting with the keyboard: arrows, space and page keys move one section */
   addEventListener('keydown', (e) => {
-    if (e.target.closest('input, textarea, [role=slider]') || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.target.closest('input, textarea, [role=slider], [role=tab]') || e.metaKey || e.ctrlKey || e.altKey) return;
     const d = ['ArrowDown', 'PageDown', ' '].includes(e.key) ? 1 : ['ArrowUp', 'PageUp'].includes(e.key) ? -1 : 0; if (!d) return;
     const n = secs[Math.max(0, Math.min(secs.length - 1, cur + d))]; if (!n) return;
     e.preventDefault(); n.scrollIntoView({ behavior: still ? 'instant' : 'smooth' });
   });
 
-  /* before and after */
+  /* tiles rise into place; they are visible by default and only hidden once we know we can reveal them */
+  if (!still && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -6% 0px' });
+    $$('.up').forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) return el.classList.add('in'); io.observe(el); });
+  } else $$('.up').forEach((el) => el.classList.add('in'));
+
+  /* the room: before and after */
   const cmp = $('#cmp'), handle = $('#handle'), plate = $('#plate');
   let pos = 98;
   function setPos(p) {
@@ -324,7 +384,6 @@ header.top .lang{margin-inline-start:0}
   handle.addEventListener('pointerdown', (e) => { handle.setPointerCapture(e.pointerId); cmp.classList.remove('spot'); });
   handle.addEventListener('pointermove', (e) => { if (handle.hasPointerCapture(e.pointerId)) setPos(fromX(e.clientX)); });
   handle.addEventListener('keydown', (e) => { const d = e.key === 'ArrowLeft' ? -4 : e.key === 'ArrowRight' ? 4 : 0; if (d) { e.preventDefault(); setPos(pos + d); } });
-  // the works arrive on the walls the first time the room comes into view
   let played = false;
   function play() {
     if (played) return; played = true; if (still) return setPos(98);
@@ -333,14 +392,11 @@ header.top .lang{margin-inline-start:0}
     requestAnimationFrame(step);
   }
   if ('IntersectionObserver' in window) new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { play(); o.disconnect(); } }), { threshold: 0.35 }).observe(cmp); else setPos(98);
-  // on phones the hall is wider than the screen: start on the wall with three works
-  const rs = $('#roomScroll'); rs.scrollLeft = 0;
-
-  /* works on the wall: light one up, open its real page */
+  $('#roomScroll').scrollLeft = 0;
   function label(h) {
-    const w = works.find((x) => x.id === h.dataset.id); const l = parseFloat(h.style.left), wd = parseFloat(h.style.width), t = parseFloat(h.style.top), ht = parseFloat(h.style.height);
-    cmp.style.setProperty('--sx', l + wd / 2 + '%'); cmp.style.setProperty('--sy', t + ht / 2 + '%'); cmp.style.setProperty('--py', 'calc(' + (t + ht) + '% + 18px)');
-    $('b', plate).textContent = w ? L(w.title) : ''; $('span', plate).textContent = lang === 'fa' ? 'باز کردن صفحهٔ اثر' : 'Open the work\'s page';
+    const w = works.find((x) => x.id === h.dataset.id), l = parseFloat(h.style.left), wd = parseFloat(h.style.width), t = parseFloat(h.style.top), ht = parseFloat(h.style.height);
+    cmp.style.setProperty('--sx', l + wd / 2 + '%'); cmp.style.setProperty('--sy', t + ht / 2 + '%'); cmp.style.setProperty('--py', 'calc(' + (t + ht) + '% + 16px)');
+    $('b', plate).textContent = w ? L(w.title) : ''; $('span', plate).textContent = lang === 'fa' ? 'باز کردن صفحهٔ اثر' : "Open the work's page";
     cmp.classList.add('spot');
   }
   $$('.hot', cmp).forEach((h) => {
@@ -349,11 +405,28 @@ header.top .lang{margin-inline-start:0}
     ['pointerleave', 'blur'].forEach((ev) => h.addEventListener(ev, () => cmp.classList.remove('spot')));
   });
 
+  /* the buyer's path: choosing a step changes the phone; it plays by itself until someone takes over */
+  const tabs = $$('#steps [role=tab]'), screens = $$('#phone .scr'), pathSec = $('#s4');
+  let step = 0, auto = !still, timer = 0, inView = false;
+  function showStep(i) {
+    step = (i + tabs.length) % tabs.length;
+    tabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === step)));
+    screens.forEach((s, k) => s.classList.toggle('on', k === step));
+  }
+  const tick = () => { clearTimeout(timer); if (auto && inView) timer = setTimeout(() => { showStep(step + 1); tick(); }, 3400); };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => { auto = false; clearTimeout(timer); showStep(i); });
+    t.addEventListener('keydown', (e) => { const d = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0; if (!d) return; e.preventDefault(); auto = false; clearTimeout(timer); showStep(step + d); tabs[step].focus(); });
+  });
+  $$('#steps a').forEach((a) => a.addEventListener('click', (e) => e.stopPropagation()));
+  if ('IntersectionObserver' in window) new IntersectionObserver((es) => es.forEach((e) => { inView = e.isIntersecting; tick(); }), { threshold: 0.5 }).observe(pathSec);
+
   let l0 = 'fa'; try { l0 = new URLSearchParams(location.search).get('lang') || localStorage.getItem('hooma-lang') || 'fa'; } catch {}
   setLang(l0); onScroll();
   fetch('/api/works').then((r) => r.json()).then((w) => {
     works = Array.isArray(w) ? w : [];
     $$('.hot', cmp).forEach((h) => { const x = works.find((y) => y.id === h.dataset.id); if (x) h.setAttribute('aria-label', L(x.title)); else h.remove(); });
+    setLang(lang);
   }).catch(() => {});
 })();
 </script>
