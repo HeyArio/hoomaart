@@ -84,3 +84,20 @@ section{scroll-margin-top:84px}
 .form-msg.ok,.form-note{color:#12714A}.form-msg.bad{color:#A3261B}
 .f.bad input,.f.bad textarea{border-color:#A3261B}
 .journey{border-top:0}
+
+/* the curved wall of works */
+.arc-sec{padding:clamp(48px,7vw,104px) 0;overflow:hidden}
+.arc-sec .wrap{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 32px}
+.arc-sec h2{font-size:clamp(1.7rem,3.6vw,3rem);font-weight:800}
+.arc-sec .sub2{color:var(--i2);max-width:40ch}
+.arc{margin-top:clamp(20px,3vw,40px)}
+.arc-row{--tw:clamp(250px,31vw,460px);display:flex;gap:clamp(10px,1.3vw,20px);direction:ltr;overflow-x:auto;scrollbar-width:none;perspective:1500px;perspective-origin:50% 50%;
+  padding:clamp(34px,5vw,70px) calc(50% - var(--tw)/2);cursor:grab;outline-offset:-4px}
+.arc-row::-webkit-scrollbar{display:none}
+.arc-tile{flex:none;width:var(--tw);aspect-ratio:3/2;border-radius:clamp(14px,1.6vw,24px);overflow:hidden;background:var(--tile);transform-style:preserve-3d;will-change:transform;box-shadow:0 24px 50px -28px rgba(0,0,0,.5);transition:box-shadow .5s var(--out)}
+.arc-tile img{width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform 1.2s var(--out)}
+.arc-tile.mid{box-shadow:0 34px 70px -30px rgba(0,0,0,.6)}
+.arc-tile:hover img{transform:scale(1.05)}
+.arc-cap{text-align:center;margin:0 auto;max-width:none;min-height:3.2em;font-size:.875rem;color:var(--i2)}
+.arc-cap b{display:block;color:var(--i);font-weight:700;font-size:1.125rem}
+@media (prefers-reduced-motion:reduce){.arc-tile{transform:none!important}}

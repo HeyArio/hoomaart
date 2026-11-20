@@ -110,9 +110,11 @@ html[lang=en] .link3{line-height:1.5}
 <body>
 <header class="top" id="top"></header>
 <main id="page"></main>
+<div id="arcSlot" hidden><section class="arc-sec"><div class="wrap"><h2><span class="fa">مجموعهٔ نخست</span><span class="en">The first collection</span></h2><p class="sub2"><span class="fa">هفت عکس از عکاس هوما آرت. روی هر اثر بزنید تا صفحه‌اش باز شود.</span><span class="en">Seven photographs by Hooma Art's photographer. Tap any work to open its page.</span></p></div><div class="arc" id="arc"></div><div class="wrap" style="justify-content:center;margin-top:8px"><a class="btn primary" href="/gallery#collection"><span class="fa">همهٔ مجموعه</span><span class="en">The whole collection</span></a></div></section></div>
 <footer class="foot" id="foot"></footer>
 <script src="/js/site.js"></script>
 <script src="/js/lite.js"></script>
+<script src="/js/arc.js"></script>
 <script>
 'use strict';
 (() => {
@@ -233,6 +235,7 @@ html[lang=en] .link3{line-height:1.5}
   }
   document.getElementById('page').addEventListener('input', (e) => { if (e.target.matches('.ba input')) e.target.parentNode.style.setProperty('--pos', e.target.value + '%'); });
   HoomaLite.onLang(render);
+  if (who === 'collectors') { document.getElementById('arcSlot').hidden = false; fetch('/api/works').then((r) => r.json()).then((w) => { const arc = HoomaArc.mount(document.getElementById('arc'), Array.isArray(w) ? w : [], () => HoomaLite.lang); HoomaLite.onLang(() => arc.relabel()); }).catch(() => {}); }
 })();
 </script>
 </body>

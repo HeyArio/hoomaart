@@ -54,8 +54,13 @@ html[dir=rtl] .door i svg{transform:scaleX(-1)}
   </div>
   <p class="other"><span><span class="fa">صاحب فضا یا حامی رویداد هستید؟ </span><span class="en">Do you own a space or want to sponsor an event? </span><a href="/join"><span class="fa">با ما در تماس باشید</span><span class="en">Get in touch</span></a></span></p>
 </main>
+<section class="arc-sec"><div class="wrap"><h2><span class="fa">مجموعهٔ نخست</span><span class="en">The first collection</span></h2><p class="sub2"><span class="fa">هفت عکس از عکاس هوما آرت. روی هر اثر بزنید تا صفحه‌اش باز شود.</span><span class="en">Seven photographs by Hooma Art's photographer. Tap any work to open its page.</span></p></div><div class="arc" id="arc"></div><div class="wrap" style="justify-content:center;margin-top:8px"><a class="btn primary" href="/gallery#collection"><span class="fa">همهٔ مجموعه</span><span class="en">The whole collection</span></a></div></section>
 <footer class="foot" id="foot"></footer>
 <script src="/js/site.js"></script>
 <script src="/js/lite.js"></script>
+<script src="/js/arc.js"></script>
+<script>
+fetch('/api/works').then((r) => r.json()).then((w) => { const a = HoomaArc.mount(document.getElementById('arc'), Array.isArray(w) ? w : [], () => HoomaLite.lang); HoomaLite.onLang(() => a.relabel()); }).catch(() => {});
+</script>
 </body>
 </html>
