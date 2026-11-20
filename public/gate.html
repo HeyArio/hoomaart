@@ -9,7 +9,8 @@
 <meta property="og:image" content="/img/spaces/home-evening.jpg">
 <meta name="theme-color" content="#fcfcfb">
 <link rel="icon" href="/img/mark.svg" type="image/svg+xml">
-<link rel="preload" href="/fonts/markazi-text-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/estedad-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/img/spaces/home-evening.jpg" as="image">
 <link rel="stylesheet" href="/css/app.css">
 <link rel="stylesheet" href="/css/light.css">
 <style>
@@ -73,11 +74,16 @@
 <body>
 <header class="top" id="top"></header>
 <main>
-<section>
-  <div class="lead3 rise">
-    <h1><span class="fa">فضای شما را روشن‌تر می‌کنیم.</span><span class="en">We brighten your space.</span></h1>
-    <p class="ld"><span class="fa">همین‌جا امتحان کنید: یک فضا و یک اثر انتخاب کنید، اثر را جابه‌جا کنید و ببینید چطور می‌نشیند.</span><span class="en">Try it right here: choose a space and a work, move the work, and see how it sits.</span></p>
-  </div>
+<section class="cover">
+  <img src="/img/spaces/home-evening.jpg" alt="" fetchpriority="high">
+  <div class="c-head"><h1><span class="fa">فضای شما را روشن‌تر می‌کنیم.</span><span class="en">We brighten your space.</span></h1></div>
+  <div class="c-side"><p><span class="fa">اثر هنری گزیده، در خانه‌ای که شایسته‌اش است. پیش از هر تصمیم، اثر را روی دیوار خودتان ببینید.</span><span class="en">Selected art, in the home it deserves. Before any decision, see the work on your own wall.</span></p>
+    <div class="actions"><a class="btn primary" href="#try"><span class="fa">روی دیوار من</span><span class="en">On my wall</span></a><a class="btn" href="/gallery#collection"><span class="fa">مجموعه</span><span class="en">The collection</span></a></div></div>
+  <p class="c-cap"><span class="fa">تصویر مفهومی: اثر به‌صورت دیجیتال در فضا قرار گرفته است.</span><span class="en">Concept visualisation: the work is digitally placed in the room.</span></p>
+  <a class="c-down" href="#try" aria-label="Try it"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></a>
+</section>
+<section id="try">
+  <div class="try rise2"><h2><span class="fa">همین‌جا امتحان کنید.</span><span class="en">Try it right here.</span></h2><p><span class="fa">یک فضا و یک اثر انتخاب کنید. فضا تحلیل می‌شود و اثر روی دیوار می‌نشیند.</span><span class="en">Choose a space and a work. The space is analysed and the work is hung on the wall.</span></p></div>
   <div class="livewrap"><div id="live"></div></div>
 </section>
 
