@@ -264,6 +264,8 @@ function route() {
   if ((m = /^\/a\/([a-z0-9-]+)/.exec(p))) return Hooma.openArtist(m[1], true);
   hideAll(false);
   if (p === '/wall') Hooma.openWall(); else if (p === '/scan') Hooma.openScan(); else if (p === '/join' || p === '/artists') $('#' + p.slice(1)).scrollIntoView({ behavior: 'instant' });
+  // links from the audience pages arrive with the visitor's role already chosen
+  const role = new URLSearchParams(location.search).get('role'); const ri = role && $('#joinForm input[name=role][value="' + role.replace(/[^a-z]/g, '') + '"]'); if (ri) { ri.checked = true; roleChanged(); }
 }
 const getJson = (u) => fetch(u).then((r) => r.json()).catch(() => []);
 Hooma.ready = Promise.all([getJson('/api/works'), getJson('/api/artists')]).then(([w, a]) => { Hooma.works = Array.isArray(w) ? w : []; Hooma.artists = Array.isArray(a) ? a : []; });

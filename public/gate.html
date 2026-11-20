@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>هوما آرت | Hooma Art</title>
+<meta name="description" content="هوما آرت خریدار منتخب، اثر گزیده و فضایی با طراحی معماری شناخته‌شده را در یک شب کنار هم می‌گذارد.">
+<meta property="og:title" content="هوما آرت | Hooma Art">
+<meta property="og:image" content="/img/spaces/home-evening.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/img/mark.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/vazirmatn-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/app.css">
+<link rel="stylesheet" href="/css/light.css">
+<style>
+/* The entrance: a white room with three doors. Each door is a work of art. */
+main{min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding:clamp(84px,12vh,120px) var(--gut) clamp(16px,3vh,28px);max-width:1500px;margin-inline:auto}
+.ask h1{font-size:clamp(1.9rem,min(4.4vw,7vh),3.8rem);font-weight:800;max-width:18ch}
+.ask p{color:var(--i2);font-size:clamp(1rem,min(1.3vw,2.3vh),1.2rem);margin-top:.5rem}
+.doors{display:flex;gap:clamp(10px,1.2vw,18px);margin-top:clamp(18px,3.4vh,40px);min-height:0}
+.door{position:relative;flex:1 1 0;min-width:0;border-radius:clamp(20px,2.2vw,32px);overflow:hidden;color:#fff;text-decoration:none;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(18px,2vw,30px);min-height:clamp(260px,48vh,560px);transition:flex-grow .7s var(--out),box-shadow .5s var(--out)}
+.door img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1.4s var(--out)}
+.door:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(transparent 35%,rgba(0,0,0,.78))}
+.door:hover,.door:focus-visible{flex-grow:1.55;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
+.door:hover img,.door:focus-visible img{transform:scale(1.05)}
+.door small{font-size:.8125rem;font-weight:600;opacity:.85}
+.door b{font-weight:800;font-size:clamp(1.5rem,min(2.6vw,4.6vh),2.5rem);line-height:1.3;display:block}
+.door span.v{display:block;font-size:clamp(.875rem,min(1.1vw,2vh),1.0625rem);opacity:.9;margin-top:4px;max-width:30ch}
+.door i{position:absolute;top:clamp(14px,1.6vw,22px);inset-inline-end:clamp(14px,1.6vw,22px);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.92);color:#111;display:grid;place-items:center;transition:transform .5s var(--out)}
+.door:hover i{transform:scale(1.1)}
+.door i svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+html[dir=rtl] .door i svg{transform:scaleX(-1)}
+.other{display:flex;flex-wrap:wrap;gap:6px 22px;justify-content:space-between;margin-top:clamp(12px,2.2vh,22px);font-size:.875rem;color:var(--i2)}
+.other a{color:var(--i)}
+.doors>*{animation:rise 1s var(--out) both}.doors>:nth-child(2){animation-delay:.08s}.doors>:nth-child(3){animation-delay:.16s}
+@media (max-width:820px){.doors{flex-direction:column}.door{min-height:clamp(170px,26vh,260px)}.door:hover{flex-grow:1}}
+@media (prefers-reduced-motion:reduce){.doors>*{animation:none}.door,.door img{transition:none}}
+</style>
+</head>
+<body class="light">
+<header class="top lite" id="top">
+  <a class="brand" href="/" aria-label="Hooma Art"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 31C8 16 18 6 34 5c-1 15-10 25-25 27l12-13"/></svg><span class="fa">هوما آرت</span><span class="en">Hooma Art</span></a>
+  <a class="back" href="/gallery" style="margin-inline-start:auto"><span class="fa">مجموعه</span><span class="en">Collection</span></a>
+  <div class="seg" id="langBtn" role="group" aria-label="Language"><button type="button" data-lang="fa" aria-label="فارسی">FA</button><button type="button" data-lang="en" aria-label="English">EN</button></div>
+</header>
+<main>
+  <div class="ask">
+    <h1><span class="fa">هنر، در خانه‌ای که شایسته‌اش است.</span><span class="en">Art, in the home it deserves.</span></h1>
+    <p><span class="fa">برای شروع بگویید کدام‌یک هستید.</span><span class="en">To begin, tell us who you are.</span></p>
+  </div>
+  <div class="doors">
+    <a class="door" href="/for/collectors"><img src="/img/spaces/home-evening.jpg" alt="" style="object-position:50% 30%"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></i>
+      <small><span class="fa">اثر می‌خرم</span><span class="en">I buy art</span></small><b><span class="fa">مجموعه‌دار</span><span class="en">Collector</span></b><span class="v"><span class="fa">اثر را در خانه‌ای واقعی ببینید، بعد روی دیوار خودتان.</span><span class="en">See the work in a real home, then on your own wall.</span></span></a>
+    <a class="door" href="/for/artists"><img src="/img/works/beyond-the-visible.jpg" alt=""><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></i>
+      <small><span class="fa">اثر می‌سازم</span><span class="en">I make art</span></small><b><span class="fa">هنرمند</span><span class="en">Artist</span></b><span class="v"><span class="fa">خریدار جدی، فضای معماری‌شده، بدون هزینهٔ حضور.</span><span class="en">Serious buyers, an architect's space, no fee to take part.</span></span></a>
+    <a class="door" href="/for/investors"><img src="/img/spaces/hall-hung.jpg" alt="" style="object-position:24% 60%"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></i>
+      <small><span class="fa">کسب‌وکار را می‌سنجم</span><span class="en">I evaluate the business</span></small><b><span class="fa">سرمایه‌گذار</span><span class="en">Investor</span></b><span class="v"><span class="fa">سه طرف کمیاب، یک پلتفرم که همین حالا کار می‌کند.</span><span class="en">Three scarce sides, one platform that already works.</span></span></a>
+  </div>
+  <p class="other"><span><span class="fa">صاحب فضا یا حامی رویداد هستید؟ </span><span class="en">Do you own a space or want to sponsor an event? </span><a href="/join"><span class="fa">با ما در تماس باشید</span><span class="en">Get in touch</span></a></span><span dir="ltr">hoomaart.ir</span></p>
+</main>
+<script src="/js/lite.js"></script>
+</body>
+</html>
