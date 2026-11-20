@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>هوما آرت | معرفی پلتفرم</title>
+<meta name="theme-color" content="#0A0A0B">
+<link rel="icon" href="/img/mark.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/markazi-text-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/img/spaces/hall-hung.jpg" as="image">
+<link rel="stylesheet" href="/css/app.css">
+<style>
+html{scroll-snap-type:y proximity}
+.pz{position:relative;min-height:100svh;display:grid;align-content:center;padding:clamp(96px,12vh,140px) 0 clamp(64px,9vh,110px);scroll-snap-align:start;scroll-margin-top:0;border-top:1px solid var(--hair)}
+.pz:first-of-type{border-top:0}
+.pz.light{background:var(--wall);color:var(--ink);border-top:0}
+.kick{font-size:.875rem;color:var(--fg-2);margin-bottom:clamp(18px,3vh,32px);display:flex;gap:14px;align-items:baseline}
+.kick b{font-family:var(--display);font-weight:500;font-size:1.25rem;color:var(--fg)}
+.light .kick{color:var(--mist)}.light .kick b{color:var(--ink)}
+.cols{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);row-gap:40px;align-items:start}
+.c5{grid-column:1/span 5}.c6{grid-column:7/-1}.c12{grid-column:1/-1}
+@media (max-width:900px){.c5,.c6{grid-column:1/-1}}
+.pz h2{font-size:clamp(2.2rem,5vw,4.5rem)}
+.pz .big{font-size:clamp(1.15rem,1.7vw,1.5rem);line-height:1.85;color:var(--fg-2);margin-top:1.4rem;max-width:44ch}
+html[lang=en] .pz .big{line-height:1.5}
+.light .big{color:var(--mist)}
+
+/* opening */
+.open{padding:0;align-content:end;overflow:hidden;isolation:isolate}
+.open>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:32% 60%;z-index:-2;animation:drift 22s var(--out) both}
+@keyframes drift{from{transform:scale(1.12)}to{transform:scale(1)}}
+.open:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(10,10,11,.5),rgba(10,10,11,.08) 32%,rgba(10,10,11,.5) 62%,var(--bg) 100%)}
+.open .wrap{width:100%;padding-bottom:clamp(40px,8vh,96px)}
+.open h1{max-width:13ch;font-size:clamp(3rem,8vw,7rem)}
+html[lang=en] .open h1{font-size:clamp(3rem,7.4vw,6rem)}
+.open .big{color:rgba(244,243,241,.86)}
+.down{display:inline-flex;align-items:center;gap:12px;margin-top:2.4rem;font-size:.875rem;color:var(--fg);text-decoration:none}
+.down i{width:44px;height:44px;border:1px solid rgba(244,243,241,.5);border-radius:50%;display:grid;place-items:center;transition:border-color .3s,transform .5s var(--out)}
+.down:hover i{border-color:#fff;transform:translateY(4px)}
+.down svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* the room: compare and open works */
+.room{padding-inline:0;padding-top:clamp(80px,10vh,104px);padding-bottom:clamp(20px,3vh,40px)}
+.room h2{font-size:clamp(1.8rem,3.1vw,2.9rem)}
+.room .big{font-size:1.0625rem;line-height:1.9}
+.room .kick{margin-bottom:10px}
+.room-scroll{overflow-x:auto;scrollbar-width:none;margin-top:clamp(16px,2.6vh,28px);direction:ltr}
+.room-scroll::-webkit-scrollbar{display:none}
+.cmp{position:relative;width:max(100%,860px);aspect-ratio:2000/1334;margin-inline:auto;direction:ltr;overflow:hidden;--pos:98%;user-select:none;-webkit-user-select:none}
+@media (min-width:861px){.cmp{width:min(100%,calc(60svh*1.4993));max-height:60svh}}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.cmp .hung{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.cmp .tag2{position:absolute;top:14px;font-size:.75rem;padding:5px 12px;border-radius:999px;background:rgba(10,10,11,.66);color:var(--fg);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:opacity .4s}
+.cmp .tag2.a{left:14px}.cmp .tag2.b{right:14px}
+.cmp .dim2{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .5s var(--out);background:radial-gradient(circle at var(--sx,50%) var(--sy,50%),transparent 0,transparent 8%,rgba(10,10,11,.6) 24%)}
+.cmp.spot .dim2{opacity:1}
+.handle{position:absolute;top:0;bottom:0;left:var(--pos);width:44px;margin-left:-22px;cursor:ew-resize;touch-action:none;display:grid;place-items:center;background:none;border:0;padding:0;z-index:3}
+.handle:before{content:"";position:absolute;top:0;bottom:0;left:50%;width:1px;background:#fff}
+.handle i{position:relative;width:44px;height:44px;border-radius:50%;background:#fff;color:#111;display:grid;place-items:center;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.handle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.hot{position:absolute;z-index:2;display:block;border-radius:2px;outline-offset:6px;transition:opacity .3s}
+.hot:before{content:"";position:absolute;inset:-10px}
+.hot:after{content:"";position:absolute;inset:-5px;border:1px solid rgba(255,255,255,.9);border-radius:1px;animation:ring 3s var(--out) infinite}
+@keyframes ring{0%{opacity:0;inset:-2px}25%{opacity:.95}100%{opacity:0;inset:-14px}}
+.hot:hover:after,.hot:focus-visible:after{animation:none;opacity:1;inset:-5px}
+.hot[hidden]{display:none}
+.plate{position:absolute;z-index:4;left:var(--sx);top:var(--py);transform:translate(-50%,0);pointer-events:none;opacity:0;transition:opacity .35s var(--out);direction:rtl;text-align:center;white-space:nowrap;font-size:.8125rem;color:var(--fg-2)}
+html[lang=en] .plate{direction:ltr}
+.plate b{display:block;font-family:var(--display);font-weight:500;font-size:1.5rem;line-height:1.3;color:#fff}
+.cmp.spot .plate{opacity:1}
+.room-note{font-size:.8125rem;color:var(--fg-2);margin-top:16px;max-width:none}
+.swipe{display:none}
+@media (max-width:860px){.swipe{display:block}}
+
+/* three sides */
+.sides3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);margin-top:clamp(36px,6vh,72px);border-top:1px solid var(--ink)}
+.sides3>div{padding-top:20px}
+.sides3 h3{font-size:clamp(1.7rem,2.6vw,2.4rem);margin-bottom:10px}
+.sides3 p{font-size:.9688rem;color:var(--mist)}
+.sides3 dl{margin-top:18px;border-top:1px solid var(--line);grid-template-columns:auto 1fr;font-size:.9375rem}
+.sides3 dt{color:var(--mist)}
+@media (max-width:860px){.sides3{grid-template-columns:1fr;border-top:0}.sides3>div{border-top:1px solid var(--ink);padding-bottom:28px}}
+
+/* path, studio, model */
+.steps6{list-style:none;padding:0;counter-reset:p;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);margin-top:clamp(32px,5vh,64px)}
+.steps6 li{counter-increment:p;border-top:1px solid var(--hair);padding:18px 0 clamp(22px,4vh,44px)}
+.steps6 li:before{content:counter(p,persian);font-family:var(--display);font-size:1.25rem;color:var(--fg-2);display:block;margin-bottom:clamp(12px,2.4vh,28px)}
+html[lang=en] .steps6 li:before{content:counter(p)}
+.steps6 h3{font-size:1.5rem}
+.steps6 p{font-size:.9375rem;color:var(--fg-2);margin-top:4px}
+.steps6 .link{display:inline-block;margin-top:12px;font-size:.9375rem;color:var(--fg)}
+@media (max-width:860px){.steps6{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps6{grid-template-columns:1fr}}
+.rows{border-top:1px solid var(--hair);margin-top:4px}
+.rows>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--hair);font-size:.9688rem}
+.rows span:last-child{color:var(--fg-2);font-size:.875rem}
+.light .rows,.light .rows>div{border-color:var(--line)}.light .rows span:last-child{color:var(--mist)}
+.calc{font-size:1.0625rem;color:var(--mist);margin-top:clamp(16px,2.4vh,28px)}
+.sum{font-family:var(--display);font-size:clamp(2.6rem,6vw,5.5rem);line-height:1.15;margin-top:4px}
+.note3{font-size:.8125rem;color:var(--mist);margin-top:18px;max-width:60ch}
+.pz:not(.light) .note3{color:var(--fg-2)}
+
+/* index dots */
+.dots{position:fixed;inset-inline-end:clamp(10px,1.6vw,22px);top:50%;transform:translateY(-50%);z-index:var(--z-sticky);display:grid;gap:4px}
+.dots a{width:28px;height:28px;display:grid;place-items:center}
+.dots a:before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;mix-blend-mode:difference;opacity:.4;transition:opacity .3s,transform .4s var(--out)}
+.dots a[aria-current=true]:before{opacity:1;transform:scale(1.7)}
+@media (max-width:860px){.dots{display:none}}
+header.top .back{font-size:.875rem;color:var(--fg);opacity:.78;text-decoration:none;margin-inline-start:auto}
+header.top .back:hover{opacity:1}
+header.top .lang{margin-inline-start:0}
+@media (prefers-reduced-motion:reduce){.open>img,.hot:after{animation:none}html{scroll-snap-type:none}}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+  <a class="brand" href="/" aria-label="Hooma Art">
+    <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 31C8 16 18 6 34 5c-1 15-10 25-25 27l12-13"/></svg>
+    <span class="fa">هوما آرت</span><span class="en">Hooma Art</span>
+  </a>
+  <a class="back" href="/"><span class="fa">سایت اصلی</span><span class="en">Main site</span></a>
+  <button class="lang" id="langBtn" type="button" aria-label="Switch language"><span class="fa">English</span><span class="en">فارسی</span></button>
+</header>
+
+<nav class="dots" id="dots" aria-label="Sections"></nav>
+
+<main>
+<section class="pz open" id="s1" data-name="آغاز|Opening">
+  <img src="/img/spaces/hall-hung.jpg" alt="">
+  <div class="wrap rise">
+    <h1><span class="fa">جایی که فضا، مجموعه می‌شود.</span><span class="en">Where a space becomes a collection.</span></h1>
+    <p class="big"><span class="fa">هوما آرت سه چیز کمیاب را در یک شب کنار هم می‌گذارد: خریدار منتخب، اثر گزیده و فضایی که معماری شناخته‌شده طراحی کرده است.</span><span class="en">Hooma Art brings three scarce things together in one evening: selected buyers, selected works, and a space designed by a known architect.</span></p>
+    <a class="down" href="#s2"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></i><span class="fa">معرفی پلتفرم، در هفت بخش</span><span class="en">The platform, in seven parts</span></a>
+  </div>
+</section>
+
+<section class="pz room" id="s2" data-name="فضا|The space">
+  <div class="wrap">
+    <p class="kick"><b><span class="fa">۱</span><span class="en">1</span></b><span class="fa">فضا</span><span class="en">The space</span></p>
+    <div class="cols">
+      <h2 class="c5"><span class="fa">همان سالن، با مجموعه‌ای روی دیوارهایش.</span><span class="en">The same hall, with a collection on its walls.</span></h2>
+      <p class="big c6" style="margin-top:0"><span class="fa">خط سفید را بکشید تا سالن را پیش و پس از هوما آرت ببینید. روی هر اثر بزنید: صفحهٔ واقعی همان اثر باز می‌شود.</span><span class="en">Drag the white line to see the hall before and after Hooma Art. Tap any work: its real page opens.</span></p>
+    </div>
+  </div>
+  <div class="room-scroll" id="roomScroll">
+    <div class="cmp" id="cmp">
+      <img src="/img/spaces/hall-empty.jpg" alt="" loading="lazy">
+      <img class="hung" src="/img/spaces/hall-hung.jpg" alt="">
+      <div class="dim2"></div>
+      <span class="tag2 a"><span class="fa">با هوما آرت</span><span class="en">With Hooma Art</span></span>
+      <span class="tag2 b" id="tagB"><span class="fa">امروز</span><span class="en">Today</span></span>
+      <a class="hot" data-id="tango-in-red-ruby" style="left:8.1%;top:52.2%;width:4.7%;height:4.6%" target="_blank" rel="noopener"></a>
+      <a class="hot" data-id="galaxy" style="left:14.5%;top:52.2%;width:5.1%;height:4.8%" target="_blank" rel="noopener"></a>
+      <a class="hot" data-id="echo-of-the-soul" style="left:21.3%;top:52.2%;width:5%;height:4.8%" target="_blank" rel="noopener"></a>
+      <a class="hot" data-id="beyond-the-visible" style="left:38.1%;top:55.4%;width:6.2%;height:6%" target="_blank" rel="noopener"></a>
+      <a class="hot" data-id="qashqai-girl" style="left:55.5%;top:53.8%;width:3.3%;height:4.1%" target="_blank" rel="noopener"></a>
+      <a class="hot" data-id="parishan-lake" style="left:89.5%;top:52.1%;width:6.8%;height:7.7%" target="_blank" rel="noopener"></a>
+      <div class="plate" id="plate"><b></b><span></span></div>
+      <button class="handle" id="handle" type="button" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="98" aria-label="Before and after"><i><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M6 5L2 9l4 4M12 5l4 4-4 4"/></svg></i></button>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="room-note"><span class="swipe"><span class="fa">برای دیدن همهٔ سالن، تصویر را به چپ و راست بکشید. </span><span class="en">Swipe the picture sideways to see the whole hall. </span></span><span class="fa">تصویر مفهومی: آثار به‌صورت دیجیتال روی عکس یک سالن واقعی قرار گرفته‌اند. جای آثار، اندازه و نور تقریبی است. عکس فضا: Divan Development.</span><span class="en">Concept visualisation: the works are digitally placed on a photograph of a real hall. Positions, sizes and lighting are indicative. Photograph of the space: Divan Development.</span></p>
+  </div>
+</section>
+
+<section class="pz light" id="s3" data-name="سه طرف|Three sides">
+  <div class="wrap">
+    <p class="kick"><b><span class="fa">۲</span><span class="en">2</span></b><span class="fa">سه طرف</span><span class="en">Three sides</span></p>
+    <h2><span class="fa">هر طرف چیزی می‌دهد که دو طرف دیگر ندارند.</span><span class="en">Each side brings what the other two lack.</span></h2>
+    <div class="sides3">
+      <div><h3><span class="fa">خریدار</span><span class="en">Buyers</span></h3>
+        <p><span class="fa">مجموعه‌دار، صاحب کسب‌وکار و خانواده‌ای که خانه‌اش را می‌چیند، از شبکهٔ شخصی بنیان‌گذاران.</span><span class="en">Collectors, business owners and families furnishing a home, from the founders' personal network.</span></p>
+        <dl><dt><span class="fa">می‌دهد</span><span class="en">Gives</span></dt><dd><span class="fa">توجه و خرید</span><span class="en">Attention and purchases</span></dd>
+            <dt><span class="fa">می‌گیرد</span><span class="en">Gets</span></dt><dd><span class="fa">راهی خصوصی و مطمئن برای دیدن اثر در خانه‌ای واقعی، و دیدن آن روی دیوار خودش</span><span class="en">A private, trusted way to see art in a real home, and on their own wall</span></dd></dl></div>
+      <div><h3><span class="fa">هنرمند</span><span class="en">Artists</span></h3>
+        <p><span class="fa">نقاش، عکاس هنری، چاپگر و مجسمه‌ساز.</span><span class="en">Painters, fine-art photographers, printmakers and sculptors.</span></p>
+        <dl><dt><span class="fa">می‌دهد</span><span class="en">Gives</span></dt><dd><span class="fa">اثر، به امانت</span><span class="en">Works on consignment</span></dd>
+            <dt><span class="fa">می‌گیرد</span><span class="en">Gets</span></dt><dd><span class="fa">خریدار جدی، فضایی معماری‌شده و صفحه‌ای برای هر اثر، بدون هزینهٔ حضور</span><span class="en">Serious buyers, an architectural setting and a page per work, with no fee to take part</span></dd></dl></div>
+      <div><h3><span class="fa">صاحب فضا</span><span class="en">Space owners</span></h3>
+        <p><span class="fa">صاحب ویلا، معمار و سازنده.</span><span class="en">Villa owners, architects and developers.</span></p>
+        <dl><dt><span class="fa">می‌دهد</span><span class="en">Gives</span></dt><dd><span class="fa">یک شب از فضایش</span><span class="en">One evening of their space</span></dd>
+            <dt><span class="fa">می‌گیرد</span><span class="en">Gets</span></dt><dd><span class="fa">دیده شدن پیش مخاطبی گزیده، عکس و فیلم حرفه‌ای، بدون هزینه و با پروتکل مکتوب نگهداری</span><span class="en">Exposure to a select audience, professional photos and film, at no cost and with a written care protocol</span></dd></dl></div>
+    </div>
+  </div>
+</section>
+
+<section class="pz" id="s4" data-name="مسیر خریدار|The buyer's path">
+  <div class="wrap">
+    <p class="kick"><b><span class="fa">۳</span><span class="en">3</span></b><span class="fa">مسیر خریدار</span><span class="en">The buyer's path</span></p>
+    <h2><span class="fa">از دعوت‌نامه تا دیوار خانه.</span><span class="en">From the invitation to the wall at home.</span></h2>
+    <ol class="steps6">
+      <li><h3><span class="fa">دعوت به نام</span><span class="en">Invited by name</span></h3><p><span class="fa">بلیتی فروخته نمی‌شود. فهرست مهمانان به هیچ‌کس داده نمی‌شود.</span><span class="en">No tickets are sold. The guest list is shared with no one.</span></p></li>
+      <li><h3><span class="fa">یک شب در خانه‌ای معماری‌شده</span><span class="en">One evening in an architect's house</span></h3><p><span class="fa">حدود پنجاه مهمان، آثار با نور گالری.</span><span class="en">About fifty guests, works under gallery lighting.</span></p></li>
+      <li><h3><span class="fa">گوشی رو به اثر</span><span class="en">Phone toward the work</span></h3><p><span class="fa">صفحهٔ اثر باز می‌شود: داستان، تکنیک، ابعاد.</span><span class="en">Its page opens: story, medium, size.</span></p><a class="link" href="/scan" target="_blank" rel="noopener"><span class="fa">اسکنر واقعی را باز کنید</span><span class="en">Open the real scanner</span></a></li>
+      <li><h3><span class="fa">روی دیوار خودش</span><span class="en">On their own wall</span></h3><p><span class="fa">در خانه، با دوربین، در اندازهٔ واقعی.</span><span class="en">At home, through the camera, at true size.</span></p><a class="link" href="/wall" target="_blank" rel="noopener"><span class="fa">ابزار واقعی را باز کنید</span><span class="en">Open the real tool</span></a></li>
+      <li><h3><span class="fa">بازدید خصوصی</span><span class="en">A private viewing</span></h3><p><span class="fa">درخواست مستقیم به تیم می‌رسد. قیمت در گفت‌وگو اعلام می‌شود.</span><span class="en">The request goes straight to the team. The price is shared in conversation.</span></p></li>
+      <li><h3><span class="fa">خرید، رو در رو</span><span class="en">The purchase, in person</span></h3><p><span class="fa">بدون سبد خرید و بدون پرداخت آنلاین.</span><span class="en">No cart and no online payment.</span></p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="pz" id="s5" data-name="استودیو|The Studio">
+  <div class="wrap cols">
+    <div class="c5">
+      <p class="kick"><b><span class="fa">۴</span><span class="en">4</span></b><span class="fa">استودیو</span><span class="en">The Studio</span></p>
+      <h2><span class="fa">پیش از گفت‌وگو می‌دانیم کدام اثر دیده شده است.</span><span class="en">Before the conversation, we know which work was looked at.</span></h2>
+      <p class="big"><span class="fa">هر اسکن، هر نمایش روی دیوار و هر درخواست در استودیوی هوما آرت شمرده می‌شود. اعداد واقعی‌اند و از همین سایت می‌آیند.</span><span class="en">Every scan, every wall view and every request is counted in the Hooma Art Studio. The numbers are real and come from this site.</span></p>
+      <div class="actions"><a class="btn" href="/admin" target="_blank" rel="noopener"><span class="fa">باز کردن استودیو</span><span class="en">Open the Studio</span></a></div>
+    </div>
+    <div class="c6">
+      <div class="rows">
+        <div><span><span class="fa">باز شدن صفحهٔ هر اثر</span><span class="en">Work pages opened</span></span><span><span class="fa">علاقهٔ اولیه</span><span class="en">First interest</span></span></div>
+        <div><span><span class="fa">اسکن اثر در رویداد</span><span class="en">Works scanned at the event</span></span><span><span class="fa">مهمان جلوی کدام اثر ایستاد</span><span class="en">Which work a guest stopped at</span></span></div>
+        <div><span><span class="fa">نمایش روی دیوار خانه</span><span class="en">Works viewed on a wall at home</span></span><span><span class="fa">قصد جدی</span><span class="en">Serious intent</span></span></div>
+        <div><span><span class="fa">درخواست بازدید خصوصی</span><span class="en">Private viewing requests</span></span><span><span class="fa">آمادهٔ گفت‌وگو</span><span class="en">Ready to talk</span></span></div>
+        <div><span><span class="fa">هنرمندانی که اثر خود را امتحان کرده‌اند</span><span class="en">Artists who tried their own work</span></span><span><span class="fa">عرضهٔ آینده</span><span class="en">Future supply</span></span></div>
+      </div>
+      <p class="note3"><span class="fa">دربارهٔ بازدیدکننده چیزی ذخیره نمی‌شود: فقط نوع رویداد، اثر و روز.</span><span class="en">Nothing about the visitor is stored: only the kind of event, the work and the day.</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="pz light" id="s6" data-name="مدل درآمد|Business model">
+  <div class="wrap cols">
+    <div class="c5">
+      <p class="kick"><b><span class="fa">۵</span><span class="en">5</span></b><span class="fa">مدل درآمد</span><span class="en">Business model</span></p>
+      <h2><span class="fa">رویداد را حامی می‌سازد. فروش، درآمد را.</span><span class="en">The sponsor funds the event. Sales bring the income.</span></h2>
+      <p class="big"><span class="fa">حامی اصلی هزینهٔ کامل میزبانی یک شب را می‌پردازد. هوما آرت از هر فروش درصدی می‌گیرد که با هنرمند توافق و در قرارداد امانت نوشته می‌شود. اگر اثری فروخته نشود، هنرمند چیزی نمی‌پردازد.</span><span class="en">A lead sponsor pays the full hosting cost of one evening. Hooma Art takes a percentage of each sale, agreed with the artist and written into the consignment agreement. If a work does not sell, the artist pays nothing.</span></p>
+    </div>
+    <div class="c6">
+      <p class="kick" style="margin-bottom:0"><span class="fa">حمایت از رویداد نخست</span><span class="en">Sponsorship of the first event</span></p>
+      <p class="calc"><span class="fa">۵۰ مهمان، هر مهمان حدود ۱۵ میلیون تومان</span><span class="en">50 guests, at about 15 million toman each</span></p>
+      <p class="sum"><span class="fa">۷۵۰ میلیون تومان</span><span class="en">750 million toman</span></p>
+      <div class="rows" style="margin-top:28px">
+        <div><span><span class="fa">عنوان «حامی اصلی» و انحصار در دستهٔ خود</span><span class="en">The "lead sponsor" title and category exclusivity</span></span><span></span></div>
+        <div><span><span class="fa">فضای نمایش محصول در خود رویداد</span><span class="en">A product display area inside the event</span></span><span></span></div>
+        <div><span><span class="fa">زمانی کوتاه برای معرفی و آشنایی شخصی با مهمانان</span><span class="en">A short introduction slot and personal introductions to guests</span></span><span></span></div>
+        <div><span><span class="fa">پنج صندلی از پنجاه صندلی برای مشتریان خود</span><span class="en">Five of the fifty seats for their own clients</span></span><span></span></div>
+        <div><span><span class="fa">عکس و فیلم حرفه‌ای از شب</span><span class="en">Professional photo and video content</span></span><span></span></div>
+      </div>
+      <p class="note3"><span class="fa">حامی سرمایه‌گذار نیست و سهم یا شراکتی در سود نمی‌گیرد. فهرست و اطلاعات تماس مهمانان به حامی داده نمی‌شود.</span><span class="en">The sponsor is not an investor and receives no equity or profit share. The guest list and contact details are not shared with the sponsor.</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="pz" id="s7" data-name="امروز|Today">
+  <div class="wrap cols">
+    <div class="c5">
+      <p class="kick"><b><span class="fa">۶</span><span class="en">6</span></b><span class="fa">امروز</span><span class="en">Today</span></p>
+      <h2><span class="fa">پلتفرم ساخته شده و روی hoomaart.ir کار می‌کند.</span><span class="en">The platform is built and running at hoomaart.ir.</span></h2>
+      <div class="actions"><a class="btn primary" href="/" target="_blank" rel="noopener"><span class="fa">سایت را ببینید</span><span class="en">See the site</span></a><a class="btn" href="https://wa.me/989123800864" target="_blank" rel="noopener"><span class="fa">گفت‌وگو در واتس‌اپ</span><span class="en">Talk on WhatsApp</span></a></div>
+    </div>
+    <div class="c6">
+      <div class="rows">
+        <div><span><span class="fa">صفحهٔ هر اثر، اسکن با دوربین و نمایش روی دیوار</span><span class="en">A page per work, camera scan and wall view</span></span><span><span class="fa">کار می‌کند</span><span class="en">Working</span></span></div>
+        <div><span><span class="fa">درخواست بازدید و همکاری، با پنل مدیریت و استودیو</span><span class="en">Viewing and partnership requests, with an admin panel and the Studio</span></span><span><span class="fa">کار می‌کند</span><span class="en">Working</span></span></div>
+        <div><span><span class="fa">مجموعهٔ نخست: هفت عکس از عکاس هوما آرت</span><span class="en">First collection: seven photographs by Hooma Art's photographer</span></span><span><span class="fa">روی سایت</span><span class="en">On the site</span></span></div>
+        <div><span><span class="fa">جذب نخستین هنرمندان</span><span class="en">Signing the first artists</span></span><span><span class="fa">قدم بعدی</span><span class="en">Next</span></span></div>
+        <div><span><span class="fa">رویداد نخست، با حامی</span><span class="en">The first event, with a sponsor</span></span><span><span class="fa">در حال آماده‌سازی</span><span class="en">In preparation</span></span></div>
+        <div><span><span class="fa">درآمد تکرارشونده از پلتفرم</span><span class="en">Recurring revenue from the platform</span></span><span><span class="fa">پس از رویداد نخست</span><span class="en">After the first event</span></span></div>
+      </div>
+      <p class="note3" dir="ltr" style="text-align:start">info@nazarbanai.com</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<script>
+'use strict';
+(() => {
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lang = 'fa', works = [];
+  const L = (o) => (o && (o[lang] || o.fa || o.en)) || '';
+
+  /* language, shared with the main site */
+  function setLang(l, save) {
+    lang = l === 'en' ? 'en' : 'fa'; const h = document.documentElement; h.lang = lang; h.dir = lang === 'fa' ? 'rtl' : 'ltr';
+    if (save) try { localStorage.setItem('hooma-lang', lang); } catch {}
+    document.title = lang === 'fa' ? 'هوما آرت | معرفی پلتفرم' : 'Hooma Art | The platform';
+    $$('#dots a').forEach((a) => { a.setAttribute('aria-label', a.dataset[lang]); a.title = a.dataset[lang]; });
+  }
+  $('#langBtn').addEventListener('click', () => setLang(lang === 'fa' ? 'en' : 'fa', true));
+
+  /* header + section index */
+  const top = $('#top'), secs = $$('.pz'), dots = $('#dots');
+  dots.innerHTML = secs.map((s) => { const [fa, en] = s.dataset.name.split('|'); return '<a href="#' + s.id + '" data-fa="' + fa + '" data-en="' + en + '"></a>'; }).join('');
+  let cur = 0;
+  const onScroll = () => {
+    top.classList.toggle('solid', scrollY > 24);
+    const mid = scrollY + innerHeight / 2; let k = 0;
+    secs.forEach((s, i) => { if (s.offsetTop <= mid) k = i; });
+    if (k !== cur || !dots.querySelector('[aria-current=true]')) { cur = k; $$('#dots a').forEach((a, i) => a.setAttribute('aria-current', String(i === k))); }
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  /* presenting with the keyboard: arrows, space and page keys move one section */
+  addEventListener('keydown', (e) => {
+    if (e.target.closest('input, textarea, [role=slider]') || e.metaKey || e.ctrlKey || e.altKey) return;
+    const d = ['ArrowDown', 'PageDown', ' '].includes(e.key) ? 1 : ['ArrowUp', 'PageUp'].includes(e.key) ? -1 : 0; if (!d) return;
+    const n = secs[Math.max(0, Math.min(secs.length - 1, cur + d))]; if (!n) return;
+    e.preventDefault(); n.scrollIntoView({ behavior: still ? 'instant' : 'smooth' });
+  });
+
+  /* before and after */
+  const cmp = $('#cmp'), handle = $('#handle'), plate = $('#plate');
+  let pos = 98;
+  function setPos(p) {
+    pos = Math.max(2, Math.min(98, p)); cmp.style.setProperty('--pos', pos + '%'); handle.setAttribute('aria-valuenow', Math.round(pos));
+    $('#tagB').style.opacity = pos > 86 ? 0 : 1; $('.tag2.a', cmp).style.opacity = pos < 14 ? 0 : 1;
+    $$('.hot', cmp).forEach((h) => { h.hidden = parseFloat(h.style.left) + parseFloat(h.style.width) / 2 > pos; });
+  }
+  const fromX = (x) => { const r = cmp.getBoundingClientRect(); return ((x - r.left) / r.width) * 100; };
+  handle.addEventListener('pointerdown', (e) => { handle.setPointerCapture(e.pointerId); cmp.classList.remove('spot'); });
+  handle.addEventListener('pointermove', (e) => { if (handle.hasPointerCapture(e.pointerId)) setPos(fromX(e.clientX)); });
+  handle.addEventListener('keydown', (e) => { const d = e.key === 'ArrowLeft' ? -4 : e.key === 'ArrowRight' ? 4 : 0; if (d) { e.preventDefault(); setPos(pos + d); } });
+  // the works arrive on the walls the first time the room comes into view
+  let played = false;
+  function play() {
+    if (played) return; played = true; if (still) return setPos(98);
+    const t0 = performance.now(), dur = 2200; setPos(4);
+    const step = (t) => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 4); setPos(4 + 94 * e); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window) new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { play(); o.disconnect(); } }), { threshold: 0.35 }).observe(cmp); else setPos(98);
+  // on phones the hall is wider than the screen: start on the wall with three works
+  const rs = $('#roomScroll'); rs.scrollLeft = 0;
+
+  /* works on the wall: light one up, open its real page */
+  function label(h) {
+    const w = works.find((x) => x.id === h.dataset.id); const l = parseFloat(h.style.left), wd = parseFloat(h.style.width), t = parseFloat(h.style.top), ht = parseFloat(h.style.height);
+    cmp.style.setProperty('--sx', l + wd / 2 + '%'); cmp.style.setProperty('--sy', t + ht / 2 + '%'); cmp.style.setProperty('--py', 'calc(' + (t + ht) + '% + 18px)');
+    $('b', plate).textContent = w ? L(w.title) : ''; $('span', plate).textContent = lang === 'fa' ? 'باز کردن صفحهٔ اثر' : 'Open the work\'s page';
+    cmp.classList.add('spot');
+  }
+  $$('.hot', cmp).forEach((h) => {
+    h.href = '/w/' + h.dataset.id;
+    ['pointerenter', 'focus'].forEach((ev) => h.addEventListener(ev, () => label(h)));
+    ['pointerleave', 'blur'].forEach((ev) => h.addEventListener(ev, () => cmp.classList.remove('spot')));
+  });
+
+  let l0 = 'fa'; try { l0 = new URLSearchParams(location.search).get('lang') || localStorage.getItem('hooma-lang') || 'fa'; } catch {}
+  setLang(l0); onScroll();
+  fetch('/api/works').then((r) => r.json()).then((w) => {
+    works = Array.isArray(w) ? w : [];
+    $$('.hot', cmp).forEach((h) => { const x = works.find((y) => y.id === h.dataset.id); if (x) h.setAttribute('aria-label', L(x.title)); else h.remove(); });
+  }).catch(() => {});
+})();
+</script>
+</body>
+</html>
