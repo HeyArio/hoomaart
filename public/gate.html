@@ -73,17 +73,12 @@
 <body>
 <header class="top" id="top"></header>
 <main>
-<section class="entry">
-  <div class="say rise">
+<section>
+  <div class="lead3 rise">
     <h1><span class="fa">فضای شما را روشن‌تر می‌کنیم.</span><span class="en">We brighten your space.</span></h1>
-    <p><span class="fa">اثر را پیش از هر تصمیم، با دوربین گوشی روی دیوار خودتان ببینید.</span><span class="en">Before any decision, see the work on your own wall through your phone camera.</span></p>
-    <div class="actions"><a class="btn primary" href="/wall"><span class="fa">روی دیوار من</span><span class="en">On my wall</span></a><a class="btn" href="/gallery#collection"><span class="fa">مجموعه</span><span class="en">The collection</span></a></div>
+    <p class="ld"><span class="fa">همین‌جا امتحان کنید: یک فضا و یک اثر انتخاب کنید، اثر را جابه‌جا کنید و ببینید چطور می‌نشیند.</span><span class="en">Try it right here: choose a space and a work, move the work, and see how it sits.</span></p>
   </div>
-  <div class="wall2" id="wall2">
-    <div class="glow" id="glowA"></div><div class="glow" id="glowB"></div>
-    <div class="line2" aria-hidden="true"></div>
-    <figure class="piece2 out" id="piece"><a id="plink" href="/gallery"><img id="pimg" alt="" width="1094" height="729"></a><figcaption class="tagc glass"><b id="ptitle"></b><span id="pmed"></span></figcaption></figure>
-  </div>
+  <div class="livewrap"><div id="live"></div></div>
 </section>
 
 <section class="eve">
@@ -113,34 +108,18 @@
 <script src="/js/site.js"></script>
 <script src="/js/lite.js"></script>
 <script src="/js/arc.js"></script>
+<script src="/js/live.js"></script>
 <script>
 'use strict';
 (() => {
   const $ = (s) => document.querySelector(s);
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const L = (o) => (o && (o[HoomaLite.lang] || o.fa || o.en)) || '';
-  let works = [], ix = 0, glowOn = 0, timer = 0;
-  const piece = $('#piece'), img = $('#pimg'), wall = $('#wall2');
-  function caption() { const w = works[ix]; if (!w) return; $('#ptitle').textContent = L(w.title); $('#pmed').textContent = L(w.medium); img.alt = L(w.title); }
-  // A work arrives on the hanging line and the wall takes its light from it.
-  function hang(first) {
-    const w = works[ix]; if (!w) return;
-    const put = () => {
-      img.src = w.img; piece.style.setProperty('--r', w.ratio || 1.5); $('#plink').href = '/w/' + w.id; caption();
-      const done = () => {
-        img.onload = null; piece.classList.remove('out', 'sway'); if (!still) { void piece.offsetWidth; piece.classList.add('sway'); }
-        const a = $(glowOn ? '#glowA' : '#glowB'), b = $(glowOn ? '#glowB' : '#glowA');
-        a.style.backgroundImage = 'url("' + w.img + '")'; a.classList.add('on'); b.classList.remove('on'); glowOn = glowOn ? 0 : 1; wall.classList.add('lit');
-      };
-      if (img.complete && img.naturalWidth) done(); else img.onload = done;
-    };
-    if (first || still) put(); else { piece.classList.add('out'); setTimeout(put, 700); }
-    clearTimeout(timer); if (!still && works.length > 1) timer = setTimeout(() => { if (!document.hidden) { ix = (ix + 1) % works.length; hang(); } else hang(true); }, 6500);
-  }
+  let works = [];
   fetch('/api/works').then((r) => r.json()).then((w) => {
-    works = Array.isArray(w) ? w : []; setTimeout(() => hang(true), still ? 0 : 700);
+    works = Array.isArray(w) ? w : []; HoomaLive.mount($('#live'), works);
     const arc = HoomaArc.mount($('#arc'), works, () => HoomaLite.lang);
-    HoomaLite.onLang(() => { caption(); arc.relabel(); });
+    HoomaLite.onLang(() => arc.relabel());
   }).catch(() => {});
   const els = [...document.querySelectorAll('.rise2')];
   if (still || !('IntersectionObserver' in window)) els.forEach((e) => e.classList.add('in'));

@@ -109,12 +109,15 @@ html[lang=en] .link3{line-height:1.5}
 </head>
 <body>
 <header class="top" id="top"></header>
+<div id="heroSlot"></div>
+<div class="livewrap"><div id="live"></div></div>
 <main id="page"></main>
 <div id="arcSlot" hidden><section class="arc-sec"><div class="wrap"><h2><span class="fa">مجموعهٔ نخست</span><span class="en">The first collection</span></h2><p class="sub2"><span class="fa">هفت عکس از عکاس هوما آرت. روی هر اثر بزنید تا صفحه‌اش باز شود.</span><span class="en">Seven photographs by Hooma Art's photographer. Tap any work to open its page.</span></p></div><div class="arc" id="arc"></div><div class="wrap" style="justify-content:center;margin-top:8px"><a class="btn primary" href="/gallery#collection"><span class="fa">همهٔ مجموعه</span><span class="en">The whole collection</span></a></div></section></div>
 <footer class="foot" id="foot"></footer>
 <script src="/js/site.js"></script>
 <script src="/js/lite.js"></script>
 <script src="/js/arc.js"></script>
+<script src="/js/live.js"></script>
 <script>
 'use strict';
 (() => {
@@ -123,7 +126,7 @@ html[lang=en] .link3{line-height:1.5}
   const P = {
     collectors: {
       img: ['/img/spaces/home-evening.jpg', '/img/works/parishan-lake.jpg'],
-      fa: { who: 'برای مجموعه‌داران', h1: 'اثر را پیش از خرید، در خانه ببینید.', ld: 'نه روی دیوار سفید یک گالری. در خانه‌ای واقعی، با نور درست، و بعد روی دیوار خودتان.',
+      fa: { who: 'برای مجموعه‌داران', h1: 'اثر را پیش از خرید، در فضای خودتان ببینید.', ld: 'همین پایین امتحان کنید: فضا و اثر را انتخاب کنید و اثر را روی دیوار جابه‌جا کنید.',
         cta: [['مجموعه را ببینید', '/gallery#collection'], ['درخواست بازدید خصوصی', '/join?role=collector']],
         vh: 'آنچه هوما آرت به شما می‌دهد',
         vals: [['دیدن، پیش از تصمیم', 'اثر را در خانه‌ای واقعی می‌بینید، همان‌جا که قرار است زندگی کند.', 'هر اثر با نور گالری، در خانه‌ای با طراحی یک معمار شناخته‌شده.'], ['خصوصی', 'دعوت به نام شما', 'بلیتی فروخته نمی‌شود و فهرست مهمانان به هیچ‌کس داده نمی‌شود.'], ['اندازهٔ واقعی', 'روی دیوار خودتان', 'با دوربین گوشی، اثر را در اندازهٔ واقعی روی دیوار خانه‌تان می‌بینید.'], ['بدون فشار', 'گفت‌وگو، نه سبد خرید', 'قیمت در گفت‌وگو اعلام می‌شود و خرید رو در رو انجام می‌شود.']],
@@ -131,7 +134,7 @@ html[lang=en] .link3{line-height:1.5}
         steps: [['دعوت به نام', 'شخصاً دعوت می‌شوید.'], ['یک شب در خانه‌ای معماری‌شده', 'حدود پنجاه مهمان.'], ['گوشی رو به اثر', 'داستان و مشخصات اثر باز می‌شود.', 'اسکنر را امتحان کنید', '/scan'], ['روی دیوار خودتان', 'در خانه، در اندازهٔ واقعی.', 'امتحان کنید', '/wall'], ['بازدید خصوصی', 'زمانش را با شما هماهنگ می‌کنیم.'], ['خرید، رو در رو', 'بدون پرداخت آنلاین.']],
         xh: 'مجموعهٔ نخست', xl: 'هفت عکس از عکاس هوما آرت. قیمت هر اثر با درخواست شما اعلام می‌شود.',
         ch: 'اثری چشمتان را گرفته است؟', cc: [['درخواست بازدید خصوصی', '/join?role=collector'], ['پرسش در واتس‌اپ', WA]] },
-      en: { who: 'For collectors', h1: 'See the work in a home before you buy it.', ld: 'Not on a white gallery wall. In a real home, in the right light, and then on your own wall.',
+      en: { who: 'For collectors', h1: 'See the work in your own space before you buy it.', ld: 'Try it just below: choose a space and a work, and move the work on the wall.',
         cta: [['See the collection', '/gallery#collection'], ['Request a private viewing', '/join?role=collector']],
         vh: 'What Hooma Art gives you',
         vals: [['See before you decide', 'You see the work in a real home, the kind of place it will live in.', 'Every work under gallery lighting, in a home by a known architect.'], ['Private', 'Invited by name', 'No tickets are sold, and the guest list is shared with no one.'], ['True size', 'On your own wall', 'Through your phone camera you see the work at true size on your wall at home.'], ['No pressure', 'A conversation, not a cart', 'The price is shared in conversation and the purchase is made in person.']],
@@ -142,7 +145,7 @@ html[lang=en] .link3{line-height:1.5}
     },
     artists: {
       img: ['/img/works/beyond-the-visible.jpg', '/img/works/echo-of-the-soul.jpg'],
-      fa: { who: 'برای هنرمندان', h1: 'اثر خوب کم نیست. خریدار درست کم است.', ld: 'هوما آرت اثر شما را در خانه‌ای معماری‌شده، پیش چشم خریدارانی می‌گذارد که با نام دعوت شده‌اند.',
+      fa: { who: 'برای هنرمندان', h1: 'اثر خودتان را در یک فضای واقعی ببینید.', ld: 'عکس اثرتان را همین پایین اضافه کنید. خریدار هم دقیقاً همین را می‌بیند، در خانهٔ خودش.',
         cta: [['اثرم را روی دیوار می‌بینم', '/wall'], ['درخواست همکاری', '/join?role=artist']],
         vh: 'آنچه هوما آرت به شما می‌دهد',
         vals: [['بدون ریسک', 'حضور برای شما هزینه‌ای ندارد. فقط وقتی سهم می‌بریم که اثر فروخته شود.', 'سهم ما درصدی است که برای هر اثر با شما توافق و در قرارداد امانت نوشته می‌شود.'], ['خریدار', 'مخاطب جدی', 'مجموعه‌دارها و خانواده‌هایی که برای خانه‌شان اثر می‌خرند.'], ['فضا', 'خانه‌ای واقعی', 'اثر شما در فضایی معماری‌شده دیده می‌شود، نه فقط روی دیوار سفید.'], ['ابزار', 'صفحه‌ای برای هر اثر', 'با نام و روایت شما، اسکن با دوربین و نمایش روی دیوار خریدار.']],
@@ -150,7 +153,7 @@ html[lang=en] .link3{line-height:1.5}
         steps: [['انتخاب اثر، با هم', 'آثاری که با فضا هم‌خوان باشد.'], ['توافق مکتوب', 'قیمت را شما تأیید می‌کنید.'], ['نمایش در فضا و روی سایت', 'با نام و روایت شما.'], ['فروش و تسویه', 'اگر فروخته نشود، هزینه‌ای ندارید.']],
         xh: 'تعهد ما به هنرمند', list: ['قیمت را شما تأیید می‌کنید.', 'هیچ تصویری از اثر بدون موافقت شما منتشر نمی‌شود.', 'نام شما بدون اجازهٔ کتبی در تبلیغات حامی به کار نمی‌رود.', 'حمل، نصب و بیمهٔ اثر در مدت امانت با هوما آرت است.', 'هوما آرت راهی در کنار گالری است، نه به جای آن.', 'عکس شما روی گوشی خودتان می‌ماند، مگر خودتان بفرستید.'],
         ch: 'در یک دقیقه، اثرتان را روی دیوار ببینید.', cc: [['اثرم را روی دیوار می‌بینم', '/wall'], ['درخواست همکاری', '/join?role=artist']] },
-      en: { who: 'For artists', h1: 'Good work isn\'t rare. The right buyer is.', ld: 'Hooma Art shows your work in an architect\'s home, to buyers who were invited by name.',
+      en: { who: 'For artists', h1: 'See your own work in a real space.', ld: 'Add a photo of your work just below. A buyer sees exactly this, in their own home.',
         cta: [['See my work on a wall', '/wall'], ['Send a request to join', '/join?role=artist']],
         vh: 'What Hooma Art gives you',
         vals: [['No risk', 'Taking part costs you nothing. We earn only when the work sells.', 'Our share is a percentage agreed with you per work and written into the consignment agreement.'], ['Buyers', 'A serious audience', 'Collectors and families who buy art for their homes.'], ['Space', 'A real home', 'Your work is seen in a designed space, not only on a white wall.'], ['Tools', 'A page per work', 'With your name and story, camera scan, and a view on the buyer\'s wall.']],
@@ -161,7 +164,7 @@ html[lang=en] .link3{line-height:1.5}
     },
     investors: {
       img: ['/img/spaces/hall-hung.jpg', '/img/works/galaxy.jpg'],
-      fa: { who: 'برای سرمایه‌گذاران', h1: 'سه چیز کمیاب، در یک پلتفرم.', ld: 'خریدار منتخب، اثر گزیده و فضای خاص. هوما آرت این سه را در رویدادهای خصوصی کنار هم می‌گذارد و با یک پلتفرم دیجیتال به هم وصل می‌کند.',
+      fa: { who: 'برای سرمایه‌گذاران', h1: 'فناوری ما: اثر، در فضای خریدار، پیش از خرید.', ld: 'این همان ابزاری است که خریدار و هنرمند استفاده می‌کنند. خودتان امتحان کنید.',
         cta: [['گفت‌وگو در واتس‌اپ', WA], ['مجموعه را ببینید', '/gallery']],
         vh: 'چرا هوما آرت',
         vals: [['مدل', 'هزینهٔ رویداد را حامی می‌پردازد. درآمد از سهم فروش آثار می‌آید.', 'هنرمند اثر را به امانت می‌دهد و صاحب فضا یک شب از فضایش را. هر دو بدون هزینه.'], ['محصول', 'ساخته شده و کار می‌کند', 'صفحهٔ هر اثر، اسکن با دوربین، نمایش روی دیوار، درخواست‌ها و پنل مدیریت.'], ['داده', 'علاقهٔ واقعی، قابل اندازه‌گیری', 'هر بازدید، اسکن و درخواست شمرده می‌شود، بدون ذخیرهٔ اطلاعات بازدیدکننده.'], ['بازار', 'تهران، از شبکهٔ بنیان‌گذاران', 'خریداران از شبکهٔ شخصی بنیان‌گذاران می‌آیند و با نام دعوت می‌شوند.']],
@@ -171,7 +174,7 @@ html[lang=en] .link3{line-height:1.5}
         fine: 'حامی سرمایه‌گذار نیست و سهمی در سود نمی‌گیرد. سهم هوما آرت از هر فروش با هنرمند توافق می‌شود. درآمدهای بعدی (عضویت، جایگاه ویژه، ابزار برای گالری‌ها و صاحبان فضا) هنوز تصمیم‌گیری نشده‌اند.',
         sh: 'امروز کجا هستیم', status: [[1, 'کار می‌کند', 'پلتفرم روی hoomaart.ir'], [1, 'روی سایت', 'مجموعهٔ نخست: هفت عکس'], [0, 'قدم بعدی', 'جذب نخستین هنرمندان'], [0, 'در حال آماده‌سازی', 'رویداد نخست، با حامی'], [0, 'رویداد نخست می‌سنجد', 'آیا شبکهٔ خریداران می‌آید و می‌خرد'], [0, 'پس از رویداد نخست', 'درآمد تکرارشونده']],
         ch: 'بقیه‌اش را حضوری بگوییم.', cc: [['گفت‌وگو در واتس‌اپ', WA], ['مجموعه را ببینید', '/gallery']] },
-      en: { who: 'For investors', h1: 'Three scarce things, on one platform.', ld: 'Selected buyers, selected works and remarkable spaces. Hooma Art brings them together at private events and joins them with a digital platform.',
+      en: { who: 'For investors', h1: 'Our technology: the work, in the buyer\'s space, before the sale.', ld: 'This is the same tool buyers and artists use. Try it yourself.',
         cta: [['Talk on WhatsApp', WA], ['See the collection', '/gallery']],
         vh: 'Why Hooma Art',
         vals: [['Model', 'A sponsor pays for the event. Income comes from a share of artwork sales.', 'The artist consigns the work and the space owner gives one evening. Neither pays.'], ['Product', 'Built and working', 'A page per work, camera scan, wall view, requests and an admin panel.'], ['Data', 'Real, measurable interest', 'Every view, scan and request is counted, with nothing stored about the visitor.'], ['Market', 'Tehran, from the founders\' network', 'Buyers come from the founders\' personal network and are invited by name.']],
@@ -219,8 +222,8 @@ html[lang=en] .link3{line-height:1.5}
     if (who === 'artists') x = '<section><div class="wrap"><h2>' + esc(t.xh) + '</h2><ul class="list2">' + t.list.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ul></div></section>';
     if (who === 'investors') x = '<section><div class="wrap"><h2>' + esc(t.xh) + '</h2><div class="figs">' + t.figs.map(([n, p], i) => '<div class="up"><div class="n' + (i ? ' s' : '') + '">' + esc(n) + '</div><p>' + esc(p) + '</p></div>').join('') + '</div><p class="fine">' + esc(t.fine) + '</p></div></section>' +
       '<section class="jr"><div class="wrap"><h2>' + esc(t.sh) + '</h2><div class="status">' + t.status.map(([on, a, b]) => '<div class="up" style="background:#fff"><em' + (on ? ' class="on"' : '') + '>' + esc(a) + '</em><b>' + esc(b) + '</b></div>').join('') + '</div></div></section>';
+    document.getElementById('heroSlot').innerHTML = '<div class="lead3 rise"><p class="ey">' + esc(t.who) + '</p><h1>' + esc(t.h1) + '</h1><p class="ld">' + esc(t.ld) + '</p><div class="actions" style="justify-content:center">' + btns(t.cta) + '</div></div>';
     document.getElementById('page').innerHTML =
-      '<div class="hero2"><div class="tx rise"><p class="ey">' + esc(t.who) + '</p><h1>' + esc(t.h1) + '</h1><p class="ld">' + esc(t.ld) + '</p><div class="actions">' + btns(t.cta) + '</div></div><div class="col"><img class="a" src="' + d.img[0] + '" alt=""><img class="b" src="' + d.img[1] + '" alt=""></div></div>' +
       '<section id="value"><div class="wrap"><h2>' + esc(v.h) + '</h2><div class="three">' + [0, 1, 2].map((i) => '<article class="tv up' + (FIRST[who] === i ? ' me' : '') + '"><div class="pic' + (i === 1 ? ' ba' : '') + '">' + PICS[i] + '</div><div class="tx2"><i>' + esc(v.k[i]) + '</i><h3>' + esc(v.t[i]) + '</h3><p>' + esc(v.p[i]) + '</p><a href="' + HREF[i] + '">' + esc(v.a[i]) + '</a></div></article>').join('') + '</div><p class="link3">' + v.link + '</p></div></section>' +
       '<section class="jr" id="journey"><div class="wrap"><h2>' + esc(t.jh) + '</h2><ol class="path2" style="--n:' + t.steps.length + '">' + t.steps.map(([h, p, lt, lh], i) => '<li class="up"><span>' + num(i + 1, l) + '</span><h3>' + esc(h) + '</h3><p>' + esc(p) + '</p>' + (lt ? '<a href="' + lh + '">' + esc(lt) + '</a>' : '') + '</li>').join('') + '</ol></div></section>' +
       x +
@@ -235,6 +238,7 @@ html[lang=en] .link3{line-height:1.5}
   }
   document.getElementById('page').addEventListener('input', (e) => { if (e.target.matches('.ba input')) e.target.parentNode.style.setProperty('--pos', e.target.value + '%'); });
   HoomaLite.onLang(render);
+  fetch('/api/works').then((r) => r.json()).then((w) => HoomaLive.mount(document.getElementById('live'), Array.isArray(w) ? w : [], { own: who === 'artists' })).catch(() => {});
   if (who === 'collectors') { document.getElementById('arcSlot').hidden = false; fetch('/api/works').then((r) => r.json()).then((w) => { const arc = HoomaArc.mount(document.getElementById('arc'), Array.isArray(w) ? w : [], () => HoomaLite.lang); HoomaLite.onLang(() => arc.relabel()); }).catch(() => {}); }
 })();
 </script>
