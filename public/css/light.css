@@ -227,34 +227,34 @@ html[lang=en] .lv-how li:before{content:counter(h)}
 
 /* space analysis */
 .lv-dim{position:absolute;inset:0;background:rgba(10,10,12,.42);opacity:0;transition:opacity .9s var(--out);pointer-events:none}
-.lv-stage.lv-scan .lv-dim{opacity:1}
-.lv-stage.lv-placed .lv-dim{opacity:0;transition-duration:1.6s}
+.lv-scan .lv-dim{opacity:1}
+.lv-placed .lv-dim{opacity:0;transition-duration:1.6s}
 .lv-edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;clip-path:inset(0 0 100% 0);filter:drop-shadow(0 0 2px rgba(255,255,255,.6))}
-.lv-stage.lv-scan .lv-edges{opacity:.9;animation:edgesIn 1.25s cubic-bezier(.45,0,.2,1) forwards}
-.lv-stage.lv-found .lv-edges{opacity:.35;transition:opacity .8s}
-.lv-stage.lv-placed .lv-edges{opacity:0;transition:opacity 1s}
+.lv-scan .lv-edges{opacity:.9;animation:edgesIn 1.25s cubic-bezier(.45,0,.2,1) forwards}
+.lv-found .lv-edges{opacity:.35;transition:opacity .8s}
+.lv-placed .lv-edges{opacity:0;transition:opacity 1s}
 @keyframes edgesIn{to{clip-path:inset(0 0 0 0)}}
 .lv-scanline{position:absolute;inset-inline:0;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);box-shadow:0 0 22px 6px rgba(255,255,255,.35);opacity:0;pointer-events:none}
-.lv-stage.lv-scan .lv-scanline{animation:scanDown 1.25s cubic-bezier(.45,0,.2,1) forwards}
+.lv-scan .lv-scanline{animation:scanDown 1.25s cubic-bezier(.45,0,.2,1) forwards}
 @keyframes scanDown{0%{top:0;opacity:1}92%{opacity:1}100%{top:100%;opacity:0}}
 .lv-cells{position:absolute;inset:0;pointer-events:none}
 .lv-cells i{position:absolute;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:#fff;box-shadow:0 0 8px rgba(255,255,255,.9);opacity:0;transform:scale(.3)}
-.lv-stage.lv-found .lv-cells i{opacity:.9;transform:none;transition:opacity .4s var(--d),transform .5s var(--out) var(--d)}
-.lv-stage.lv-placed .lv-cells i{opacity:0;transition:opacity .7s}
+.lv-found .lv-cells i{opacity:.9;transform:none;transition:opacity .4s var(--d),transform .5s var(--out) var(--d)}
+.lv-placed .lv-cells i{opacity:0;transition:opacity .7s}
 .lv-wall{position:absolute;pointer-events:none;opacity:0;border:1px dashed rgba(255,255,255,.85);border-radius:6px;transform:scale(1.03);transition:opacity .6s var(--out),transform .8s var(--out)}
 .lv-wall:before,.lv-wall:after{content:"";position:absolute;width:16px;height:16px;border:2px solid #fff}
 .lv-wall:before{top:-2px;left:-2px;border-right:0;border-bottom:0;border-top-left-radius:6px}
 .lv-wall:after{bottom:-2px;right:-2px;border-left:0;border-top:0;border-bottom-right-radius:6px}
-.lv-stage.lv-found .lv-wall{opacity:1;transform:none}
-.lv-stage.lv-placed .lv-wall{opacity:0;transition:opacity 1.2s .6s}
+.lv-found .lv-wall{opacity:1;transform:none}
+.lv-placed .lv-wall{opacity:0;transition:opacity 1.2s .6s}
 .lv-tag{position:absolute;top:calc(100% + 8px);inset-inline-start:0;white-space:nowrap;font-size:.75rem;padding:5px 11px;border-radius:999px;color:var(--i);opacity:0;transform:translateY(4px);transition:opacity .5s var(--out),transform .6s var(--out)}
 .lv-tag b{font-weight:500}
-.lv-stage.lv-lit .lv-tag{opacity:1;transform:none}
+.lv-lit .lv-tag{opacity:1;transform:none}
 .lv-step{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);margin:0;padding:8px 16px 8px 14px;border-radius:999px;font-size:.8125rem;color:var(--i);display:flex;align-items:center;gap:9px;white-space:nowrap;max-width:calc(100% - 24px)}
 .lv-step:before{content:"";flex:none;width:12px;height:12px;border-radius:50%;border:1.5px solid rgba(0,0,0,.2);border-top-color:var(--i);animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .lv-again{position:absolute;bottom:12px;inset-inline-start:12px;border:0;cursor:pointer;font:inherit;font-size:.75rem;padding:6px 12px;border-radius:999px;color:var(--i)}
-@media (prefers-reduced-motion:reduce){.lv-edges,.lv-scanline,.lv-step:before{animation:none!important}.lv-stage.lv-scan .lv-edges{clip-path:none}}
+@media (prefers-reduced-motion:reduce){.lv-edges,.lv-scanline,.lv-step:before{animation:none!important}.lv-scan .lv-edges{clip-path:none}}
 
 /* landing pages: the light style wins over each page's own older rules */
 body[data-who]{--ac:var(--i)!important}
@@ -297,3 +297,29 @@ section h2{margin-bottom:0}
 /* the light-reading tag and credit never collide with controls */
 .lv-credit{inset-inline-end:14px;bottom:10px}
 .lv-again{bottom:10px}
+
+/* ===== full-screen wall tool and scanner, in the light style ===== */
+.tool{background:#111}
+.tool .stage{background:linear-gradient(175deg,#efeeea,#dedcd6 72%,#c9c6bf)}
+.tool .panel{background:rgba(252,252,251,.9);-webkit-backdrop-filter:saturate(170%) blur(22px);backdrop-filter:saturate(170%) blur(22px);color:var(--i);border-top:1px solid rgba(0,0,0,.06);border-radius:22px 22px 0 0}
+.tool .hint{background:rgba(255,255,255,.78);color:var(--i);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(0,0,0,.06);border-radius:999px;font-size:.875rem}
+.tool .strip button{background:var(--tile);border:0;border-radius:8px;box-shadow:0 0 0 1px var(--rule);opacity:.65;transition:opacity .3s,box-shadow .3s}
+.tool .strip button[aria-pressed=true]{opacity:1;box-shadow:0 0 0 1.5px var(--i)}
+.tool .strip button.own{border:1px dashed rgba(0,0,0,.35);box-shadow:none;color:var(--i);opacity:1;font-size:.8125rem}
+.tool .size{color:var(--i2)}
+.tool .size output{color:var(--i)}
+.tool input[type=range]{--track:rgba(0,0,0,.2);--thumb:var(--i)}
+.tool .chip{border:0;background:var(--tile);color:var(--i);font-weight:400;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);transition:background .3s}
+.tool .chip:hover{background:#e9e9ee}
+.tool .chip[aria-pressed=true]{background:#fff;color:var(--i);box-shadow:0 0 0 1.5px var(--i)}
+.tool .chip.strong{background:var(--i);color:#fff;box-shadow:none}
+.tool .chip.send{background:#fff;color:var(--i);box-shadow:0 0 0 1px var(--i)}
+.tool .x.light{background:rgba(255,255,255,.8);color:var(--i);border-color:rgba(0,0,0,.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.tool .found strong{color:var(--i)}.tool .found span{color:var(--i2)}
+.tool .nocam p{color:var(--i2)}
+.tool .frame .br{border-color:#fff}
+.tool .lv-step{bottom:auto;top:14px}
+.art{transition:left .9s var(--out),top .9s var(--out),width .5s var(--out)}
+.art.dragging{transition:none}
+.tool .x:focus-visible{outline:2px solid rgba(0,0,0,.28);outline-offset:3px}
+.tool .x:focus:not(:focus-visible){outline:0}

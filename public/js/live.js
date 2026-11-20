@@ -61,14 +61,32 @@ window.HoomaLive = (() => {
       }
       const cy = comp.reduce((s, j) => s + Math.floor(j / cols), 0) / comp.length / rows;
       const cx = comp.reduce((s, j) => s + (j % cols), 0) / comp.length / cols;
-      const score = comp.length * (1.2 - Math.abs(cy - 0.42) * 1.6) * (1.1 - Math.abs(cx - 0.5) * 0.5);
+      const score = comp.length * (1.2 - Math.abs(cy - 0.42) * 1.6) * (1.15 - Math.abs(cx - 0.5) * 1.3);
       if (!best || score > best.score) best = { comp, score };
     }
+    // inside that area, the largest rectangle made only of flat cells: the work must not cover a TV, a shelf or a lamp
     let box;
     if (best && best.comp.length >= 3) {
-      const rs = best.comp.map((j) => Math.floor(j / cols)), cs = best.comp.map((j) => j % cols);
-      box = [Math.min(...cs) / cols, Math.min(...rs) / rows, (Math.max(...cs) + 1) / cols, (Math.max(...rs) + 1) / rows];
-    } else box = roi ? roi.slice() : [0.3, 0.18, 0.7, 0.62];
+      const inC = new Uint8Array(cell.length); best.comp.forEach((j) => { inC[j] = 1; });
+      const hgt = new Array(cols).fill(0); let top = null;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) hgt[c] = inC[r * cols + c] ? hgt[c] + 1 : 0;
+        const st = [];
+        for (let c = 0; c <= cols; c++) {
+          const h = c < cols ? hgt[c] : 0; let start = c;
+          while (st.length && st[st.length - 1][1] >= h) {
+            const [s0, h0] = st.pop(), w = c - s0;
+            // favour wide, hangable rectangles: area, with a mild preference for a landscape shape
+            const sc = w * h0 * Math.min(1, (w / Math.max(1, h0)) / 1.2 + 0.4);
+            if (h0 && (!top || sc > top.sc)) top = { sc, c0: s0, c1: c, r1: r + 1, r0: r + 1 - h0 };
+            start = s0;
+          }
+          st.push([start, h]);
+        }
+      }
+      box = top ? [top.c0 / cols, top.r0 / rows, top.c1 / cols, top.r1 / rows] : null;
+    }
+    if (!box) box = roi ? roi.slice() : [0.3, 0.18, 0.7, 0.62];
     // the light on that wall
     const X0 = Math.floor(box[0] * W), Y0 = Math.floor(box[1] * H), X1 = Math.ceil(box[2] * W), Y1 = Math.ceil(box[3] * H), mid = (X0 + X1) / 2;
     let R = 0, Gc = 0, B = 0, n = 0, left = 0, nl = 0, right = 0, nr = 0;
@@ -150,8 +168,8 @@ window.HoomaLive = (() => {
       if (place) { S.x = place.x; S.y = place.y; S.w = place.w; }
       else {
         const bw = a.box[2] - a.box[0], bh = a.box[3] - a.box[1], r = (works[S.work] && works[S.work].ratio) || 1.5;
-        S.w = Math.max(0.12, Math.min(0.5, bw * 0.55, (bh * 0.62 * stage.clientHeight * r) / stage.clientWidth));
-        S.x = (a.box[0] + a.box[2]) / 2; S.y = a.box[1] + bh * 0.45;
+        S.w = Math.max(0.1, Math.min(0.5, bw * 0.78, (bh * 0.78 * stage.clientHeight * r) / stage.clientWidth));
+        S.x = (a.box[0] + a.box[2]) / 2; S.y = (a.box[1] + a.box[3]) / 2;
       }
       lay(); say('جای‌گذاری اثر', 'Hanging the work');
       stage.classList.add('lv-placed'); art.classList.remove('out');
@@ -205,5 +223,5 @@ window.HoomaLive = (() => {
     if ('IntersectionObserver' in window && !still) { const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); start(); } }, { threshold: 0.45 }); io.observe(stage); bg.src = SPACES[0].img; }
     else start();
   }
-  return { mount };
+  return { mount, analyse };
 })();
