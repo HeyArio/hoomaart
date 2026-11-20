@@ -18,7 +18,7 @@
 :root{--k:#000;--k2:#161617;--k3:#2a2a2d;--w:#f5f5f7;--w2:#fff;--t:#f5f5f7;--t2:#a1a1a6;--d:#1d1d1f;--d2:#6e6e73;--r:clamp(18px,2vw,28px);--go:#30d158}
 html{scroll-snap-type:y proximity;background:var(--k)}
 body{background:var(--k);color:var(--t)}
-.pz{position:relative;min-height:100svh;display:grid;align-content:center;padding:clamp(68px,9.5vh,120px) 0 clamp(20px,4.5vh,80px);scroll-snap-align:start;scroll-margin-top:0;background:var(--k)}
+.pz{position:relative;min-height:100svh;display:grid;align-content:center;padding:clamp(76px,10.5vh,124px) 0 clamp(18px,4vh,80px);scroll-snap-align:start;scroll-margin-top:0;background:var(--k)}
 .pz.lt{background:var(--w);color:var(--d)}
 .hd{max-width:22ch}
 .pz h2{font-size:clamp(1.7rem,min(4.2vw,6.4vh),3.6rem);font-weight:800;line-height:1.28}
@@ -62,7 +62,7 @@ html[lang=en] .open h1{line-height:.98;letter-spacing:-.045em;max-width:13ch}
 @keyframes nudge{0%,60%,100%{transform:none}30%{transform:translateY(4px)}}
 
 /* 2. the room */
-.room{padding-inline:0;padding-top:clamp(68px,9vh,96px);padding-bottom:clamp(14px,2.4vh,32px)}
+.room{padding-inline:0;padding-top:clamp(76px,10vh,100px);padding-bottom:clamp(14px,2.4vh,32px)}
 .room-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:10px 40px}
 .room-head .ld{margin-top:0;max-width:38ch;font-size:clamp(.9375rem,min(1.2vw,2.1vh),1.0625rem)}
 .room-scroll{overflow-x:auto;scrollbar-width:none;margin-top:clamp(12px,2.2vh,24px);direction:ltr}
@@ -173,10 +173,7 @@ html[lang=en] .plate{direction:ltr}
 .dots a:before{content:"";width:4px;height:4px;border-radius:50%;background:#fff;mix-blend-mode:difference;opacity:.3;transition:opacity .3s,transform .4s var(--out)}
 .dots a[aria-current=true]:before{opacity:1;transform:scale(1.8)}
 @media (max-width:1100px){.dots{display:none}}
-header.top .back{font-size:.875rem;color:var(--t);opacity:.8;text-decoration:none;margin-inline-start:auto}
-header.top .back:hover{opacity:1}
-header.top .lang{margin-inline-start:0}
-header.top.solid{background:rgba(0,0,0,.88)}
+header.top .back{margin-inline-start:auto}
 .up{opacity:0;transform:translateY(28px) scale(.985)}
 .up.in{opacity:1;transform:none;transition:opacity .9s var(--out),transform 1.1s var(--out);transition-delay:calc(var(--n,0)*80ms)}
 @media (prefers-reduced-motion:reduce){.open>img,.hot:after,.down svg{animation:none}html{scroll-snap-type:none}.up{opacity:1;transform:none}}
@@ -189,7 +186,7 @@ header.top.solid{background:rgba(0,0,0,.88)}
     <span class="fa">هوما آرت</span><span class="en">Hooma Art</span>
   </a>
   <a class="back" href="/gallery"><span class="fa">مجموعه</span><span class="en">Collection</span></a>
-  <button class="lang" id="langBtn" type="button" aria-label="Switch language"><span class="fa">English</span><span class="en">فارسی</span></button>
+  <div class="seg" id="langBtn" role="group" aria-label="Language"><button type="button" data-lang="fa" aria-label="فارسی">FA</button><button type="button" data-lang="en" aria-label="English">EN</button></div>
 </header>
 <nav class="dots" id="dots" aria-label="Sections"></nav>
 
@@ -343,10 +340,11 @@ header.top.solid{background:rgba(0,0,0,.88)}
     lang = l === 'en' ? 'en' : 'fa'; const h = document.documentElement; h.lang = lang; h.dir = lang === 'fa' ? 'rtl' : 'ltr';
     if (save) try { localStorage.setItem('hooma-lang', lang); } catch {}
     document.title = lang === 'fa' ? 'هوما آرت | Hooma Art' : 'Hooma Art | هوما آرت';
+    $$('#langBtn [data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
     $$('#dots a').forEach((a) => { a.setAttribute('aria-label', a.dataset[lang]); a.title = a.dataset[lang]; });
     $$('.wt').forEach((b) => { const w = works.find((x) => x.id === b.dataset.id); b.textContent = w ? L(w.title) : ''; });
   }
-  $('#langBtn').addEventListener('click', () => setLang(lang === 'fa' ? 'en' : 'fa', true));
+  $('#langBtn').addEventListener('click', (e) => { const b = e.target.closest('[data-lang]'); if (b && b.dataset.lang !== lang) setLang(b.dataset.lang, true); });
 
   /* top bar + section index + keyboard presenting */
   const top = $('#top'), secs = $$('.pz'), dots = $('#dots');

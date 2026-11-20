@@ -32,9 +32,10 @@ function setLang(l, save) {
   Hooma.lang = l; const h = document.documentElement; h.lang = l; h.dir = l === 'fa' ? 'rtl' : 'ltr';
   if (save) try { localStorage.setItem('hooma-lang', l); } catch {}
   document.title = l === 'fa' ? 'هوما آرت | Hooma Art' : 'Hooma Art | هوما آرت';
+  $$('#langBtn [data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
   render(); document.dispatchEvent(new CustomEvent('hooma:lang'));
 }
-$('#langBtn').addEventListener('click', () => setLang(Hooma.lang === 'fa' ? 'en' : 'fa', true));
+$('#langBtn').addEventListener('click', (e) => { const b = e.target.closest('[data-lang]'); if (b && b.dataset.lang !== Hooma.lang) setLang(b.dataset.lang, true); });
 
 /* ---- rendering */
 let heroIx = 0, elevIx = 2, heroTimer = 0, ambOn = 0, heroShown = '', heroHold = false;
