@@ -131,12 +131,6 @@ function render() {
 }
 
 /* ---- header, menu, scroll entrances */
-const topBar = $('#top'), menuBtn = $('#menuBtn');
-const onScroll = () => topBar.classList.toggle('solid', scrollY > 24);
-addEventListener('scroll', onScroll, { passive: true }); onScroll();
-const setMenu = (o) => { topBar.classList.toggle('open', o); menuBtn.setAttribute('aria-expanded', String(o)); };
-menuBtn.addEventListener('click', () => setMenu(!topBar.classList.contains('open')));
-$('#nav').addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
 let io = null;
 function reveal() {
   if (still || !('IntersectionObserver' in window)) return;

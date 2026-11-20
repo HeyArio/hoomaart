@@ -5,8 +5,8 @@
 
 /* Hooma Art. A dark viewing room: the work is the only colour on the page. */
 :root{
-  --bg:#0A0A0B; --bg-2:#131314; --fg:#F4F3F1; --fg-2:#A8A6A1; --hair:rgba(244,243,241,.14);
-  --wall:#F2F1EE; --wall-2:#E9E8E4; --paper:#FBFAF8; --ink:#111112; --mist:#5A5853; --line:rgba(17,17,18,.16);
+  --bg:#fff; --bg-2:#f5f5f7; --fg:#111113; --fg-2:#6e6e73; --hair:rgba(0,0,0,.1);
+  --wall:#f5f5f7; --wall-2:#ececee; --paper:#fff; --ink:#111113; --mist:#6e6e73; --line:rgba(0,0,0,.12);
   --dot:#D8402B; --ok:#12714A; --bad:#A3261B; --lapis:#111112; --saffron:#F4F3F1;
   --display:"Vazir",system-ui,sans-serif; --body:"Vazir",system-ui,sans-serif;
   --gut:clamp(20px,5vw,72px); --max:1320px;

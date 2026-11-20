@@ -34,18 +34,29 @@ html[lang=en] .ld{line-height:1.5}
 .col:before{content:"";position:absolute;inset-inline-end:-6%;top:-6%;width:44%;aspect-ratio:1;border-radius:50%;background:var(--ac);opacity:.12}
 @media (max-width:900px){.hero2 .tx,.col{grid-column:1/-1}.col{order:-1;aspect-ratio:1.25}}
 
-/* value */
-.vals{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(10px,1.2vw,18px);margin-top:clamp(24px,4vw,56px)}
-.val{grid-column:span 4;background:var(--tile);border-radius:clamp(18px,2vw,28px);padding:clamp(20px,2.4vw,36px);display:flex;flex-direction:column;min-height:clamp(170px,22vw,260px)}
-.val:first-child{grid-column:span 8;background:var(--ac);color:#fff}
-.val:nth-child(4){grid-column:span 8}
-.val b{font-weight:800;font-size:clamp(1.25rem,2.1vw,1.9rem);line-height:1.4;margin-top:auto}
-.val:first-child b{font-size:clamp(1.6rem,3.2vw,2.8rem);line-height:1.3;max-width:18ch}
-.val p{font-size:.9688rem;color:var(--i2);margin-top:8px;max-width:46ch}
-.val:first-child p{color:rgba(255,255,255,.86)}
-.val i{font-style:normal;font-weight:700;font-size:.875rem;color:var(--ac)}
-.val:first-child i{color:#fff;opacity:.8}
-@media (max-width:860px){.val,.val:first-child,.val:nth-child(4){grid-column:1/-1;min-height:0}.val b{margin-top:18px}}
+/* the three values: the same block on every landing */
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.2vw,18px);margin-top:clamp(24px,4vw,56px)}
+.tv{background:var(--tile);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.tv .pic{position:relative;aspect-ratio:1.35;overflow:hidden;background:#ddd}
+.tv .pic>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tv .tx2{padding:clamp(18px,2vw,28px);display:flex;flex-direction:column;flex:1}
+.tv i{font-style:normal;font-weight:700;font-size:.8125rem;color:var(--ac)}
+.tv h3{font-size:clamp(1.25rem,1.9vw,1.7rem);font-weight:800;margin-top:6px}
+.tv p{font-size:.9375rem;color:var(--i2);margin-top:8px}
+.tv a{margin-top:auto;padding-top:16px;font-size:.9375rem;font-weight:600;color:var(--i)}
+.tv.me{box-shadow:0 0 0 2px var(--ac)}
+.ba{direction:ltr;--pos:50%}
+.ba .hung{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.ba:after{content:"";position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);pointer-events:none}
+.ba input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize}
+.ba b{position:absolute;top:50%;left:var(--pos);width:38px;height:38px;margin:-19px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.3);pointer-events:none;display:grid;place-items:center}
+.ba b svg{width:16px;height:16px;fill:none;stroke:#111;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mos{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;position:absolute;inset:0}
+.mos img{width:100%;height:100%;object-fit:cover}
+.link3{font-size:clamp(1.05rem,1.4vw,1.3rem);color:var(--i2);margin-top:clamp(20px,3vw,36px);max-width:60ch;line-height:1.85}
+html[lang=en] .link3{line-height:1.5}
+.link3 b{color:var(--i);font-weight:700}
+@media (max-width:860px){.three{grid-template-columns:1fr}}
 
 /* journey */
 .jr{background:var(--tile)}
@@ -90,20 +101,17 @@ html[lang=en] .ld{line-height:1.5}
 .close2{text-align:center;padding-bottom:clamp(40px,6vw,72px)}
 .close2 h2{margin-inline:auto}
 .close2 .actions{justify-content:center}
-.who{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;margin-top:clamp(36px,6vw,72px);padding-top:22px;border-top:1px solid var(--rule);font-size:.875rem;color:var(--i2)}
-.who a{color:var(--i)}
+
 .up{opacity:0;transform:translateY(24px)}
 .up.in{opacity:1;transform:none;transition:opacity .9s var(--out),transform 1.1s var(--out)}
 @media (prefers-reduced-motion:reduce){.up{opacity:1;transform:none}}
 </style>
 </head>
-<body class="light">
-<header class="top lite" id="top">
-  <a class="brand" href="/" aria-label="Hooma Art"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 31C8 16 18 6 34 5c-1 15-10 25-25 27l12-13"/></svg><span class="fa">هوما آرت</span><span class="en">Hooma Art</span></a>
-  <nav class="nav" id="nav" aria-label="Main"><a href="#value" data-k="navValue"></a><a href="#journey" data-k="navPath"></a><a href="/gallery"><span class="fa">مجموعه</span><span class="en">Collection</span></a></nav>
-  <div class="seg" id="langBtn" role="group" aria-label="Language"><button type="button" data-lang="fa" aria-label="فارسی">FA</button><button type="button" data-lang="en" aria-label="English">EN</button></div>
-</header>
+<body>
+<header class="top" id="top"></header>
 <main id="page"></main>
+<footer class="foot" id="foot"></footer>
+<script src="/js/site.js"></script>
 <script src="/js/lite.js"></script>
 <script>
 'use strict';
@@ -152,7 +160,7 @@ html[lang=en] .ld{line-height:1.5}
     investors: {
       img: ['/img/spaces/hall-hung.jpg', '/img/works/galaxy.jpg'],
       fa: { who: 'برای سرمایه‌گذاران', h1: 'سه چیز کمیاب، در یک پلتفرم.', ld: 'خریدار منتخب، اثر گزیده و فضای خاص. هوما آرت این سه را در رویدادهای خصوصی کنار هم می‌گذارد و با یک پلتفرم دیجیتال به هم وصل می‌کند.',
-        cta: [['گفت‌وگو در واتس‌اپ', WA], ['معرفی کامل پلتفرم', '/overview']],
+        cta: [['گفت‌وگو در واتس‌اپ', WA], ['مجموعه را ببینید', '/gallery']],
         vh: 'چرا هوما آرت',
         vals: [['مدل', 'هزینهٔ رویداد را حامی می‌پردازد. درآمد از سهم فروش آثار می‌آید.', 'هنرمند اثر را به امانت می‌دهد و صاحب فضا یک شب از فضایش را. هر دو بدون هزینه.'], ['محصول', 'ساخته شده و کار می‌کند', 'صفحهٔ هر اثر، اسکن با دوربین، نمایش روی دیوار، درخواست‌ها و پنل مدیریت.'], ['داده', 'علاقهٔ واقعی، قابل اندازه‌گیری', 'هر بازدید، اسکن و درخواست شمرده می‌شود، بدون ذخیرهٔ اطلاعات بازدیدکننده.'], ['بازار', 'تهران، از شبکهٔ بنیان‌گذاران', 'خریداران از شبکهٔ شخصی بنیان‌گذاران می‌آیند و با نام دعوت می‌شوند.']],
         jh: 'یک رویداد چطور کار می‌کند',
@@ -160,9 +168,9 @@ html[lang=en] .ld{line-height:1.5}
         xh: 'حمایت از رویداد نخست', figs: [['۷۵۰', 'میلیون تومان، هزینهٔ کامل میزبانی که حامی اصلی می‌پردازد'], ['۵۰', 'مهمان، هر کدام با نام'], ['۱۵', 'میلیون تومان، حدود هزینهٔ هر مهمان']],
         fine: 'حامی سرمایه‌گذار نیست و سهمی در سود نمی‌گیرد. سهم هوما آرت از هر فروش با هنرمند توافق می‌شود. درآمدهای بعدی (عضویت، جایگاه ویژه، ابزار برای گالری‌ها و صاحبان فضا) هنوز تصمیم‌گیری نشده‌اند.',
         sh: 'امروز کجا هستیم', status: [[1, 'کار می‌کند', 'پلتفرم روی hoomaart.ir'], [1, 'روی سایت', 'مجموعهٔ نخست: هفت عکس'], [0, 'قدم بعدی', 'جذب نخستین هنرمندان'], [0, 'در حال آماده‌سازی', 'رویداد نخست، با حامی'], [0, 'رویداد نخست می‌سنجد', 'آیا شبکهٔ خریداران می‌آید و می‌خرد'], [0, 'پس از رویداد نخست', 'درآمد تکرارشونده']],
-        ch: 'بقیه‌اش را حضوری بگوییم.', cc: [['گفت‌وگو در واتس‌اپ', WA], ['معرفی کامل پلتفرم', '/overview']] },
+        ch: 'بقیه‌اش را حضوری بگوییم.', cc: [['گفت‌وگو در واتس‌اپ', WA], ['مجموعه را ببینید', '/gallery']] },
       en: { who: 'For investors', h1: 'Three scarce things, on one platform.', ld: 'Selected buyers, selected works and remarkable spaces. Hooma Art brings them together at private events and joins them with a digital platform.',
-        cta: [['Talk on WhatsApp', WA], ['Full platform walkthrough', '/overview']],
+        cta: [['Talk on WhatsApp', WA], ['See the collection', '/gallery']],
         vh: 'Why Hooma Art',
         vals: [['Model', 'A sponsor pays for the event. Income comes from a share of artwork sales.', 'The artist consigns the work and the space owner gives one evening. Neither pays.'], ['Product', 'Built and working', 'A page per work, camera scan, wall view, requests and an admin panel.'], ['Data', 'Real, measurable interest', 'Every view, scan and request is counted, with nothing stored about the visitor.'], ['Market', 'Tehran, from the founders\' network', 'Buyers come from the founders\' personal network and are invited by name.']],
         jh: 'How one event works',
@@ -170,7 +178,7 @@ html[lang=en] .ld{line-height:1.5}
         xh: 'Sponsorship of the first event', figs: [['750', 'million toman, the full hosting cost paid by the lead sponsor'], ['50', 'guests, each invited by name'], ['15', 'million toman, about the cost per guest']],
         fine: 'The sponsor is not an investor and receives no profit share. Hooma Art\'s share of each sale is agreed with the artist. Later revenue (memberships, promoted placement, tools for galleries and space owners) is not yet decided.',
         sh: 'Where we are today', status: [[1, 'Working', 'The platform at hoomaart.ir'], [1, 'On the site', 'First collection: seven photographs'], [0, 'Next', 'Signing the first artists'], [0, 'In preparation', 'The first event, with a sponsor'], [0, 'The first event will test', 'Whether the buyer network turns up and buys'], [0, 'After the first event', 'Recurring revenue']],
-        ch: 'Let\'s cover the rest in person.', cc: [['Talk on WhatsApp', WA], ['Full platform walkthrough', '/overview']] },
+        ch: 'Let\'s cover the rest in person.', cc: [['Talk on WhatsApp', WA], ['See the collection', '/gallery']] },
     },
   };
   const who = (location.pathname.split('/')[2] || '').replace(/[^a-z]/g, '');
@@ -180,23 +188,41 @@ html[lang=en] .ld{line-height:1.5}
   const num = (n, l) => (l === 'fa' ? String(n).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]) : String(n));
   const btns = (a) => a.map(([t, h], i) => '<a class="btn' + (i ? '' : ' primary') + '" href="' + h + '"' + (h.startsWith('http') ? ' target="_blank" rel="noopener"' : '') + '>' + esc(t) + '</a>').join('');
   const OTHER = { fa: { collectors: 'مجموعه‌دار هستم', artists: 'هنرمند هستم', investors: 'سرمایه‌گذار هستم', sw: 'کس دیگری هستید؟', v: 'ارزش', p: 'مسیر' }, en: { collectors: 'I\'m a collector', artists: 'I\'m an artist', investors: 'I\'m an investor', sw: 'Someone else?', v: 'Value', p: 'Path' } };
+  const V = {
+    fa: { h: 'سه چیز، که با هم کار می‌کنند', k: ['فناوری', 'فضا', 'هنرمند'],
+      t: ['اثر را روی دیوار خودتان ببینید', 'فضاهایی که می‌شناسیم', 'آثاری که با هنرمند انتخاب می‌شوند'],
+      p: ['با دوربین گوشی، در اندازهٔ واقعی، پیش از هر تصمیم. بدون نصب برنامه.', 'خانه‌ها و سالن‌هایی با طراحی معماران شناخته‌شده. خط را بکشید: همان سالن، با اثر و بدون اثر.', 'نقاشی، عکس هنری، چاپ دستی و مجسمه. هر اثر صفحهٔ خودش را دارد.'],
+      a: ['امتحان کنید', 'با ما در تماس باشید', 'مجموعه را ببینید'],
+      link: '<b>فضا</b> اثر را همان‌جا نشان می‌دهد که قرار است زندگی کند. <b>فناوری</b> همان اثر را به دیوار خانهٔ خریدار می‌برد. و <b>هنرمند</b> به خریداری می‌رسد که اثر را دیده و جدی است.' },
+    en: { h: 'Three things that work together', k: ['Technology', 'Space', 'Artist'],
+      t: ['See the work on your own wall', 'Spaces we know', 'Works chosen with the artist'],
+      p: ['Through your phone camera, at true size, before any decision. No app to install.', 'Homes and halls designed by known architects. Drag the line: the same hall, with and without art.', 'Painting, fine-art photography, printmaking and sculpture. Every work has its own page.'],
+      a: ['Try it', 'Get in touch', 'See the collection'],
+      link: 'The <b>space</b> shows the work where it is meant to live. The <b>technology</b> takes that same work to the buyer\'s own wall. And the <b>artist</b> reaches a buyer who has seen the work and is serious.' },
+  };
+  const FIRST = { collectors: 0, investors: 1, artists: 2 };
+  const PICS = [
+    '<img loading="lazy" src="/img/spaces/home-evening.jpg" alt="" style="object-position:50% 34%">',
+    '<img loading="lazy" src="/img/spaces/hall-empty.jpg" alt=""><img class="hung" loading="lazy" src="/img/spaces/hall-hung.jpg" alt=""><b><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M6 5L2 9l4 4M12 5l4 4-4 4"/></svg></b><input type="range" min="4" max="96" value="50" aria-label="Before and after">',
+    '<div class="mos"><img loading="lazy" src="/img/works/tango-in-red-ruby.jpg" alt=""><img loading="lazy" src="/img/works/galaxy.jpg" alt=""><img loading="lazy" src="/img/works/echo-of-the-soul.jpg" alt=""><img loading="lazy" src="/img/works/parishan-lake.jpg" alt=""></div>',
+  ];
+  const HREF = ['/wall', '/join', '/gallery'];
   let works = [];
 
   function render(l) {
     const d = P[who], t = d[l], o = OTHER[l];
     document.title = (l === 'fa' ? 'هوما آرت | ' : 'Hooma Art | ') + t.who;
-    document.querySelector('[data-k=navValue]').textContent = o.v; document.querySelector('[data-k=navPath]').textContent = o.p;
+    const v = V[l];
     let x = '';
-    if (who === 'collectors') x = '<section><div class="wrap"><h2>' + esc(t.xh) + '</h2><p class="ld">' + esc(t.xl) + '</p><div class="strip">' + works.slice(0, 4).map((w) => '<a href="/w/' + w.id + '"><img loading="lazy" src="' + w.img + '" alt=""><b>' + esc(w.title[l] || w.title.fa) + '</b><span>' + esc((w.medium && (w.medium[l] || w.medium.fa)) || '') + '</span></a>').join('') + '</div><div class="actions"><a class="btn" href="/gallery#collection">' + esc(t.cta[0][0]) + '</a></div></div></section>';
     if (who === 'artists') x = '<section><div class="wrap"><h2>' + esc(t.xh) + '</h2><ul class="list2">' + t.list.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ul></div></section>';
     if (who === 'investors') x = '<section><div class="wrap"><h2>' + esc(t.xh) + '</h2><div class="figs">' + t.figs.map(([n, p], i) => '<div class="up"><div class="n' + (i ? ' s' : '') + '">' + esc(n) + '</div><p>' + esc(p) + '</p></div>').join('') + '</div><p class="fine">' + esc(t.fine) + '</p></div></section>' +
       '<section class="jr"><div class="wrap"><h2>' + esc(t.sh) + '</h2><div class="status">' + t.status.map(([on, a, b]) => '<div class="up" style="background:#fff"><em' + (on ? ' class="on"' : '') + '>' + esc(a) + '</em><b>' + esc(b) + '</b></div>').join('') + '</div></div></section>';
     document.getElementById('page').innerHTML =
       '<div class="hero2"><div class="tx rise"><p class="ey">' + esc(t.who) + '</p><h1>' + esc(t.h1) + '</h1><p class="ld">' + esc(t.ld) + '</p><div class="actions">' + btns(t.cta) + '</div></div><div class="col"><img class="a" src="' + d.img[0] + '" alt=""><img class="b" src="' + d.img[1] + '" alt=""></div></div>' +
-      '<section id="value"><div class="wrap"><h2>' + esc(t.vh) + '</h2><div class="vals">' + t.vals.map(([k, b, p]) => '<div class="val up"><i>' + esc(k) + '</i><b>' + esc(b) + '</b><p>' + esc(p) + '</p></div>').join('') + '</div></div></section>' +
+      '<section id="value"><div class="wrap"><h2>' + esc(v.h) + '</h2><div class="three">' + [0, 1, 2].map((i) => '<article class="tv up' + (FIRST[who] === i ? ' me' : '') + '"><div class="pic' + (i === 1 ? ' ba' : '') + '">' + PICS[i] + '</div><div class="tx2"><i>' + esc(v.k[i]) + '</i><h3>' + esc(v.t[i]) + '</h3><p>' + esc(v.p[i]) + '</p><a href="' + HREF[i] + '">' + esc(v.a[i]) + '</a></div></article>').join('') + '</div><p class="link3">' + v.link + '</p></div></section>' +
       '<section class="jr" id="journey"><div class="wrap"><h2>' + esc(t.jh) + '</h2><ol class="path2" style="--n:' + t.steps.length + '">' + t.steps.map(([h, p, lt, lh], i) => '<li class="up"><span>' + num(i + 1, l) + '</span><h3>' + esc(h) + '</h3><p>' + esc(p) + '</p>' + (lt ? '<a href="' + lh + '">' + esc(lt) + '</a>' : '') + '</li>').join('') + '</ol></div></section>' +
       x +
-      '<section class="close2"><div class="wrap"><h2>' + esc(t.ch) + '</h2><div class="actions">' + btns(t.cc) + '</div><p class="who"><span>' + esc(o.sw) + '</span>' + Object.keys(P).filter((k) => k !== who).map((k) => '<a href="/for/' + k + '">' + esc(o[k]) + '</a>').join('') + '<a href="/">' + (l === 'fa' ? 'صفحهٔ نخست' : 'Home') + '</a></p></div></section>';
+      '<section class="close2"><div class="wrap"><h2>' + esc(t.ch) + '</h2><div class="actions">' + btns(t.cc) + '</div></div></section>';
     reveal();
   }
   function reveal() {
@@ -205,8 +231,8 @@ html[lang=en] .ld{line-height:1.5}
     const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -6% 0px' });
     els.forEach((e) => { if (e.getBoundingClientRect().top < innerHeight) e.classList.add('in'); else io.observe(e); });
   }
+  document.getElementById('page').addEventListener('input', (e) => { if (e.target.matches('.ba input')) e.target.parentNode.style.setProperty('--pos', e.target.value + '%'); });
   HoomaLite.onLang(render);
-  if (who === 'collectors') fetch('/api/works').then((r) => r.json()).then((w) => { works = Array.isArray(w) ? w : []; render(HoomaLite.lang); }).catch(() => {});
 })();
 </script>
 </body>

@@ -210,8 +210,7 @@ const server = http.createServer(async (req, res) => {
     if (p === '/admin') return serveFile(res, path.join(PUB, 'admin.html'), 'no-store');
     if (p === '/') return serveFile(res, path.join(PUB, 'gate.html'), 'no-cache');
     if (/^\/for\/(collectors|artists|investors)$/.test(p)) return serveFile(res, path.join(PUB, 'audience.html'), 'no-cache');
-    if (p === '/overview') return serveFile(res, path.join(PUB, 'present.html'), 'no-cache');
-    if (p === '/present') { res.writeHead(302, { Location: '/overview' }); return res.end(); }
+    if (p === '/overview' || p === '/present') { res.writeHead(302, { Location: '/for/investors' }); return res.end(); }
     const f = path.normalize(path.join(PUB, p));
     if (!f.startsWith(PUB + path.sep)) return send(res, 403, 'Forbidden');
     return serveFile(res, f, /\/(fonts|img|vendor)\//.test(p) ? 'public, max-age=2592000' : 'no-cache');
