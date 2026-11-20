@@ -15,17 +15,17 @@
 <link rel="stylesheet" href="/css/app.css">
 <style>
 html{scroll-snap-type:y proximity}
-.pz{position:relative;min-height:100svh;display:grid;align-content:center;padding:clamp(96px,12vh,140px) 0 clamp(64px,9vh,110px);scroll-snap-align:start;scroll-margin-top:0;border-top:1px solid var(--hair)}
+.pz{position:relative;min-height:100svh;display:grid;align-content:center;padding:clamp(72px,10vh,140px) 0 clamp(24px,5vh,110px);scroll-snap-align:start;scroll-margin-top:0;border-top:1px solid var(--hair)}
 .pz:first-of-type{border-top:0}
 .pz.light{background:var(--wall);color:var(--ink);border-top:0}
-.kick{font-size:.875rem;color:var(--fg-2);margin-bottom:clamp(18px,3vh,32px);display:flex;gap:14px;align-items:baseline}
+.kick{font-size:.875rem;color:var(--fg-2);margin-bottom:clamp(8px,2vh,32px);display:flex;gap:14px;align-items:baseline}
 .kick b{font-family:var(--display);font-weight:500;font-size:1.25rem;color:var(--fg)}
 .light .kick{color:var(--mist)}.light .kick b{color:var(--ink)}
 .cols{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);row-gap:40px;align-items:start}
 .c5{grid-column:1/span 5}.c6{grid-column:7/-1}.c12{grid-column:1/-1}
 @media (max-width:900px){.c5,.c6{grid-column:1/-1}}
-.pz h2{font-size:clamp(2.2rem,5vw,4.5rem)}
-.pz .big{font-size:clamp(1.15rem,1.7vw,1.5rem);line-height:1.85;color:var(--fg-2);margin-top:1.4rem;max-width:44ch}
+.pz h2{font-size:clamp(1.9rem,min(5vw,7vh),4.5rem)}
+.pz .big{font-size:clamp(1rem,min(1.7vw,2.5vh),1.5rem);line-height:1.8;color:var(--fg-2);margin-top:clamp(.7rem,2vh,1.4rem);max-width:44ch}
 html[lang=en] .pz .big{line-height:1.5}
 .light .big{color:var(--mist)}
 
@@ -36,6 +36,7 @@ html[lang=en] .pz .big{line-height:1.5}
 .open:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(10,10,11,.5),rgba(10,10,11,.08) 32%,rgba(10,10,11,.5) 62%,var(--bg) 100%)}
 .open .wrap{width:100%;padding-bottom:clamp(32px,6vh,72px)}
 .open .actions{margin-top:1.8rem}
+.pz .actions{margin-top:clamp(1rem,3vh,2.2rem)}
 .open .btn{border-color:rgba(244,243,241,.7)}
 .down{margin-top:1.6rem}
 .open h1{max-width:13ch;font-size:clamp(3rem,8vw,7rem)}
@@ -80,18 +81,18 @@ html[lang=en] .plate{direction:ltr}
 @media (max-width:860px){.swipe{display:block}}
 
 /* three sides */
-.sides3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);margin-top:clamp(36px,6vh,72px);border-top:1px solid var(--ink)}
+.sides3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);margin-top:clamp(18px,4vh,72px);border-top:1px solid var(--ink)}
 .sides3>div{padding-top:20px}
-.sides3 h3{font-size:clamp(1.7rem,2.6vw,2.4rem);margin-bottom:10px}
+.sides3 h3{font-size:clamp(1.5rem,min(2.6vw,4vh),2.4rem);margin-bottom:6px}
 .sides3 p{font-size:.9688rem;color:var(--mist)}
-.sides3 dl{margin-top:18px;border-top:1px solid var(--line);grid-template-columns:auto 1fr;font-size:.9375rem}
+.sides3 dl{margin-top:clamp(8px,1.8vh,18px);border-top:1px solid var(--line);grid-template-columns:auto 1fr;font-size:.9375rem}
 .sides3 dt{color:var(--mist)}
 @media (max-width:860px){.sides3{grid-template-columns:1fr;border-top:0}.sides3>div{border-top:1px solid var(--ink);padding-bottom:28px}}
 
 /* path, studio, model */
-.steps6{list-style:none;padding:0;counter-reset:p;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);margin-top:clamp(32px,5vh,64px)}
-.steps6 li{counter-increment:p;border-top:1px solid var(--hair);padding:18px 0 clamp(22px,4vh,44px)}
-.steps6 li:before{content:counter(p,persian);font-family:var(--display);font-size:1.25rem;color:var(--fg-2);display:block;margin-bottom:clamp(12px,2.4vh,28px)}
+.steps6{list-style:none;padding:0;counter-reset:p;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);margin-top:clamp(14px,3.4vh,64px)}
+.steps6 li{counter-increment:p;border-top:1px solid var(--hair);padding:clamp(10px,1.8vh,18px) 0 clamp(12px,2.6vh,44px)}
+.steps6 li:before{content:counter(p,persian);font-family:var(--display);font-size:1.25rem;color:var(--fg-2);display:block;margin-bottom:clamp(4px,1.4vh,28px)}
 html[lang=en] .steps6 li:before{content:counter(p)}
 .steps6 h3{font-size:1.5rem}
 .steps6 p{font-size:.9375rem;color:var(--fg-2);margin-top:4px}
@@ -99,24 +100,25 @@ html[lang=en] .steps6 li:before{content:counter(p)}
 @media (max-width:860px){.steps6{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.steps6{grid-template-columns:1fr}}
 .rows{border-top:1px solid var(--hair);margin-top:4px}
-.rows>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--hair);font-size:.9688rem}
+.rows>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:baseline;padding:clamp(8px,1.6vh,16px) 0;border-bottom:1px solid var(--hair);font-size:.9688rem}
 .rows span:last-child{color:var(--fg-2);font-size:.875rem}
 .light .rows,.light .rows>div{border-color:var(--line)}.light .rows span:last-child{color:var(--mist)}
 .calc{font-size:1.0625rem;color:var(--mist);margin-top:clamp(16px,2.4vh,28px)}
-.sum{font-family:var(--display);font-size:clamp(2.6rem,6vw,5.5rem);line-height:1.15;margin-top:4px}
-.note3{font-size:.8125rem;color:var(--mist);margin-top:18px;max-width:60ch}
+.sum{font-family:var(--display);font-size:clamp(2.2rem,min(6vw,8.5vh),5.5rem);line-height:1.15;margin-top:2px}
+.note3{font-size:.8125rem;color:var(--mist);margin-top:clamp(8px,1.6vh,18px);max-width:60ch}
 .pz:not(.light) .note3{color:var(--fg-2)}
 
 /* index dots */
-.dots{position:fixed;inset-inline-end:clamp(10px,1.6vw,22px);top:50%;transform:translateY(-50%);z-index:var(--z-sticky);display:grid;gap:4px}
-.dots a{width:28px;height:28px;display:grid;place-items:center}
-.dots a:before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;mix-blend-mode:difference;opacity:.4;transition:opacity .3s,transform .4s var(--out)}
+.dots{position:fixed;inset-inline-end:4px;top:50%;transform:translateY(-50%);z-index:var(--z-sticky);display:grid;gap:0}
+.dots a{width:24px;height:22px;display:grid;place-items:center}
+.dots a:before{content:"";width:4px;height:4px;border-radius:50%;background:#fff;mix-blend-mode:difference;opacity:.3;transition:opacity .3s,transform .4s var(--out)}
 .dots a[aria-current=true]:before{opacity:1;transform:scale(1.7)}
-@media (max-width:860px){.dots{display:none}}
+@media (max-width:1100px){.dots{display:none}}
 header.top .back{font-size:.875rem;color:var(--fg);opacity:.78;text-decoration:none;margin-inline-start:auto}
 header.top .back:hover{opacity:1}
 header.top .lang{margin-inline-start:0}
 @media (prefers-reduced-motion:reduce){.open>img,.hot:after{animation:none}html{scroll-snap-type:none}}
+.lat{font-family:var(--body);font-weight:500;font-size:.72em;direction:ltr;unicode-bidi:isolate;letter-spacing:-.01em}
 </style>
 </head>
 <body>
@@ -240,7 +242,7 @@ header.top .lang{margin-inline-start:0}
       <p class="kick" style="margin-bottom:0"><span class="fa">حمایت از رویداد نخست</span><span class="en">Sponsorship of the first event</span></p>
       <p class="calc"><span class="fa">۵۰ مهمان، هر مهمان حدود ۱۵ میلیون تومان</span><span class="en">50 guests, at about 15 million toman each</span></p>
       <p class="sum"><span class="fa">۷۵۰ میلیون تومان</span><span class="en">750 million toman</span></p>
-      <div class="rows" style="margin-top:28px">
+      <div class="rows" style="margin-top:clamp(10px,2vh,28px)">
         <div><span><span class="fa">عنوان «حامی اصلی» و انحصار در دستهٔ خود</span><span class="en">The "lead sponsor" title and category exclusivity</span></span><span></span></div>
         <div><span><span class="fa">فضای نمایش محصول در خود رویداد</span><span class="en">A product display area inside the event</span></span><span></span></div>
         <div><span><span class="fa">زمانی کوتاه برای معرفی و آشنایی شخصی با مهمانان</span><span class="en">A short introduction slot and personal introductions to guests</span></span><span></span></div>
@@ -256,7 +258,7 @@ header.top .lang{margin-inline-start:0}
   <div class="wrap cols">
     <div class="c5">
       <p class="kick"><b><span class="fa">۶</span><span class="en">6</span></b><span class="fa">امروز</span><span class="en">Today</span></p>
-      <h2><span class="fa">پلتفرم ساخته شده و روی hoomaart.ir کار می‌کند.</span><span class="en">The platform is built and running at hoomaart.ir.</span></h2>
+      <h2><span class="fa">پلتفرم ساخته شده و روی <span class="lat">hoomaart.ir</span> کار می‌کند.</span><span class="en">The platform is built and running at hoomaart.ir.</span></h2>
       <div class="actions"><a class="btn primary" href="/gallery"><span class="fa">مجموعه را ببینید</span><span class="en">See the collection</span></a><a class="btn" href="https://wa.me/989123800864" target="_blank" rel="noopener"><span class="fa">گفت‌وگو در واتس‌اپ</span><span class="en">Talk on WhatsApp</span></a></div>
     </div>
     <div class="c6">
