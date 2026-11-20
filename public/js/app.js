@@ -155,7 +155,7 @@ function show(el) { lastFocus = document.activeElement; el.hidden = false; docum
 function hideAll(push) {
   $$('.sheet,.tool').forEach((e) => { if (!e.hidden) { e.hidden = true; e.dispatchEvent(new CustomEvent('hooma:close')); } });
   document.body.style.overflow = ''; openId = null; openArtistId = null;
-  if (push && location.pathname !== '/') history.pushState({}, '', '/');
+  if (push && location.pathname !== '/gallery') history.pushState({}, '', '/gallery');
   if (lastFocus && lastFocus.focus) lastFocus.focus();
 }
 Hooma.hideAll = hideAll; Hooma.show = show;

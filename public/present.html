@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow">
-<title>هوما آرت | معرفی پلتفرم</title>
+<title>هوما آرت | Hooma Art</title>
+<meta name="description" content="هوما آرت خریدار منتخب، اثر گزیده و فضایی با طراحی معماری شناخته‌شده را در یک شب کنار هم می‌گذارد.">
+<meta property="og:title" content="هوما آرت | Hooma Art">
+<meta property="og:description" content="خریدار منتخب، اثر گزیده و فضای خاص، در یک شب.">
+<meta property="og:image" content="/img/spaces/hall-hung.jpg">
 <meta name="theme-color" content="#0A0A0B">
 <link rel="icon" href="/img/mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/markazi-text-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -31,7 +34,10 @@ html[lang=en] .pz .big{line-height:1.5}
 .open>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:32% 60%;z-index:-2;animation:drift 22s var(--out) both}
 @keyframes drift{from{transform:scale(1.12)}to{transform:scale(1)}}
 .open:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(10,10,11,.5),rgba(10,10,11,.08) 32%,rgba(10,10,11,.5) 62%,var(--bg) 100%)}
-.open .wrap{width:100%;padding-bottom:clamp(40px,8vh,96px)}
+.open .wrap{width:100%;padding-bottom:clamp(32px,6vh,72px)}
+.open .actions{margin-top:1.8rem}
+.open .btn{border-color:rgba(244,243,241,.7)}
+.down{margin-top:1.6rem}
 .open h1{max-width:13ch;font-size:clamp(3rem,8vw,7rem)}
 html[lang=en] .open h1{font-size:clamp(3rem,7.4vw,6rem)}
 .open .big{color:rgba(244,243,241,.86)}
@@ -119,7 +125,7 @@ header.top .lang{margin-inline-start:0}
     <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 31C8 16 18 6 34 5c-1 15-10 25-25 27l12-13"/></svg>
     <span class="fa">هوما آرت</span><span class="en">Hooma Art</span>
   </a>
-  <a class="back" href="/"><span class="fa">سایت اصلی</span><span class="en">Main site</span></a>
+  <a class="back" href="/gallery"><span class="fa">مجموعه</span><span class="en">Collection</span></a>
   <button class="lang" id="langBtn" type="button" aria-label="Switch language"><span class="fa">English</span><span class="en">فارسی</span></button>
 </header>
 
@@ -131,6 +137,7 @@ header.top .lang{margin-inline-start:0}
   <div class="wrap rise">
     <h1><span class="fa">جایی که فضا، مجموعه می‌شود.</span><span class="en">Where a space becomes a collection.</span></h1>
     <p class="big"><span class="fa">هوما آرت سه چیز کمیاب را در یک شب کنار هم می‌گذارد: خریدار منتخب، اثر گزیده و فضایی که معماری شناخته‌شده طراحی کرده است.</span><span class="en">Hooma Art brings three scarce things together in one evening: selected buyers, selected works, and a space designed by a known architect.</span></p>
+    <div class="actions"><a class="btn primary" href="/gallery"><span class="fa">مجموعه را ببینید</span><span class="en">See the collection</span></a><a class="btn" href="/artists"><span class="fa">هنرمند هستم</span><span class="en">I'm an artist</span></a></div>
     <a class="down" href="#s2"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></i><span class="fa">معرفی پلتفرم، در هفت بخش</span><span class="en">The platform, in seven parts</span></a>
   </div>
 </section>
@@ -250,7 +257,7 @@ header.top .lang{margin-inline-start:0}
     <div class="c5">
       <p class="kick"><b><span class="fa">۶</span><span class="en">6</span></b><span class="fa">امروز</span><span class="en">Today</span></p>
       <h2><span class="fa">پلتفرم ساخته شده و روی hoomaart.ir کار می‌کند.</span><span class="en">The platform is built and running at hoomaart.ir.</span></h2>
-      <div class="actions"><a class="btn primary" href="/" target="_blank" rel="noopener"><span class="fa">سایت را ببینید</span><span class="en">See the site</span></a><a class="btn" href="https://wa.me/989123800864" target="_blank" rel="noopener"><span class="fa">گفت‌وگو در واتس‌اپ</span><span class="en">Talk on WhatsApp</span></a></div>
+      <div class="actions"><a class="btn primary" href="/gallery"><span class="fa">مجموعه را ببینید</span><span class="en">See the collection</span></a><a class="btn" href="https://wa.me/989123800864" target="_blank" rel="noopener"><span class="fa">گفت‌وگو در واتس‌اپ</span><span class="en">Talk on WhatsApp</span></a></div>
     </div>
     <div class="c6">
       <div class="rows">
@@ -279,7 +286,7 @@ header.top .lang{margin-inline-start:0}
   function setLang(l, save) {
     lang = l === 'en' ? 'en' : 'fa'; const h = document.documentElement; h.lang = lang; h.dir = lang === 'fa' ? 'rtl' : 'ltr';
     if (save) try { localStorage.setItem('hooma-lang', lang); } catch {}
-    document.title = lang === 'fa' ? 'هوما آرت | معرفی پلتفرم' : 'Hooma Art | The platform';
+    document.title = lang === 'fa' ? 'هوما آرت | Hooma Art' : 'Hooma Art | هوما آرت';
     $$('#dots a').forEach((a) => { a.setAttribute('aria-label', a.dataset[lang]); a.title = a.dataset[lang]; });
   }
   $('#langBtn').addEventListener('click', () => setLang(lang === 'fa' ? 'en' : 'fa', true));

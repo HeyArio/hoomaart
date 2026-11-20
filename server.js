@@ -206,9 +206,10 @@ const server = http.createServer(async (req, res) => {
     if (p.startsWith('/uploads/')) {
       const f = path.join(UP, path.basename(p)); return serveFile(res, f, 'public, max-age=31536000, immutable');
     }
-    if (p === '/' || p.startsWith('/w/') || p.startsWith('/a/') || ['/wall', '/scan', '/join', '/artists'].includes(p)) return serveFile(res, path.join(PUB, 'index.html'), 'no-cache');
+    if (p === '/gallery' || p.startsWith('/w/') || p.startsWith('/a/') || ['/wall', '/scan', '/join', '/artists'].includes(p)) return serveFile(res, path.join(PUB, 'index.html'), 'no-cache');
     if (p === '/admin') return serveFile(res, path.join(PUB, 'admin.html'), 'no-store');
-    if (p === '/present') return serveFile(res, path.join(PUB, 'present.html'), 'no-cache');
+    if (p === '/') return serveFile(res, path.join(PUB, 'present.html'), 'no-cache');
+    if (p === '/present') { res.writeHead(301, { Location: '/' }); return res.end(); }
     const f = path.normalize(path.join(PUB, p));
     if (!f.startsWith(PUB + path.sep)) return send(res, 403, 'Forbidden');
     return serveFile(res, f, /\/(fonts|img|vendor)\//.test(p) ? 'public, max-age=2592000' : 'no-cache');
