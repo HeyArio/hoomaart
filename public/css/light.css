@@ -272,3 +272,28 @@ body[data-who] .status em.on:before{background:#3a9a5b}
 body.gal .state,body.gal #journey,body.gal #wall,body.gal #artists{display:none!important}
 body.gal .amb{display:none}
 body.gal .hero:after{background:none}
+
+/* ===== finishing pass ===== */
+/* 1. nothing shows above the floating header: a soft white band sits behind it */
+body:before{content:"";position:fixed;inset:0 0 auto 0;height:clamp(18px,2.6vh,26px);z-index:calc(var(--z-sticky) - 1);background:#fcfcfb;pointer-events:none}
+body:after{content:"";position:fixed;inset:clamp(18px,2.6vh,26px) 0 auto 0;height:70px;z-index:calc(var(--z-sticky) - 1);background:linear-gradient(#fcfcfb,rgba(252,252,251,0));pointer-events:none}
+/* 2. one rhythm for vertical space */
+.sec{padding:clamp(56px,7vw,104px) 0}
+.arc-sec{padding:clamp(40px,5vw,80px) 0}
+.doors2{padding-bottom:clamp(40px,5vw,80px)}
+.lv-how{margin-top:clamp(20px,3vw,36px)}
+.close2{padding-top:clamp(40px,5vw,72px)}
+/* 3. collection header: title and line stacked, centred */
+.arc-sec .wrap{display:block;text-align:center}
+.arc-sec h2{margin-inline:auto}
+.arc-sec .sub2{margin:.5rem auto 0;max-width:52ch}
+.arc{margin-top:clamp(8px,1.6vw,20px)}
+.arc-row{padding-block:clamp(26px,3.6vw,52px)}
+.arc-cap{margin-top:4px}
+/* section headings breathe the same way everywhere */
+section h2{margin-bottom:0}
+.three,.path2,.list2,.figs,.status{margin-top:clamp(20px,3vw,40px)!important}
+.link3{margin-top:clamp(18px,2.4vw,28px)!important}
+/* the light-reading tag and credit never collide with controls */
+.lv-credit{inset-inline-end:14px;bottom:10px}
+.lv-again{bottom:10px}

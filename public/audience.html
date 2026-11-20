@@ -16,7 +16,7 @@ body[data-who=collectors]{--ac:#c1121f}
 body[data-who=artists]{--ac:#1d3fb8}
 body[data-who=investors]{--ac:#111113}
 .wrap{max-width:1320px}
-section{padding:clamp(56px,9vw,128px) 0}
+section{padding:clamp(48px,6.5vw,96px) 0}
 h2{font-size:clamp(1.7rem,3.6vw,3rem);font-weight:800;max-width:20ch}
 .ey{font-size:.875rem;font-weight:700;color:var(--ac);margin-bottom:12px}
 .ld{font-size:clamp(1.05rem,1.4vw,1.3rem);color:var(--i2);margin-top:1rem;max-width:44ch;line-height:1.85}
@@ -225,9 +225,12 @@ html[lang=en] .link3{line-height:1.5}
     document.getElementById('heroSlot').innerHTML = '<div class="lead3 rise"><p class="ey">' + esc(t.who) + '</p><h1>' + esc(t.h1) + '</h1><p class="ld">' + esc(t.ld) + '</p><div class="actions" style="justify-content:center">' + btns(t.cta) + '</div></div>';
     document.getElementById('page').innerHTML =
       '<section id="value"><div class="wrap"><h2>' + esc(v.h) + '</h2><div class="three">' + [0, 1, 2].map((i) => '<article class="tv up' + (FIRST[who] === i ? ' me' : '') + '"><div class="pic' + (i === 1 ? ' ba' : '') + '">' + PICS[i] + '</div><div class="tx2"><i>' + esc(v.k[i]) + '</i><h3>' + esc(v.t[i]) + '</h3><p>' + esc(v.p[i]) + '</p><a href="' + HREF[i] + '">' + esc(v.a[i]) + '</a></div></article>').join('') + '</div><p class="link3">' + v.link + '</p></div></section>' +
-      '<section class="jr" id="journey"><div class="wrap"><h2>' + esc(t.jh) + '</h2><ol class="path2" style="--n:' + t.steps.length + '">' + t.steps.map(([h, p, lt, lh], i) => '<li class="up"><span>' + num(i + 1, l) + '</span><h3>' + esc(h) + '</h3><p>' + esc(p) + '</p>' + (lt ? '<a href="' + lh + '">' + esc(lt) + '</a>' : '') + '</li>').join('') + '</ol></div></section>' +
+      (who === 'collectors' ? '' : '<section class="jr" id="journey"><div class="wrap"><h2>' + esc(t.jh) + '</h2><ol class="path2" style="--n:' + t.steps.length + '">' + t.steps.map(([h, p, lt, lh], i) => '<li class="up"><span>' + num(i + 1, l) + '</span><h3>' + esc(h) + '</h3><p>' + esc(p) + '</p>' + (lt ? '<a href="' + lh + '">' + esc(lt) + '</a>' : '') + '</li>').join('') + '</ol></div></section>') +
       x +
       '<section class="close2"><div class="wrap"><h2>' + esc(t.ch) + '</h2><div class="actions">' + btns(t.cc) + '</div></div></section>';
+    // collectors: the collection sits before the closing question, which asks about it
+    const slot = document.getElementById('arcSlot'), close = document.querySelector('#page .close2');
+    if (who === 'collectors' && slot && close) close.before(slot);
     reveal();
   }
   function reveal() {

@@ -96,7 +96,7 @@ window.HoomaLive = (() => {
           '<label>' + t('عکس دیوار من', 'A photo of my wall') + '<input type="file" accept="image/*" hidden data-wall></label></div>' +
         '<p class="lv-step glass" aria-live="polite" hidden></p>' +
         '<button type="button" class="lv-again glass" data-again hidden>' + t('تحلیل دوباره', 'Analyse again') + '</button>' +
-        '<p class="lv-credit">' + t('فضا: Divan Development', 'Space: Divan Development') + '</p></div>' +
+        '<p class="lv-credit">' + t('فضا: <bdi dir="ltr">Divan Development</bdi>', 'Space: Divan Development') + '</p></div>' +
       '<div class="lv-bar"><div class="lv-strip">' +
           (opts.own ? '<label class="lv-own">' + t('+ اثر خودم', '+ My own work') + '<input type="file" accept="image/*" hidden data-own></label>' : '') +
           works.map((w, i) => '<button type="button" data-work="' + i + '"><img loading="lazy" src="' + w.img + '" alt=""></button>').join('') + '</div>' +
