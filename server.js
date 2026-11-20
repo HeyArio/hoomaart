@@ -206,10 +206,11 @@ const server = http.createServer(async (req, res) => {
     if (p.startsWith('/uploads/')) {
       const f = path.join(UP, path.basename(p)); return serveFile(res, f, 'public, max-age=31536000, immutable');
     }
-    if (p === '/gallery' || p.startsWith('/w/') || p.startsWith('/a/') || ['/wall', '/scan', '/join', '/artists'].includes(p)) return serveFile(res, path.join(PUB, 'index.html'), 'no-cache');
+    if (p === '/gallery' || p.startsWith('/w/') || p.startsWith('/a/') || ['/wall', '/scan', '/join'].includes(p)) return serveFile(res, path.join(PUB, 'index.html'), 'no-cache');
     if (p === '/admin') return serveFile(res, path.join(PUB, 'admin.html'), 'no-store');
     if (p === '/') return serveFile(res, path.join(PUB, 'gate.html'), 'no-cache');
     if (/^\/for\/(collectors|artists|investors)$/.test(p)) return serveFile(res, path.join(PUB, 'audience.html'), 'no-cache');
+    if (p === '/artists') { res.writeHead(302, { Location: '/for/artists' }); return res.end(); }
     if (p === '/overview' || p === '/present') { res.writeHead(302, { Location: '/for/investors' }); return res.end(); }
     const f = path.normalize(path.join(PUB, p));
     if (!f.startsWith(PUB + path.sep)) return send(res, 403, 'Forbidden');
