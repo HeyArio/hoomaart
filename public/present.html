@@ -7,11 +7,11 @@
 <meta name="description" content="هوما آرت خریدار منتخب، اثر گزیده و فضایی با طراحی معماری شناخته‌شده را در یک شب کنار هم می‌گذارد.">
 <meta property="og:title" content="هوما آرت | Hooma Art">
 <meta property="og:description" content="خریدار منتخب، اثر گزیده و فضای خاص، در یک شب.">
-<meta property="og:image" content="/img/spaces/hall-hung.jpg">
+<meta property="og:image" content="/img/spaces/home-evening.jpg">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="/img/mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/vazirmatn-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/img/spaces/hall-hung.jpg" as="image">
+<link rel="preload" href="/img/spaces/home-evening.jpg" as="image">
 <link rel="stylesheet" href="/css/app.css">
 <style>
 /* Front page. Black and near-white screens, heavy type, rounded tiles, one picture per screen. */
@@ -22,7 +22,7 @@ body{background:var(--k);color:var(--t)}
 .pz.lt{background:var(--w);color:var(--d)}
 .hd{max-width:22ch}
 .pz h2{font-size:clamp(1.7rem,min(4.2vw,6.4vh),3.6rem);font-weight:800;line-height:1.28}
-html[lang=en] .pz h2{line-height:1.05}
+html[lang=en] .pz h2{line-height:1.1;letter-spacing:-.018em}
 .ld{font-size:clamp(1rem,min(1.45vw,2.4vh),1.3rem);line-height:1.85;color:var(--t2);margin-top:clamp(.5rem,1.6vh,1rem);max-width:46ch}
 html[lang=en] .ld{line-height:1.5}
 .lt .ld{color:var(--d2)}
@@ -46,20 +46,24 @@ html[lang=en] .ld{line-height:1.5}
 .cols{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(16px,2.4vw,32px);row-gap:28px;align-items:center}
 .lat{direction:ltr;unicode-bidi:isolate;letter-spacing:-.02em}
 
-/* 1. opening */
-.open{padding:0;align-content:end;overflow:hidden;isolation:isolate}
-.open>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:32% 60%;z-index:-2;animation:drift 24s var(--out) both}
-@keyframes drift{from{transform:scale(1.14)}to{transform:scale(1)}}
-.open:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.05) 30%,rgba(0,0,0,.45) 60%,#000 100%)}
-.open .wrap{width:100%;padding-bottom:clamp(28px,6vh,72px)}
-.open h1{max-width:12ch;font-size:clamp(2.6rem,min(7.4vw,12vh),6.5rem);font-weight:800;line-height:1.2}
-html[lang=en] .open h1{line-height:.98;letter-spacing:-.045em;max-width:13ch}
-.open .ld{color:rgba(245,245,247,.86);max-width:52ch;text-wrap:balance}
+/* 1. opening: one lit work in a dark room, centred; the words sit beneath it and never on it */
+.open{padding:0;align-content:end;overflow:hidden;isolation:isolate;text-align:center}
+.open>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%;z-index:-2;animation:drift 20s var(--out) both;transform-origin:50% 38%}
+@keyframes drift{from{transform:scale(1.08)}to{transform:scale(1)}}
+.open:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(0,0,0,.35),transparent 16%,transparent 52%,rgba(0,0,0,.82) 74%,#000 100%)}
+.open .wrap{width:100%;padding-bottom:clamp(20px,4.5vh,56px);display:grid;justify-items:center}
+.open h1{max-width:none;font-size:clamp(1.9rem,min(4.6vw,7.6vh),4rem);font-weight:800;line-height:1.3;text-shadow:0 2px 30px rgba(0,0,0,.6)}
+html[lang=en] .open h1{line-height:1.08;letter-spacing:-.022em}
+.open .ld{color:rgba(245,245,247,.82);max-width:52ch;margin-top:clamp(.3rem,1vh,.7rem);font-size:clamp(.9375rem,min(1.3vw,2.3vh),1.2rem)}
+.open .actions{justify-content:center;margin-top:clamp(.8rem,2.4vh,1.6rem)}
 .open .btn{border-color:rgba(245,245,247,.7)}
-.down{display:inline-flex;align-items:center;gap:10px;margin-top:clamp(1rem,2.6vh,1.6rem);font-size:.875rem;color:var(--t2);text-decoration:none;transition:color .3s}
+.down{display:inline-flex;align-items:center;gap:10px;margin-top:clamp(.7rem,2vh,1.3rem);font-size:.875rem;color:var(--t2);text-decoration:none;transition:color .3s}
 .down:hover{color:#fff}
 .down svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;animation:nudge 2.4s var(--out) infinite}
 @keyframes nudge{0%,60%,100%{transform:none}30%{transform:translateY(4px)}}
+.cap{position:absolute;inset-inline-end:var(--gut);bottom:10px;font-size:.6875rem;color:#6e6e73;max-width:none}
+@media (max-width:900px){.cap{position:static;margin-top:10px}}
+@media (max-aspect-ratio:1/1){.open>img{object-position:50% 0;height:62%}.open:after{background:linear-gradient(rgba(0,0,0,.35),transparent 14%,transparent 36%,#000 60%)}}
 
 /* 2. the room */
 .room{padding-inline:0;padding-top:clamp(76px,10vh,100px);padding-bottom:clamp(14px,2.4vh,32px)}
@@ -192,12 +196,13 @@ header.top .back{margin-inline-start:auto}
 
 <main>
 <section class="pz open" id="s1" data-name="آغاز|Opening">
-  <img src="/img/spaces/hall-hung.jpg" alt="">
+  <img src="/img/spaces/home-evening.jpg" alt="">
   <div class="wrap rise">
     <h1><span class="fa">جایی که فضا، مجموعه می‌شود.</span><span class="en">Where a space becomes a collection.</span></h1>
     <p class="ld"><span class="fa">خریدار منتخب، اثر گزیده و فضایی با امضای یک معمار. در یک شب.</span><span class="en">Selected buyers, selected works, and a space signed by an architect. In one evening.</span></p>
     <div class="actions"><a class="btn primary" href="/gallery"><span class="fa">مجموعه را ببینید</span><span class="en">See the collection</span></a><a class="btn" href="/artists"><span class="fa">هنرمند هستم</span><span class="en">I'm an artist</span></a></div>
     <a class="down" href="#s2"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg><span class="fa">هوما آرت چطور کار می‌کند</span><span class="en">How Hooma Art works</span></a>
+    <p class="cap"><span class="fa">تصویر مفهومی: اثر به‌صورت دیجیتال در فضا قرار گرفته است.</span><span class="en">Concept visualisation: the work is digitally placed in the room.</span></p>
   </div>
 </section>
 
